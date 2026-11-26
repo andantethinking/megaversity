@@ -102,6 +102,119 @@ dialog .db{padding:12px 18px 18px;max-height:70vh;overflow:auto}
 .rep .stk{background:#e9ecf3}
 .rep .qbox{break-inside:avoid;padding:6px 0 10px}
 .rep .txt{font-size:13.5px;color:#333;margin:4px 0;padding-left:12px;border-left:2px solid #dde1ec}
+
+/* 문항 관리 (쉬운 편집) */
+.savebar{position:sticky;top:49px;z-index:4;display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:var(--bg);padding:10px 0;margin-bottom:10px}
+.savebar .sp{flex:1}
+details.more{position:relative}details.more summary{list-style:none;display:inline-flex;align-items:center}details.more summary::-webkit-details-marker{display:none}
+details.more .menu{position:absolute;right:0;top:44px;background:var(--paper);border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 30px -12px rgba(0,0,0,.3);padding:6px;z-index:6;min-width:200px}
+details.more .menu button{display:block;width:100%;text-align:left;border:0;background:none;padding:10px 12px;border-radius:8px;cursor:pointer}
+details.more .menu button:hover{background:var(--soft)}
+.tl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:13px;color:var(--mute);margin:0 0 14px}
+.tr{border:1px solid var(--line);border-radius:99px;padding:3px 10px;background:var(--paper)}.tr.ok b{color:#1f9d55}
+.qlist{display:flex;flex-direction:column;gap:0;max-width:920px}
+.sechd{display:flex;align-items:center;gap:10px;background:var(--band);color:#fff;border-radius:14px;padding:14px 16px;margin:18px 0 8px;cursor:pointer}
+.sechd>div:first-child{flex:1;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}
+.sechd .pt{font-size:11px;font-weight:800;background:#ffcc33;color:#141a33;border-radius:99px;padding:2px 8px}
+.sechd b{font-size:16px}.sechd small{opacity:.75;font-size:12.5px}
+.sechd .ab{background:rgba(255,255,255,.14);color:#fff;border-color:transparent}
+.qc{display:flex;gap:12px;align-items:flex-start;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px;cursor:pointer;transition:border-color .15s,box-shadow .15s}
+.qc:hover,.qc:focus-visible{border-color:var(--blue);box-shadow:0 6px 18px -12px rgba(44,74,150,.6)}
+.qc.sub{margin-left:28px}
+.qno{flex:none;font-weight:800;font-size:12.5px;background:var(--ink);color:var(--paper);border-radius:8px;padding:4px 8px;min-width:44px;text-align:center}
+.qbody{flex:1}
+.qtt{display:inline-block;font-size:12px;font-weight:700;color:var(--blue);background:var(--soft);border-radius:99px;padding:1px 8px;margin-bottom:4px}
+.qtx{margin:0 0 8px;font-weight:600;font-size:15px;line-height:1.5}
+.ops{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px}
+.op{font-size:12.5px;border:1px solid var(--line);border-radius:8px;padding:2px 8px;background:var(--soft)}
+.op b{color:var(--blue);margin-right:4px}.op.oth{border-style:dashed}.op.more{color:var(--mute)}
+.chips{display:flex;flex-wrap:wrap;gap:5px}
+.ty{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:700;color:var(--ink)}
+.ty svg,.tch svg,.tpi svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.6}
+.fl{font-size:11.5px;border-radius:99px;padding:1px 8px;background:var(--soft);color:var(--mute)}
+.fl.req{background:#ffe1e1;color:#b42318}.fl.cond{background:#fff4cc;color:#7a5a00}.fl.miss{background:#fde7ef;color:#a8124c}.fl.ok{background:#e6f7ef;color:#147a46}
+.acts{flex:none;display:flex;flex-wrap:wrap;gap:4px;justify-content:flex-end;max-width:210px}
+.ab{border:1px solid var(--line);background:var(--paper);border-radius:8px;padding:5px 9px;font-size:12.5px;cursor:pointer;min-height:32px}
+.ab.ic{padding:5px 8px}.ab.del{color:#b42318}
+.gap{height:10px;display:flex;align-items:center;justify-content:center}
+.gap .addq{opacity:0;transform:scale(.9);transition:opacity .15s}
+.gap:hover .addq,.gap .addq:focus{opacity:1;transform:none}
+.addq{border:1.5px dashed #9fb0dc;background:var(--paper);color:var(--blue);font-weight:700;border-radius:10px;padding:8px 14px;cursor:pointer;margin:8px 0;font-size:13.5px}
+.gap .addq{padding:4px 12px;margin:0;font-size:12.5px;position:relative;z-index:1}
+.addq.sec{border-color:var(--ink);color:var(--ink)}
+.tpick{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.tp{display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left;border:1.5px solid var(--line);background:var(--paper);border-radius:12px;padding:14px;cursor:pointer;min-height:96px}
+.tp:hover{border-color:var(--blue);background:var(--soft)}
+.tp b{font-size:15px}.tp small{color:var(--mute);font-size:12.5px;line-height:1.45}
+.tpi{width:34px;height:34px;border-radius:10px;background:var(--soft);color:var(--blue);display:grid;place-items:center}
+.tpi svg{width:20px;height:20px}
+.drawer{position:fixed;inset:0;z-index:30;background:rgba(7,15,38,.5);display:flex;justify-content:flex-end}
+.drawer[hidden]{display:none}
+.dpanel{background:var(--bg);width:min(1060px,100%);height:100%;display:flex;flex-direction:column;box-shadow:-20px 0 40px -20px rgba(0,0,0,.4)}
+.dpanel.narrow{width:min(760px,100%)}
+.dhead{display:flex;align-items:center;gap:10px;padding:14px 18px;background:var(--paper);border-bottom:1px solid var(--line)}
+.dhead b{font-size:17px}.dhead .sp{flex:1}
+.idb{font-size:12px;font-weight:800;background:var(--ink);color:var(--paper);border-radius:6px;padding:2px 8px}
+.dpanel .ltabs{padding:10px 18px 0;margin:0;align-items:center}
+.dbody{flex:1;overflow:auto;display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:18px;padding:16px 18px 40px}
+.dbody.one{grid-template-columns:minmax(0,1fr)}
+.dform{display:flex;flex-direction:column;gap:14px}
+.fg{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px}
+.fg.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fl2{display:block;font-weight:700;font-size:14px;margin-bottom:6px}.fl2 small{font-weight:500;color:var(--mute)}
+.inp{width:100%;border:1px solid var(--line);background:var(--paper);border-radius:8px;padding:9px 11px;font-size:15px;min-height:40px}
+.inp.sm{width:auto}
+textarea.inp{resize:vertical;line-height:1.55}
+.koref{margin:0 0 6px;font-size:13px;color:var(--mute);background:var(--soft);border-radius:8px;padding:6px 9px;line-height:1.5}
+.tchips{display:flex;flex-wrap:wrap;gap:6px}
+.tch{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--line);background:var(--paper);border-radius:99px;padding:6px 12px;cursor:pointer;font-size:13.5px;font-weight:600}
+.tch[aria-pressed=true]{border-color:var(--blue);background:var(--soft);color:var(--blue)}
+.presets{display:flex;flex-wrap:wrap;gap:5px;align-items:center;font-size:12.5px;color:var(--mute);margin-bottom:8px}
+.pre{border:1px solid var(--line);background:var(--soft);border-radius:99px;padding:3px 10px;cursor:pointer;font-size:12.5px}
+.olist{display:flex;flex-direction:column;gap:6px}
+.orow{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.onum{flex:none;width:26px;height:26px;border-radius:8px;background:var(--soft);color:var(--blue);display:grid;place-items:center;font-weight:800;font-size:12.5px}
+.oin{flex:1;min-width:180px}.oin .koref{margin-bottom:3px}
+.ck{display:inline-flex;align-items:center;gap:5px;font-size:13.5px;cursor:pointer}.ck.sm{font-size:12px;color:var(--mute);white-space:nowrap}
+.oadd{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+.opts2{display:flex;flex-wrap:wrap;gap:18px;align-items:center}
+.sw{display:inline-flex;align-items:center;gap:10px;cursor:pointer;font-size:14px}
+.sw input{position:absolute;opacity:0}
+.sw span{width:40px;height:22px;border-radius:99px;background:#c9d0e3;position:relative;transition:background .15s;flex:none}
+.sw span::after{content:"";position:absolute;left:3px;top:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .15s}
+.sw input:checked+span{background:var(--blue)}.sw input:checked+span::after{transform:translateX(18px)}
+.sw input:focus-visible+span{outline:3px solid var(--acc);outline-offset:2px}
+.selrow{display:inline-flex;align-items:center;gap:8px;font-size:14px}
+details.adv{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:0 14px}
+details.adv summary{cursor:pointer;padding:12px 0;font-weight:700;font-size:14px}details.adv summary small{color:var(--mute);font-weight:500}
+details.adv[open]{padding-bottom:14px}details.adv .fg{border:0;padding:8px 0;background:none}
+.condopts{display:flex;flex-direction:column;gap:6px;margin-top:8px;padding:10px;background:var(--soft);border-radius:8px}
+.dprev{position:sticky;top:0;align-self:start}
+.pvh{font-size:12.5px;font-weight:700;color:var(--mute);margin:0 0 8px}
+.phone{background:#f5f6fb;color:#141a33;border:8px solid #141a33;border-radius:28px;padding:18px 14px;min-height:460px;font-family:Pretendard,"Noto Sans KR","Noto Sans Khmer","Noto Sans SC",sans-serif}
+.ptags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px}
+.pt1,.pt2,.pt3{font-size:10.5px;font-weight:800;border-radius:99px;padding:2px 7px}
+.pt1{background:#141a33;color:#fff}.pt2{background:#eef1ff;color:#2f54eb}.pt3{background:#fff4cc;color:#7a5a00}
+.phone h4{font-size:16px;line-height:1.45;margin:0 0 12px}.phone h4 b{color:#ff6b6b}
+.po{display:flex;align-items:center;gap:9px;background:#fff;border-radius:11px;padding:10px;margin-bottom:7px;font-size:13px;box-shadow:0 1px 2px rgba(20,26,51,.06)}
+.po em{font-style:normal;color:#2f54eb;font-size:11.5px}
+.pf{flex:none;width:22px;height:22px;border-radius:50%}
+.pk{flex:none;width:20px;height:20px;border-radius:6px;background:#eef1ff;color:#2f54eb;display:grid;place-items:center;font-style:normal;font-weight:800;font-size:10.5px}
+.pk.m{background:#fff;border:2px solid #c9d0ea}
+.pin{background:#fff;border:2px solid #e2e6f3;border-radius:11px;padding:10px;color:#9aa3bf;font-size:13px}.pin.tall{min-height:110px}
+.pmax{font-size:12px;color:#5d6583;margin:6px 0 0}
+.pvsec span{display:inline-block;background:#ffcc33;border-radius:99px;padding:3px 10px;font-weight:800;font-size:11.5px}
+.pvsec h3{font-size:20px;margin:12px 0 6px}.pvsec p{color:#5d6583;font-size:13px}
+.logos2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.logo-up{display:flex;gap:12px;align-items:center;border:1px dashed var(--line);border-radius:10px;padding:10px}
+.lprev{flex:none;width:120px;height:56px;border-radius:8px;background:#fff;display:grid;place-items:center;overflow:hidden;border:1px solid var(--line)}
+.lprev img{max-width:110px;max-height:48px}.lprev span{font-size:12px;color:#9aa3bf}
+.logo-up label.btn{display:inline-flex;align-items:center;cursor:pointer}
+.hlogos{display:flex;gap:6px;align-items:center}
+.hlogos img{height:28px;background:#fff;border-radius:6px;padding:3px 8px}
+.rlogos{display:flex;gap:14px;align-items:center;justify-content:flex-end;margin-bottom:10px}
+.rlogos img{height:38px}
+@media(max-width:900px){.dbody{grid-template-columns:1fr}.dprev{position:static}.fg.two,.logos2,.tpick{grid-template-columns:1fr}.qc{flex-wrap:wrap}.acts{max-width:none;width:100%;justify-content:flex-start}.qc.sub{margin-left:12px}}
 @media(max-width:900px){.ed{grid-template-columns:1fr}.list{max-height:280px}.g4{grid-template-columns:repeat(2,minmax(0,1fr))}.row{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){.g2{grid-template-columns:1fr}.hb{grid-template-columns:minmax(0,1fr) 84px}.hb .t{grid-column:1/-1;grid-row:2}
  table{font-size:13px}.stack thead{display:none}.stack tr{display:grid;padding-block:10px}.stack td{display:flow-root;border:0;padding:3px 0;padding-inline-start:7em;text-align:start}.stack td::before{content:attr(data-l);float:inline-start;width:6.5em;margin-inline-start:-7em;color:var(--mute)}.stack td:empty{display:none}}
@@ -111,12 +224,12 @@ dialog .db{padding:12px 18px 18px;max-height:70vh;overflow:auto}
 <script>new MutationObserver(()=>{for(const c of document.querySelectorAll('.stack td:not([data-l])')){let i=0,p=c;while(p=p.previousElementSibling)i+=p.colSpan;c.dataset.l=c.closest('table').rows[0].cells[i]?.textContent||''}}).observe(document,{childList:true,subtree:true})</script>
 </head>
 <body>
-<header class="band"><div class="in">
-  <h1>MEGAversity 유학생 만족도 조사 · 관리자</h1><span class="badge" id="mode"></span><span class="sp"></span>
+<header class="band"><div class="inp">
+  <span id="hlogos" class="hlogos"></span><h1>MEGAversity 유학생 만족도 조사 · 관리자</h1><span class="badge" id="mode"></span><span class="sp"></span>
   <span id="who" class="hint" style="color:#cfd6ea"></span>
   <button id="reload" hidden>새로고침</button><button id="logout" hidden>로그아웃</button>
 </div></header>
-<nav class="tabs" id="tabs" hidden><div class="in">
+<nav class="tabs" id="tabs" hidden><div class="inp">
   <a href="#dash">응답 현황</a><a href="#items">문항 관리</a><a href="#responses">응답 결과</a><a href="#report">보고서 생성</a><a href="#settings">설정</a>
 </div></nav>
 <main id="main"></main>
@@ -835,6 +948,7 @@ async function load() {
   R = D.responses.filter((o) => o['구분'] !== '검토').map((o) => ({ rid: o['응답ID'], ts: String(o['제출시각'] || ''), lang: o['언어'] || '', dur: Number(o['소요시간(초)']) || 0, ans: parseRow(D.survey, o) }));
   if (!dirty) E = clone(D.survey);
   $('#tabs').hidden = false; $('#reload').hidden = $('#logout').hidden = false;
+  renderLogos();
   route();
 }
 $('#reload').onclick = () => load().then(() => toast('최신 데이터를 불러왔습니다.')).catch((e) => toast(e.message));
@@ -901,111 +1015,343 @@ function dashView() {
 }
 
 /* ---------------- 문항 관리 ---------------- */
+const TYPE_INFO = {
+  scale: { name: '5점 척도', desc: '매우 만족 ~ 매우 불만족처럼 5단계로 답해요', note: '' },
+  single: { name: '하나만 고르기', desc: '보기 중 하나를 골라요', note: '1개 선택' },
+  multi: { name: '여러 개 고르기', desc: '보기를 여러 개 골라요 (최대 개수 지정 가능)', note: '복수 응답 가능' },
+  text: { name: '짧은 글', desc: '한 줄로 적어요 (예: 전공)', note: '' },
+  longtext: { name: '긴 글', desc: '자유롭게 서술해요', note: '' },
+  section: { name: '파트 구분', desc: '새 파트를 시작해요 (I, II, III …)', note: '' }
+};
+const TYPE_ICON = {
+  scale: '<svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="2.2"/><circle cx="12" cy="12" r="2.2"/><circle cx="19" cy="12" r="2.2"/><path d="M5 17h14" stroke-width="1.6"/></svg>',
+  single: '<svg viewBox="0 0 24 24"><circle cx="6" cy="7" r="2.6"/><circle cx="6" cy="7" r="1" fill="currentColor"/><circle cx="6" cy="17" r="2.6"/><path d="M11 7h9M11 17h9" stroke-width="1.8"/></svg>',
+  multi: '<svg viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="5" height="5" rx="1"/><path d="M4.6 7l1.3 1.3L8 5.8" stroke-width="1.5"/><rect x="3.5" y="14.5" width="5" height="5" rx="1"/><path d="M12 7h8M12 17h8" stroke-width="1.8"/></svg>',
+  text: '<svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="8" rx="2"/><path d="M6 12h6" stroke-width="1.8"/></svg>',
+  longtext: '<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M6 9h12M6 13h12M6 17h7" stroke-width="1.6"/></svg>',
+  section: '<svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h16" stroke-width="2"/></svg>'
+};
+const SCALE_PRESETS = {
+  '만족도': ['매우 만족', '만족', '보통', '불만족', '매우 불만족'],
+  '동의': ['매우 그렇다', '그렇다', '보통이다', '그렇지 않다', '전혀 그렇지 않다'],
+  '충분함': ['매우 충분', '충분', '보통', '부족', '매우 부족'],
+  '효과': ['매우 효과적임', '효과적임', '보통', '별로 효과적이지 않음', '매우 효과적이지 않음'],
+  '도움': ['매우 도움이 된다', '도움이 되는 편이다', '보통이다', '별로 도움이 되지 않는다', '전혀 도움이 되지 않는다'],
+  '적절성': ['매우 적절', '적절', '보통', '부적절', '매우 부적절'],
+  '원활함': ['매우 원활했다', '원활했다', '보통이었다', '원활하지 않았다', '매우 원활하지 않았다']
+};
+const LN = { ko: '한국어', vi: '베트남어', zh: '중국어', km: '크메르어' };
+const isLogoKey = (k) => /^logo/.test(k);
 function transRate(lang) {
   let tot = 0, ok = 0;
   const chk = (o) => { if (o && hasLang(o, 'ko')) { tot++; if (hasLang(o, lang)) ok++; } };
-  Object.values(E.meta).forEach(chk);
+  Object.keys(E.meta).filter((k) => !isLogoKey(k)).forEach((k) => chk(E.meta[k]));
   E.items.forEach((it) => { chk(it.title); chk(it.text); chk(it.note); (it.options || []).forEach((o) => chk(o.t)); });
   return tot ? Math.round(ok / tot * 100) : 0;
 }
-function itemsView() {
-  const has = R.length > 0;
-  $('#main').innerHTML = `<h2>문항 관리</h2><p class="lede">문항을 고르고 오른쪽에서 고친 뒤 <b>저장</b>을 누르면 설문 페이지에 바로 반영됩니다. 번역은 언어 탭에서 입력하거나, 구글 시트 Questions 탭의 언어별 열에 직접 입력해도 됩니다.</p>
-  ${has ? `<div class="warn">이미 응답 ${R.length}건이 있습니다. 보기의 <b>순서·개수</b>를 바꾸면 기존 응답 코드와 어긋나므로, 문구 수정과 번역만 권장합니다.</div>` : ''}
-  ${D.fromDefault && !Api.demo ? '<div class="warn">시트에 문항이 아직 없어 기본 문항을 보여 주고 있습니다. 저장하면 시트 Questions 탭에 등록됩니다.</div>' : ''}
-  <div class="bar"><button class="btn pri" id="save" ${dirty ? '' : 'disabled'}>변경사항 저장</button><span class="hint" id="dirtyT">${dirty ? '저장하지 않은 변경사항이 있습니다.' : ''}</span><span class="sp"></span>
-   <a class="btn" href="${window.APP_URL ? esc(APP_URL) + '?preview=1' : 'index.html#preview'}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;text-decoration:none">설문 미리보기</a>
-   <button class="btn" id="exp">문항 JSON</button><button class="btn" id="def">기본 문항으로 되돌리기</button></div>
-  <div class="tl" style="margin-bottom:12px">번역 현황 ${LANGS.slice(1).map((l) => `<span>${esc(l.name)} <b>${transRate(l.code)}%</b></span>`).join('')}</div>
-  <div class="ed"><div class="panel list" id="list"></div><div class="panel" id="form"></div></div>`;
-  $('#save').onclick = saveSurvey;
-  $('#exp').onclick = () => copy(JSON.stringify(E, null, 1));
-  $('#def').onclick = () => { if (!confirmBox('기본 문항으로 되돌리기', '편집 중인 내용이 원본 HWP 기준 기본 문항으로 바뀝니다. 저장 전까지는 시트에 반영되지 않습니다.', () => { E = clone(DEFAULT_SURVEY); markDirty(); itemsView(); })) return; };
-  drawList(); drawForm();
+function itemMissing(it, lang) {
+  let miss = 0; const chk = (o) => { if (o && hasLang(o, 'ko') && !hasLang(o, lang)) miss++; };
+  chk(it.title); chk(it.text); chk(it.note); (it.options || []).forEach((o) => chk(o.t));
+  return miss;
 }
-function confirmBox(title, msg, ok) {
-  dialog(title, `<p>${esc(msg)}</p><div class="bar"><span class="sp"></span><button class="btn" id="cNo">취소</button><button class="btn pri" id="cOk">진행</button></div>`);
+function confirmBox(title, msg, ok, okLabel = '진행') {
+  dialog(title, `<p>${esc(msg)}</p><div class="bar"><span class="sp"></span><button class="btn" id="cNo">취소</button><button class="btn pri" id="cOk">${esc(okLabel)}</button></div>`);
   $('#cNo').onclick = () => $('#dlgX').click(); $('#cOk').onclick = () => { $('#dlgX').click(); ok(); };
   return true;
 }
-function markDirty() { dirty = true; const s = $('#save'); if (s) { s.disabled = false; $('#dirtyT').textContent = '저장하지 않은 변경사항이 있습니다.'; } }
+function markDirty() { dirty = true; const s = $('#save'); if (s) { s.disabled = false; $('#dirtyT').textContent = '저장하지 않은 변경사항이 있어요. 저장해야 설문 페이지에 반영됩니다.'; } }
+
+function itemsView() {
+  const has = R.length > 0;
+  $('#main').innerHTML = `<div class="ihead"><div><h2>문항 관리</h2><p class="lede">문항 카드를 눌러 고치고, <b>＋ 문항 추가</b>로 새 문항을 넣으세요. 다 고친 뒤 <b>저장</b>을 눌러야 설문 페이지에 반영됩니다.</p></div></div>
+  <div class="savebar"><button class="btn pri" id="save" ${dirty ? '' : 'disabled'}>저장하기</button><span class="hint" id="dirtyT">${dirty ? '저장하지 않은 변경사항이 있어요. 저장해야 설문 페이지에 반영됩니다.' : '변경사항 없음'}</span><span class="sp"></span>
+    <button class="btn" id="metaBtn">표지·안내문·로고</button>
+    <a class="btn" href="${window.APP_URL ? esc(APP_URL) + '?preview=1' : 'index.html#preview'}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;text-decoration:none">학생 화면 미리보기</a>
+    <details class="more"><summary class="btn">더보기</summary><div class="menu"><button id="exp">문항 JSON 복사</button><button id="def">원본 문항으로 되돌리기</button></div></details></div>
+  ${has ? `<div class="warn">이미 응답 ${R.length}건이 있어요. 보기의 <b>순서나 개수</b>를 바꾸면 기존 응답과 번호가 어긋나니, 글자 수정과 번역만 하시길 권해요.</div>` : ''}
+  ${D.fromDefault && !Api.demo ? '<div class="warn">시트에 문항이 아직 없어 원본 문항을 보여 주고 있어요. 저장하면 시트에 등록됩니다.</div>' : ''}
+  <div class="tl">번역 현황 ${LANGS.slice(1).map((l) => { const r = transRate(l.code); return `<span class="tr ${r === 100 ? 'ok' : ''}">${esc(LN[l.code])} <b>${r}%</b></span>`; }).join('')}</div>
+  <div id="qlist" class="qlist"></div>`;
+  $('#save').onclick = saveSurvey;
+  $('#metaBtn').onclick = openMeta;
+  $('#exp').onclick = () => copy(JSON.stringify(E, null, 1));
+  $('#def').onclick = () => confirmBox('원본 문항으로 되돌리기', '편집 중인 내용이 원본(HWP 기준) 문항과 번역으로 바뀝니다. 저장하기 전까지는 시트에 반영되지 않아요.', () => { E = clone(DEFAULT_SURVEY); markDirty(); itemsView(); });
+  drawList();
+}
+function addBtn(pos, label = '＋ 문항 추가') { return `<button class="addq" data-add="${pos}">${label}</button>`; }
 function drawList() {
-  $('#list').innerHTML = `<div class="li sec" data-i="-1" aria-selected="${sel === -1}"><span class="id">표지</span><span>설문 제목·안내문</span></div>` +
-    E.items.map((it, i) => `<div class="li${it.type === 'section' ? ' sec' : ''}${it.sub ? ' sub' : ''}" data-i="${i}" aria-selected="${sel === i}" tabindex="0">
-      <span class="id">${esc(it.id)}</span><span>${esc(it.type === 'section' ? tr(it.title, 'ko') : (it.short || tr(it.text, 'ko')))}</span><span class="ty">${esc(TYPES[it.type] || it.type)}</span></div>`).join('');
-  $$('#list .li').forEach((el) => { el.onclick = () => { sel = Number(el.dataset.i); drawList(); drawForm(); }; el.onkeydown = (e) => { if (e.key === 'Enter') el.click(); }; });
+  const L = E.items; let html = '', qn = 0;
+  L.forEach((it, i) => {
+    if (it.type === 'section') {
+      if (i > 0) html += addBtn(i, '＋ 이 파트 끝에 문항 추가');
+      html += `<div class="sechd" data-i="${i}"><div><span class="pt">파트</span><b>${esc(tr(it.title, 'ko'))}</b><small>${esc(tr(it.text, 'ko'))}</small></div>
+        <div class="acts">${actBtns(i, true)}</div></div>`;
+      return;
+    }
+    qn++;
+    const opts = (it.options || []);
+    const miss = LANGS.slice(1).map((l) => itemMissing(it, l.code)).reduce((a, b) => a + b, 0);
+    const chips = [
+      `<span class="ty">${TYPE_ICON[it.type] || ''}${esc((TYPE_INFO[it.type] || {}).name || (it.type === 'contact' ? '연락처·동의' : it.type))}</span>`,
+      it.required ? '<span class="fl req">필수</span>' : '<span class="fl">선택</span>',
+      it.type === 'multi' && it.max ? `<span class="fl">최대 ${it.max}개</span>` : '',
+      it.cond ? `<span class="fl cond">${esc(it.cond.q)}에서 ${esc(it.cond.in.map((v) => { const q = L.find((x) => x.id === it.cond.q); return q && q.options ? optLabel(q, v) : v; }).join(' · '))} 고른 사람만</span>` : '',
+      miss ? `<span class="fl miss">번역 ${miss}곳 비어 있음</span>` : '<span class="fl ok">번역 완료</span>'
+    ].join('');
+    html += `<div class="qc${it.sub ? ' sub' : ''}" data-i="${i}" tabindex="0">
+      <div class="qno">${esc(it.id)}</div>
+      <div class="qbody">${tr(it.title, 'ko') ? `<span class="qtt">${esc(tr(it.title, 'ko'))}</span>` : ''}<p class="qtx">${esc(tr(it.text, 'ko'))}</p>
+        ${opts.length ? `<div class="ops">${opts.slice(0, 7).map((o, k) => `<span class="op${o.other ? ' oth' : ''}">${it.type === 'scale' ? `<b>${opts.length - k}</b>` : ''}${esc(tr(o.t, 'ko'))}${o.other ? ' ✎' : ''}</span>`).join('')}${opts.length > 7 ? `<span class="op more">+${opts.length - 7}</span>` : ''}</div>` : ''}
+        <div class="chips">${chips}</div></div>
+      <div class="acts">${actBtns(i, false)}</div></div>`;
+    html += `<div class="gap">${addBtn(i + 1)}</div>`;
+  });
+  html += addBtn(L.length, '＋ 마지막에 문항 추가') + `<button class="addq sec" data-addsec="${L.length}">＋ 새 파트 추가</button>`;
+  $('#qlist').innerHTML = html;
+  $('#qlist').querySelectorAll('.qc,.sechd').forEach((el) => {
+    el.onclick = (e) => { if (e.target.closest('.acts')) return; openEditor(Number(el.dataset.i)); };
+    el.onkeydown = (e) => { if (e.key === 'Enter') openEditor(Number(el.dataset.i)); };
+  });
+  $('#qlist').querySelectorAll('[data-add]').forEach((b) => b.onclick = () => pickType(Number(b.dataset.add)));
+  $('#qlist').querySelectorAll('[data-addsec]').forEach((b) => b.onclick = () => openEditor(null, { pos: Number(b.dataset.addsec), type: 'section' }));
+  $('#qlist').querySelectorAll('[data-act]').forEach((b) => b.onclick = (e) => { e.stopPropagation(); act(b.dataset.act, Number(b.dataset.i)); });
 }
-function langTabs() {
-  return `<div class="ltabs" id="lt">${LANGS.map((l) => `<button type="button" data-l="${l.code}" aria-pressed="${eLang === l.code}">${esc(l.name)}${l.code === 'ko' ? '' : `<span class="dot${transRate(l.code) === 100 ? ' ok' : ''}"></span>`}</button>`).join('')}</div>`;
+function actBtns(i, sec) {
+  return `<button class="ab" data-act="edit" data-i="${i}" title="수정">수정</button>${sec ? '' : `<button class="ab" data-act="dup" data-i="${i}" title="복제">복제</button>`}
+    <button class="ab ic" data-act="up" data-i="${i}" title="위로" aria-label="위로">▲</button><button class="ab ic" data-act="down" data-i="${i}" title="아래로" aria-label="아래로">▼</button>
+    <button class="ab del" data-act="del" data-i="${i}" title="삭제">삭제</button>`;
 }
-function bindLangTabs() { $$('#lt button').forEach((b) => b.onclick = () => { eLang = b.dataset.l; drawForm(); }); }
-function drawForm() {
-  const F = $('#form');
-  const ref = eLang === 'ko' ? '' : ' <span class="hint">(한국어 원문 참고)</span>';
-  const koRef = (o) => eLang === 'ko' ? '' : `<p class="hint" style="margin:2px 0 0">${esc(tr(o, 'ko'))}</p>`;
-  if (sel === -1) {
-    const m = E.meta, F_ = [['kicker', '머리말'], ['title', '설문 제목'], ['org', '조사기관'], ['notice', '통계법 안내'], ['intro', '인사말·사업 소개 (## 큰제목, ### 작은제목, - 목록, ※ 주석)'], ['date', '날짜·기관'], ['thanks', '제출 후 감사 문구']];
-    F.innerHTML = `<h3>설문 표지·안내문</h3>${langTabs()}${F_.map(([k, lab]) => `<label class="f">${esc(lab)}${ref}</label>
-      ${k === 'intro' || k === 'notice' ? `<textarea data-m="${k}" style="min-height:${k === 'intro' ? 260 : 70}px">${esc((m[k] || {})[eLang] || '')}</textarea>` : `<input type="text" style="width:100%" data-m="${k}" value="${esc((m[k] || {})[eLang] || '')}">`}${koRef(m[k])}`).join('')}`;
-    $$('[data-m]', F).forEach((el) => el.oninput = () => { const k = el.dataset.m; E.meta[k] = E.meta[k] || {}; E.meta[k][eLang] = el.value; markDirty(); });
-    bindLangTabs(); return;
+function act(a, i) {
+  const L = E.items, it = L[i];
+  if (a === 'edit') return openEditor(i);
+  if (a === 'up' && i > 0) { [L[i - 1], L[i]] = [L[i], L[i - 1]]; }
+  if (a === 'down' && i < L.length - 1) { [L[i + 1], L[i]] = [L[i], L[i + 1]]; }
+  if (a === 'dup') { const c = clone(it); c.id = newId(it.id); L.splice(i + 1, 0, c); }
+  if (a === 'del') {
+    const used = L.filter((x) => x.cond && x.cond.q === it.id).map((x) => x.id);
+    return confirmBox(`${it.id} 삭제`, `이 ${it.type === 'section' ? '파트 구분' : '문항'}을 삭제할까요?${used.length ? ` (${used.join(', ')}의 표시 조건이 함께 풀립니다)` : ''} 이미 받은 응답은 시트에 그대로 남아요.`,
+      () => { L.forEach((x) => { if (x.cond && x.cond.q === it.id) delete x.cond; }); L.splice(i, 1); markDirty(); drawList(); }, '삭제');
   }
-  const it = E.items[sel]; if (!it) { F.innerHTML = ''; return; }
-  const qs = E.items.filter((x) => isQuestion(x) && x.id !== it.id);
-  const optsText = (it.options || []).map((o) => eLang === 'ko' ? (o.none ? '!' : '') + (o.t.ko || '') + (o.other ? '*' : '') : (o.t[eLang] || '')).join('\n');
-  F.innerHTML = `<div class="bar"><h3 style="margin:0">${esc(it.id)} 편집</h3><span class="sp"></span>
-    <button class="btn sm" data-a="up">▲ 위로</button><button class="btn sm" data-a="down">▼ 아래로</button><button class="btn sm" data-a="dup">복제</button>
-    <button class="btn sm" data-a="add">아래에 새 문항</button><button class="btn sm" data-a="del" style="color:var(--acc)">삭제</button></div>
-  <div class="row"><div><label class="f">문항 ID (시트 열 이름)</label><input type="text" id="fId" value="${esc(it.id)}" style="width:100%"></div>
-   <div><label class="f">유형</label><select id="fType" style="width:100%">${Object.entries(TYPES).map(([k, v]) => `<option value="${k}" ${it.type === k ? 'selected' : ''}>${v}</option>`).join('')}</select></div>
-   <div><label class="f">보고서용 약칭</label><input type="text" id="fShort" value="${esc(it.short || '')}" style="width:100%"></div>
-   <div><label class="f">최대 선택 수 (복수 선택)</label><input type="number" id="fMax" min="0" value="${esc(it.max || '')}" placeholder="제한 없음" style="width:100%" ${it.type === 'multi' ? '' : 'disabled'}></div></div>
-  <div class="row"><label class="chk"><input type="checkbox" id="fReq" ${it.required ? 'checked' : ''}> 필수 응답</label>
-   <label class="chk"><input type="checkbox" id="fSub" ${it.sub ? 'checked' : ''}> 하위 문항(들여쓰기)</label>
-   <div><label class="f">표시 조건: 이 문항의 응답이</label><select id="fCq" style="width:100%"><option value="">항상 표시</option>${qs.map((q) => `<option ${it.cond && it.cond.q === q.id ? 'selected' : ''}>${esc(q.id)}</option>`).join('')}</select></div>
-   <div><label class="f">…다음 값 중 하나일 때 (쉼표)</label><input type="text" id="fCv" value="${esc(it.cond ? it.cond.in.join(',') : '')}" placeholder="예: 1,2,3" style="width:100%"></div></div>
-  ${langTabs()}
-  <label class="f">${it.type === 'section' ? '구분 제목' : '[대괄호 소제목]'}${ref}</label><input type="text" style="width:100%" data-t="title" value="${esc((it.title || {})[eLang] || '')}">${koRef(it.title)}
-  <label class="f">${it.type === 'section' ? '영문 부제' : '질문'}${ref}</label><textarea data-t="text" style="min-height:70px">${esc((it.text || {})[eLang] || '')}</textarea>${koRef(it.text)}
-  ${it.type === 'section' ? '' : `<label class="f">안내 (예: 1개 선택)${ref}</label><input type="text" style="width:100%" data-t="note" value="${esc((it.note || {})[eLang] || '')}">${koRef(it.note)}`}
-  ${['scale', 'single', 'multi'].includes(it.type) ? `<label class="f">보기 — 한 줄에 하나${eLang === 'ko' ? ' · 끝에 * = 기타(직접 작성), 앞에 ! = 단독 선택(없음)' : ' · 한국어와 같은 순서로'}${it.type === 'scale' ? ' · 척도는 위에서부터 5,4,3,2,1점' : ''}</label>
-    <textarea id="fOpts" style="min-height:150px">${esc(optsText)}</textarea>${eLang === 'ko' ? '' : `<p class="hint">${(it.options || []).map((o) => esc(o.t.ko)).join(' / ')}</p>`}` : ''}`;
-  bindLangTabs();
-  const upd = () => { markDirty(); };
-  $('#fId').onchange = (e) => { const v = e.target.value.trim(); if (!v) return; if (E.items.some((x, i) => i !== sel && x.id === v)) { toast('이미 있는 ID입니다.'); e.target.value = it.id; return; } E.items.forEach((x) => { if (x.cond && x.cond.q === it.id) x.cond.q = v; }); it.id = v; upd(); drawList(); };
-  $('#fType').onchange = (e) => { it.type = e.target.value; if (['scale', 'single', 'multi'].includes(it.type) && !it.options) it.options = [{ t: { ko: '보기 1' } }]; upd(); drawList(); drawForm(); };
-  $('#fShort').oninput = (e) => { it.short = e.target.value; upd(); };
-  $('#fMax').oninput = (e) => { it.max = Number(e.target.value) || 0; upd(); };
-  $('#fReq').onchange = (e) => { it.required = e.target.checked; upd(); };
-  $('#fSub').onchange = (e) => { it.sub = e.target.checked; upd(); drawList(); };
-  const cond = () => { const q = $('#fCq').value, v = $('#fCv').value.split(',').map((x) => Number(x.trim())).filter((x) => !isNaN(x) && x); if (q && v.length) it.cond = { q, in: v }; else delete it.cond; upd(); };
-  $('#fCq').onchange = cond; $('#fCv').onchange = cond;
-  $$('[data-t]', $('#form')).forEach((el) => el.oninput = () => { const k = el.dataset.t; it[k] = it[k] || {}; it[k][eLang] = el.value; upd(); });
-  const fo = $('#fOpts');
-  if (fo) fo.oninput = () => {
-    const lines = fo.value.split('\n');
-    if (eLang === 'ko') {
-      const clean = lines.filter((l, i) => l.trim() || i < lines.length - 1).filter((l) => l.trim());
-      it.options = clean.map((l, i) => { const old = (it.options || [])[i] || { t: {} }; const t = Object.assign({}, old.t, { ko: l.trim().replace(/^!/, '').replace(/\*$/, '').trim() }); const o = { t }; if (/\*$/.test(l.trim())) o.other = true; if (/^!/.test(l.trim())) o.none = true; return o; });
-    } else (it.options || []).forEach((o, i) => { o.t[eLang] = (lines[i] || '').trim(); });
-    upd();
-  };
-  $$('[data-a]', $('#form')).forEach((b) => b.onclick = () => {
-    const a = b.dataset.a, L = E.items;
-    if (a === 'up' && sel > 0) { [L[sel - 1], L[sel]] = [L[sel], L[sel - 1]]; sel--; }
-    if (a === 'down' && sel < L.length - 1) { [L[sel + 1], L[sel]] = [L[sel], L[sel + 1]]; sel++; }
-    if (a === 'dup') { const c = clone(it); let n = 2; while (L.some((x) => x.id === it.id + '_' + n)) n++; c.id = it.id + '_' + n; L.splice(sel + 1, 0, c); sel++; }
-    if (a === 'add') { let n = 1; while (L.some((x) => x.id === 'N' + n)) n++; L.splice(sel + 1, 0, { id: 'N' + n, type: 'single', title: { ko: '' }, text: { ko: '새 문항' }, note: { ko: '1개 선택' }, options: [{ t: { ko: '보기 1' } }, { t: { ko: '보기 2' } }], required: true }); sel++; }
-    if (a === 'del') { confirmBox(it.id + ' 삭제', '이 문항을 삭제합니다. 이미 받은 응답 열은 시트에 그대로 남습니다.', () => { L.splice(sel, 1); sel = Math.min(sel, L.length - 1); markDirty(); drawList(); drawForm(); }); return; }
-    markDirty(); drawList(); drawForm();
+  markDirty(); drawList();
+}
+function newId(base) {
+  const ids = new Set(E.items.map((x) => x.id));
+  if (base) { let n = 2; while (ids.has(base + '_' + n)) n++; return base + '_' + n; }
+  let max = 0; E.items.forEach((x) => { const m = /^Q(\d+)$/.exec(x.id); if (m) max = Math.max(max, Number(m[1])); });
+  let n = max + 1; while (ids.has('Q' + n)) n++; return 'Q' + n;
+}
+function pickType(pos) {
+  dialog('어떤 문항을 추가할까요?', `<div class="tpick">${['scale', 'single', 'multi', 'text', 'longtext', 'section'].map((t) => `<button class="tp" data-t="${t}"><span class="tpi">${TYPE_ICON[t]}</span><b>${TYPE_INFO[t].name}</b><small>${TYPE_INFO[t].desc}</small></button>`).join('')}</div>`);
+  document.querySelectorAll('.tp').forEach((b) => b.onclick = () => { $('#dlgX').click(); openEditor(null, { pos, type: b.dataset.t }); });
+}
+function blankItem(type) {
+  const it = { id: type === 'section' ? 'S' + (E.items.filter((x) => x.type === 'section').length + 1) : newId(), type, title: { ko: '' }, text: { ko: '' }, note: { ko: TYPE_INFO[type].note } };
+  while (E.items.some((x) => x.id === it.id)) it.id += '_2';
+  if (type === 'scale') it.options = SCALE_PRESETS['만족도'].map((t) => ({ t: { ko: t } }));
+  if (type === 'single' || type === 'multi') it.options = [{ t: { ko: '' } }, { t: { ko: '' } }, { t: { ko: '' } }];
+  if (type !== 'section') it.required = type !== 'longtext';
+  return it;
+}
+
+/* ----- 편집 창 ----- */
+let W = null, wIdx = null, wPos = null, wLang = 'ko';
+function openEditor(idx, opt = {}) {
+  wIdx = idx; wPos = opt.pos != null ? opt.pos : null; wLang = 'ko';
+  W = idx != null ? clone(E.items[idx]) : blankItem(opt.type);
+  ['title', 'text', 'note'].forEach((k) => { W[k] = W[k] || {}; });
+  let dr = $('#drawer'); if (!dr) { dr = document.createElement('div'); dr.id = 'drawer'; dr.className = 'drawer'; document.body.appendChild(dr); }
+  dr.hidden = false; document.body.style.overflow = 'hidden';
+  drawEditor();
+}
+function closeEditor() { const dr = $('#drawer'); if (dr) dr.hidden = true; document.body.style.overflow = ''; W = null; }
+function drawEditor() {
+  const dr = $('#drawer'), it = W, ko = wLang === 'ko', isNew = wIdx == null;
+  const choice = ['scale', 'single', 'multi'].includes(it.type), sec = it.type === 'section', contact = it.type === 'contact';
+  const ref = (o) => !ko && o && o.ko ? `<p class="koref">한국어: ${esc(o.ko)}</p>` : '';
+  const qs = E.items.filter((x) => x !== E.items[wIdx] && ['scale', 'single', 'multi'].includes(x.type));
+  const condQ = it.cond ? E.items.find((x) => x.id === it.cond.q) : null;
+  dr.innerHTML = `<div class="dpanel" role="dialog" aria-label="문항 편집">
+   <div class="dhead"><b>${isNew ? '새 ' : ''}${sec ? '파트 구분' : '문항'} ${isNew ? '추가' : '수정'}</b><span class="idb">${esc(it.id)}</span><span class="sp"></span>
+     <button class="btn" id="eCancel">취소</button><button class="btn pri" id="eOk">${isNew ? '추가하기' : '적용하기'}</button></div>
+   <div class="ltabs" id="elt">${LANGS.map((l) => { const miss = l.code === 'ko' ? 0 : itemMissing(it, l.code); return `<button type="button" data-l="${l.code}" aria-pressed="${wLang === l.code}">${esc(LN[l.code])}${l.code === 'ko' ? '' : `<span class="dot${miss ? '' : ' ok'}"></span>`}</button>`; }).join('')}
+     ${ko ? '' : '<span class="hint">회색 글씨의 한국어를 보고 같은 뜻으로 입력하세요. 비워 두면 한국어가 보여요.</span>'}</div>
+   <div class="dbody"><div class="dform">
+    ${ko && !sec && !contact ? `<div class="fg"><label class="fl2">문항 유형</label><div class="tchips">${['scale', 'single', 'multi', 'text', 'longtext'].map((t) => `<button type="button" class="tch" data-type="${t}" aria-pressed="${it.type === t}">${TYPE_ICON[t]}${TYPE_INFO[t].name}</button>`).join('')}</div></div>` : ''}
+    <div class="fg"><label class="fl2" for="fText">${sec ? '파트 제목 (예: I. 프로그램 만족도)' : '질문'}</label>${ref(sec ? it.title : it.text)}
+      ${sec ? `<input class="inp" id="fText" value="${esc(it.title[wLang] || '')}">` : `<textarea class="inp" id="fText" rows="3" placeholder="학생에게 보여 줄 질문을 입력하세요">${esc(it.text[wLang] || '')}</textarea>`}</div>
+    ${sec ? `<div class="fg"><label class="fl2" for="fSub">부제 (영문 등, 선택)</label>${ref(it.text)}<input class="inp" id="fSub" value="${esc(it.text[wLang] || '')}"></div>` : `
+    <div class="fg two"><div><label class="fl2" for="fTitle">소제목 <small>(선택 · 질문 앞에 [ ]로 표시)</small></label>${ref(it.title)}<input class="inp" id="fTitle" value="${esc(it.title[wLang] || '')}" placeholder="예: 정보 습득 경로"></div>
+      <div><label class="fl2" for="fNote">안내 문구 <small>(선택)</small></label>${ref(it.note)}<input class="inp" id="fNote" value="${esc(it.note[wLang] || '')}" placeholder="예: 1개 선택"></div></div>`}
+    ${choice ? optEditor(it, ko) : ''}
+    ${ko && !sec ? `<div class="fg opts2">
+      ${contact ? '' : `<label class="sw"><input type="checkbox" id="fReq" ${it.required ? 'checked' : ''}><span></span>반드시 답해야 하는 문항 (필수)</label>`}
+      ${it.type === 'multi' ? `<label class="selrow">최대 선택 개수 <select class="inp sm" id="fMax"><option value="0">제한 없음</option>${[1, 2, 3, 4, 5].map((n) => `<option value="${n}" ${it.max === n ? 'selected' : ''}>${n}개까지</option>`).join('')}</select></label>` : ''}
+    </div>
+    <details class="adv" ${it.cond ? 'open' : ''}><summary>고급 설정 <small>(조건부 표시, 문항 번호, 보고서 약칭)</small></summary>
+      <div class="fg"><label class="fl2">조건부 표시 <small>특정 답을 고른 사람에게만 이 문항을 보여 줘요</small></label>
+        <div class="condrow"><select class="inp" id="fCq"><option value="">항상 보여 주기</option>${qs.map((q) => `<option value="${esc(q.id)}" ${it.cond && it.cond.q === q.id ? 'selected' : ''}>${esc(q.id)} · ${esc(shortLabel(q))}</option>`).join('')}</select></div>
+        ${condQ ? `<div class="condopts">${condQ.options.map((o, k) => { const v = optValue(condQ, k); return `<label class="ck"><input type="checkbox" data-cv="${v}" ${it.cond.in.includes(v) ? 'checked' : ''}> ${esc(tr(o.t, 'ko'))}</label>`; }).join('')}<p class="hint">위 답 중 하나를 고른 사람에게만 보여요.</p></div>` : ''}</div>
+      <div class="fg two"><div><label class="fl2" for="fId">문항 번호 (시트 열 이름)</label><input class="inp" id="fId" value="${esc(it.id)}"></div>
+        <div><label class="fl2" for="fShort">보고서용 약칭</label><input class="inp" id="fShort" value="${esc(it.short || '')}" placeholder="예: 공동 교육과정 만족도"></div></div>
+      ${contact ? '' : `<label class="sw"><input type="checkbox" id="fSubq" ${it.sub ? 'checked' : ''}><span></span>하위 문항으로 표시 (목록에서 들여쓰기)</label>`}
+    </details>` : ''}
+    ${ko && sec ? `<div class="fg"><label class="fl2" for="fId">파트 번호</label><input class="inp sm" id="fId" value="${esc(it.id)}"></div>` : ''}
+   </div>
+   <aside class="dprev"><p class="pvh">학생 화면 미리보기 · ${esc(LN[wLang])}</p><div class="phone" id="pv"></div></aside></div></div>`;
+  bindEditor();
+  drawPreview();
+}
+function optEditor(it, ko) {
+  const scale = it.type === 'scale', multi = it.type === 'multi';
+  return `<div class="fg"><label class="fl2">보기 ${scale ? '<small>위에서부터 5점(가장 긍정) → 1점</small>' : '<small>한 칸에 하나씩</small>'}</label>
+    ${scale && ko ? `<div class="presets">자주 쓰는 척도: ${Object.keys(SCALE_PRESETS).map((k) => `<button type="button" class="pre" data-pre="${esc(k)}">${esc(k)}</button>`).join('')}</div>` : ''}
+    <div class="olist">${it.options.map((o, k) => `<div class="orow">
+      <span class="onum">${scale ? it.options.length - k : k + 1}</span>
+      <div class="oin">${!ko && o.t.ko ? `<p class="koref">${esc(o.t.ko)}</p>` : ''}<input class="inp" data-o="${k}" value="${esc(o.t[wLang] || '')}" placeholder="${ko ? '보기 내용' : esc(o.t.ko || '')}"></div>
+      ${ko && !scale ? `<label class="ck sm" title="이 보기를 고르면 직접 쓰는 칸이 나와요"><input type="checkbox" data-oth="${k}" ${o.other ? 'checked' : ''}> 직접 입력칸</label>
+        ${multi ? `<label class="ck sm" title="예: '없음' — 다른 보기와 같이 고를 수 없어요"><input type="checkbox" data-none="${k}" ${o.none ? 'checked' : ''}> 단독 선택</label>` : ''}
+        <button type="button" class="ab ic" data-omv="${k}" data-d="-1" aria-label="위로">▲</button><button type="button" class="ab ic" data-omv="${k}" data-d="1" aria-label="아래로">▼</button>
+        <button type="button" class="ab del ic" data-odel="${k}" aria-label="보기 삭제">✕</button>` : ''}
+    </div>`).join('')}</div>
+    ${ko && !scale ? `<div class="oadd"><button type="button" class="btn sm" id="oAdd">＋ 보기 추가</button><button type="button" class="btn sm" id="oAddOther">＋ '기타(직접 입력)' 추가</button></div>` : ''}</div>`;
+}
+function bindEditor() {
+  const it = W, d = $('#drawer');
+  d.querySelectorAll('#elt [data-l]').forEach((b) => b.onclick = () => { wLang = b.dataset.l; drawEditor(); });
+  $('#eCancel').onclick = closeEditor;
+  $('#eOk').onclick = applyEditor;
+  d.onclick = (e) => { if (e.target === d) closeEditor(); };
+  const sec = it.type === 'section';
+  const t = $('#fText'); t.oninput = () => { (sec ? it.title : it.text)[wLang] = t.value; drawPreview(); };
+  if ($('#fSub')) $('#fSub').oninput = (e) => { it.text[wLang] = e.target.value; };
+  if ($('#fTitle')) $('#fTitle').oninput = (e) => { it.title[wLang] = e.target.value; drawPreview(); };
+  if ($('#fNote')) $('#fNote').oninput = (e) => { it.note[wLang] = e.target.value; drawPreview(); };
+  d.querySelectorAll('.tch').forEach((b) => b.onclick = () => {
+    const nt = b.dataset.type; if (nt === it.type) return;
+    if (nt === 'scale') it.options = SCALE_PRESETS['만족도'].map((x) => ({ t: { ko: x } }));
+    else if (nt === 'single' || nt === 'multi') { if (!it.options || it.type === 'scale') it.options = [{ t: { ko: '' } }, { t: { ko: '' } }, { t: { ko: '' } }]; }
+    else delete it.options;
+    if (nt !== 'multi') delete it.max;
+    if (!it.note.ko || Object.values(TYPE_INFO).some((x) => x.note === it.note.ko)) it.note.ko = TYPE_INFO[nt].note;
+    it.type = nt; drawEditor();
+  });
+  d.querySelectorAll('[data-o]').forEach((inp) => inp.oninput = () => { it.options[Number(inp.dataset.o)].t[wLang] = inp.value; drawPreview(); });
+  d.querySelectorAll('[data-oth]').forEach((c) => c.onchange = () => { const o = it.options[Number(c.dataset.oth)]; if (c.checked) o.other = true; else delete o.other; drawPreview(); });
+  d.querySelectorAll('[data-none]').forEach((c) => c.onchange = () => { const o = it.options[Number(c.dataset.none)]; if (c.checked) o.none = true; else delete o.none; });
+  d.querySelectorAll('[data-omv]').forEach((b) => b.onclick = () => { const k = Number(b.dataset.omv), j = k + Number(b.dataset.d), O = it.options; if (j < 0 || j >= O.length) return; [O[k], O[j]] = [O[j], O[k]]; drawEditor(); });
+  d.querySelectorAll('[data-odel]').forEach((b) => b.onclick = () => { if (it.options.length <= 1) return toast('보기는 하나 이상 있어야 해요.'); it.options.splice(Number(b.dataset.odel), 1); drawEditor(); });
+  d.querySelectorAll('[data-pre]').forEach((b) => b.onclick = () => { it.options = SCALE_PRESETS[b.dataset.pre].map((x) => ({ t: { ko: x } })); drawEditor(); });
+  if ($('#oAdd')) $('#oAdd').onclick = () => { const oi = it.options.findIndex((o) => o.other); const n = { t: { ko: '' } }; if (oi > -1) it.options.splice(oi, 0, n); else it.options.push(n); drawEditor(); setTimeout(() => { const ins = d.querySelectorAll('[data-o]'); ins[oi > -1 ? oi : ins.length - 1].focus(); }, 30); };
+  if ($('#oAddOther')) $('#oAddOther').onclick = () => { if (it.options.some((o) => o.other)) return toast("'기타' 보기가 이미 있어요."); it.options.push({ t: { ko: '기타', vi: 'Khác', zh: '其他', km: 'ផ្សេងៗ' }, other: true }); drawEditor(); };
+  if ($('#fReq')) $('#fReq').onchange = (e) => { it.required = e.target.checked; drawPreview(); };
+  if ($('#fMax')) $('#fMax').onchange = (e) => { it.max = Number(e.target.value) || 0; if (!it.max) delete it.max; drawPreview(); };
+  if ($('#fSubq')) $('#fSubq').onchange = (e) => { if (e.target.checked) it.sub = true; else delete it.sub; };
+  if ($('#fShort')) $('#fShort').oninput = (e) => { it.short = e.target.value; };
+  if ($('#fId')) $('#fId').oninput = (e) => { d.querySelector('.idb').textContent = e.target.value; };
+  if ($('#fCq')) $('#fCq').onchange = (e) => { const q = e.target.value; if (q) it.cond = { q, in: [] }; else delete it.cond; drawEditor(); };
+  d.querySelectorAll('[data-cv]').forEach((c) => c.onchange = () => { it.cond.in = [...d.querySelectorAll('[data-cv]:checked')].map((x) => Number(x.dataset.cv)); });
+}
+function drawPreview() {
+  const it = W, pv = $('#pv'); if (!pv) return;
+  const T2 = (o) => tr(o, wLang);
+  if (it.type === 'section') { pv.innerHTML = `<div class="pvsec"><span>파트</span><h3>${esc(T2(it.title).replace(/^[IVX]+\.\s*/, '') || '파트 제목')}</h3><p>${esc(T2(it.text))}</p></div>`; return; }
+  const faces = ['#2f54eb', '#5f86ff', '#a3aac0', '#ff9a76', '#ff5d5d'];
+  const opts = (it.options || []).map((o, k) => {
+    const lead = it.type === 'scale' ? `<i class="pf" style="background:${faces[k] || '#a3aac0'}"></i>` : `<i class="pk${it.type === 'multi' ? ' m' : ''}">${it.type === 'multi' ? '' : 'ABCDEFGHIJ'[k] || ''}</i>`;
+    return `<div class="po">${lead}<span>${esc(T2(o.t) || '(비어 있음)')}${o.other ? ' <em>✎ 직접 입력</em>' : ''}</span></div>`;
+  }).join('');
+  const field = it.type === 'text' ? '<div class="pin">한 줄 입력칸</div>' : it.type === 'longtext' ? '<div class="pin tall">자유롭게 작성해 주세요</div>' : '';
+  pv.innerHTML = `<div class="ptags"><span class="pt1">${esc($('#fId') ? $('#fId').value : it.id)}</span>${T2(it.title) ? `<span class="pt2">${esc(T2(it.title))}</span>` : ''}${T2(it.note) ? `<span class="pt3">${esc(T2(it.note))}</span>` : ''}</div>
+    <h4>${esc(T2(it.text) || '질문을 입력하세요')}${it.required ? ' <b>*</b>' : ''}</h4>${opts}${field}
+    ${it.type === 'multi' && it.max ? `<p class="pmax">최대 ${it.max}개까지 선택</p>` : ''}`;
+}
+function applyEditor() {
+  const it = W, ko = (o) => (o && (o.ko || '').trim());
+  const sec = it.type === 'section';
+  if (sec ? !ko(it.title) : !ko(it.text)) { wLang = 'ko'; drawEditor(); return toast(sec ? '파트 제목을 입력하세요.' : '질문을 입력하세요.'); }
+  if (it.options) {
+    it.options = it.options.filter((o) => ko(o.t) || o.other);
+    if (!it.options.length) { wLang = 'ko'; drawEditor(); return toast('보기를 하나 이상 입력하세요.'); }
+  }
+  const idEl = $('#fId'), nid = idEl ? idEl.value.trim() : it.id;
+  if (!nid) return toast('문항 번호를 입력하세요.');
+  if (E.items.some((x, k) => x.id === nid && k !== wIdx)) return toast(`문항 번호 ${nid}는 이미 있어요.`);
+  if (it.cond && !it.cond.in.length) delete it.cond;
+  if (nid !== it.id && wIdx != null) E.items.forEach((x) => { if (x.cond && x.cond.q === E.items[wIdx].id) x.cond.q = nid; });
+  it.id = nid;
+  ['title', 'note'].forEach((k) => { if (it[k] && !Object.values(it[k]).some((v) => String(v).trim())) it[k] = { ko: '' }; });
+  if (wIdx != null) E.items[wIdx] = it; else E.items.splice(wPos, 0, it);
+  closeEditor(); markDirty(); drawList();
+  toast(wIdx != null ? '적용했어요. 저장하기를 눌러야 설문에 반영돼요.' : '추가했어요. 저장하기를 눌러야 설문에 반영돼요.');
+}
+
+/* ----- 표지·안내문·로고 ----- */
+let mLang = 'ko';
+function openMeta() {
+  let dr = $('#drawer'); if (!dr) { dr = document.createElement('div'); dr.id = 'drawer'; dr.className = 'drawer'; document.body.appendChild(dr); }
+  dr.hidden = false; document.body.style.overflow = 'hidden'; drawMeta();
+}
+function drawMeta() {
+  const m = E.meta, ko = mLang === 'ko', dr = $('#drawer');
+  const F_ = [['kicker', '머리말 (예: 교육부 RISE 사업)'], ['title', '설문 제목'], ['org', '조사기관 표시'], ['notice', '통계법 안내'], ['intro', '조사 안내문 — 카드뉴스로 보여요'], ['date', '날짜·기관'], ['thanks', '제출 후 감사 문구']];
+  const logo = (k, name) => { const v = (m[k] || {}).ko; return `<div class="logo-up"><div class="lprev">${v ? `<img src="${esc(v)}" alt="${esc(name)} 로고">` : '<span>로고 없음</span>'}</div><div><b>${esc(name)}</b><p class="hint">PNG(배경 투명) 권장 · 자동으로 줄여 저장해요</p>
+    <label class="btn sm">이미지 선택<input type="file" accept="image/*" data-logo="${k}" hidden></label>${v ? ` <button type="button" class="btn sm" data-logodel="${k}">삭제</button>` : ''}</div></div>`; };
+  dr.innerHTML = `<div class="dpanel narrow" role="dialog" aria-label="표지와 안내문"><div class="dhead"><b>표지·안내문·로고</b><span class="sp"></span><button class="btn pri" id="mDone">완료</button></div>
+   <div class="ltabs">${LANGS.map((l) => `<button type="button" data-l="${l.code}" aria-pressed="${mLang === l.code}">${esc(LN[l.code])}</button>`).join('')}</div>
+   <div class="dbody one"><div class="dform">
+    ${ko ? `<div class="fg"><label class="fl2">기관 로고 <small>설문 첫 화면·안내 카드·완료 화면·관리자·보고서에 표시돼요</small></label><div class="logos2">${logo('logo_kw', '경운대학교')}${logo('logo_kiet', '한국교육공학연구소')}</div></div>` : ''}
+    ${F_.map(([k, lab]) => `<div class="fg"><label class="fl2">${esc(lab)}</label>${!ko && (m[k] || {}).ko ? `<p class="koref">${esc(m[k].ko).slice(0, 400)}${(m[k].ko || '').length > 400 ? '…' : ''}</p>` : ''}
+      ${k === 'intro' || k === 'notice' ? `<textarea class="inp" data-m="${k}" rows="${k === 'intro' ? 14 : 3}">${esc((m[k] || {})[mLang] || '')}</textarea>` : `<input class="inp" data-m="${k}" value="${esc((m[k] || {})[mLang] || '')}">`}
+      ${k === 'intro' && ko ? '<p class="hint">## 큰 제목(카드 묶음) · ### 작은 제목(카드 한 장) · - 목록 · ※ 주석 · → 가 있는 줄은 단계 그림으로 바뀌어요</p>' : ''}</div>`).join('')}
+   </div></div></div>`;
+  dr.querySelectorAll('.ltabs [data-l]').forEach((b) => b.onclick = () => { mLang = b.dataset.l; drawMeta(); });
+  $('#mDone').onclick = () => { closeEditor(); itemsView(); };
+  dr.onclick = (e) => { if (e.target === dr) { closeEditor(); itemsView(); } };
+  dr.querySelectorAll('[data-m]').forEach((el) => el.oninput = () => { const k = el.dataset.m; E.meta[k] = E.meta[k] || {}; E.meta[k][mLang] = el.value; markDirty(); });
+  dr.querySelectorAll('[data-logo]').forEach((inp) => inp.onchange = async () => {
+    const f = inp.files[0]; if (!f) return;
+    try { const url = await shrinkImage(f); E.meta[inp.dataset.logo] = { ko: url }; markDirty(); drawMeta(); renderLogos(); toast('로고를 넣었어요. 저장하기를 눌러야 반영돼요.'); }
+    catch (e) { toast('이미지를 읽지 못했어요. PNG나 JPG로 다시 시도해 주세요.'); }
+  });
+  dr.querySelectorAll('[data-logodel]').forEach((b) => b.onclick = () => { delete E.meta[b.dataset.logodel]; markDirty(); drawMeta(); renderLogos(); });
+}
+/* 로고는 시트 셀(최대 5만 자)에 들어가도록 줄여서 data URL로 저장 */
+function shrinkImage(file) {
+  return new Promise((res, rej) => {
+    const rd = new FileReader();
+    rd.onerror = rej;
+    rd.onload = () => {
+      if (/svg/.test(file.type) && rd.result.length < 40000) return res(rd.result);
+      const img = new Image(); img.onerror = rej;
+      img.onload = () => {
+        let h = 160;
+        for (let tries = 0; tries < 6; tries++) {
+          const w = Math.round(img.width * h / img.height), c = document.createElement('canvas');
+          c.width = Math.min(w, 900); c.height = Math.round(c.width * img.height / img.width);
+          c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+          let url = c.toDataURL('image/png');
+          if (url.length > 40000) url = c.toDataURL('image/webp', .9);
+          if (url.length <= 40000) return res(url);
+          h = Math.round(h * .75);
+        }
+        rej(new Error('too big'));
+      };
+      img.src = rd.result;
+    };
+    rd.readAsDataURL(file);
   });
 }
 async function saveSurvey() {
   const b = $('#save'); b.disabled = true; b.textContent = '저장 중…';
-  try { E.version = nowStr(); await Api.request('saveSurvey', { pw: PW, survey: E }); D.survey = clone(E); D.fromDefault = false; dirty = false; toast('저장했습니다. 설문 페이지에 바로 반영됩니다.'); itemsView(); }
-  catch (e) { toast('저장 실패: ' + e.message); b.disabled = false; b.textContent = '변경사항 저장'; }
+  try { E.version = nowStr(); await Api.request('saveSurvey', { pw: PW, survey: E }); D.survey = clone(E); D.fromDefault = false; dirty = false; toast('저장했어요. 설문 페이지에 바로 반영됩니다.'); itemsView(); renderLogos(); }
+  catch (e) { toast('저장 실패: ' + e.message); b.disabled = false; b.textContent = '저장하기'; }
 }
 
+function logoImgs(meta) {
+  const m = meta || {};
+  return [['logo_kw', '경운대학교'], ['logo_kiet', '한국교육공학연구소']].filter(([k]) => m[k] && m[k].ko).map(([k, n]) => `<img src="${esc(m[k].ko)}" alt="${n}">`).join('');
+}
+function renderLogos() { const h = $('#hlogos'); if (h) h.innerHTML = logoImgs((E || D.survey || {}).meta); }
 /* ---------------- 응답 결과 ---------------- */
 let rf = { d1: '', d0: '', q: '' };
 function filtered(f = rf) {
@@ -1108,7 +1454,7 @@ function buildReport() {
     return `<div class="qbox">${head}${s.texts.slice(0, 30).map((t) => `<p class="txt">${esc(t)}</p>`).join('')}${s.texts.length > 30 ? `<p class="meta">외 ${s.texts.length - 30}건 — 응답 결과 탭 참조</p>` : ''}</div>`;
   }).join('');
   const demoTbl = ['D1', 'D0', 'D2', 'D4'].map(item).filter(Boolean).map((it) => { const s = stat(it, rows); const cnt = it.type === 'scale' ? s.dist : s.counts; return it.options.map((o, i) => `<tr>${i === 0 ? `<td rowspan="${it.options.length}"><b>${esc(shortLabel(it))}</b></td>` : ''}<td>${esc(tr(o.t, 'ko'))}</td><td class="n">${cnt[i]}</td><td class="n">${pct(cnt[i], s.n)}%</td></tr>`).join(''); }).join('');
-  return `<p class="meta">교육부 RISE 사업 · MEGAversity 연합대학</p><h1>MEGAversity 연합대학 참여 유학생 만족도 조사 결과 (자동 집계)</h1>
+  return `${logoImgs(D.survey.meta) ? `<div class="rlogos">${logoImgs(D.survey.meta)}</div>` : ''}<p class="meta">교육부 RISE 사업 · MEGAversity 연합대학</p><h1>MEGAversity 연합대학 참여 유학생 만족도 조사 결과 (자동 집계)</h1>
   <p class="meta">응답 ${n}명${fl ? ' · 대상: ' + esc(fl) : ''} · 조사 기간 ${esc(ts[0].slice(0, 10))} ~ ${esc(ts[ts.length - 1].slice(0, 10))} · 집계 ${esc(nowStr().slice(0, 16))}</p>
   <h2>핵심 결과 요약</h2><ul class="sum">
    ${!isNaN(coreAvg) ? `<li>교과·비교과 전반 만족도(Q2·Q3·Q4) 평균은 <b>${f2(coreAvg)}점</b>(5점 만점)입니다.</li>` : ''}
