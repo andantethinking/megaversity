@@ -115,7 +115,21 @@ p,li,.tx,.qt,.hint{text-wrap:pretty}
 .pg .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--blue),#5f86ff);border-radius:99px;transition:width .35s ease}
 .pg .meta{display:flex;justify-content:space-between;font-size:12.5px;color:var(--mute);font-weight:600}
 .lbtn{flex:none;height:40px;padding:0 12px;border-radius:12px;border:0;background:var(--card);box-shadow:var(--sh);font-weight:800;font-size:13px;display:flex;align-items:center;gap:6px}
-.lbtn svg{width:16px;height:16px}
+.lbtn{padding:0 8px 0 6px;gap:5px}
+.lbtn .lflag{width:26px;height:26px;border-radius:50%;overflow:hidden;flex:none;box-shadow:0 0 0 1px rgba(20,26,51,.12)}
+.lbtn .lflag svg{width:100%;height:100%;display:block}
+.lbtn .car{width:14px;height:14px;opacity:.6;transition:transform .15s}
+.lbtn[aria-expanded=true] .car{transform:rotate(180deg)}
+.sheet.ddwrap{background:transparent;animation:none;display:block}
+.dd{position:fixed;z-index:41;background:var(--card);border-radius:18px;box-shadow:0 20px 44px -16px rgba(20,26,51,.5),0 0 0 1px rgba(20,26,51,.06);padding:6px;min-width:208px;transform-origin:top right;animation:ddin .16s ease}
+@keyframes ddin{from{opacity:0;transform:translateY(-6px) scale(.96)}to{opacity:1;transform:none}}
+.ddi{display:flex;align-items:center;gap:12px;width:100%;border:0;background:none;padding:8px 10px;border-radius:12px;font-weight:700;font-size:15px;color:var(--ink);text-align:left}
+.ddi:hover{background:var(--bg)}
+.ddi .flag{width:32px;height:32px;border-radius:50%;overflow:hidden;flex:none;box-shadow:0 0 0 1px rgba(20,26,51,.12)}
+.ddi .flag svg{width:100%;height:100%;display:block}
+.ddi[aria-checked=true]{background:var(--sky);color:var(--blue)}
+.ddi .ck{margin-left:auto;width:18px;height:18px;display:grid;place-items:center}.ddi .ck svg{width:18px;height:18px}
+.ddi:disabled{opacity:.35}
 
 /* ---------- 문항 ---------- */
 .view{animation:in .32s ease both}
@@ -188,8 +202,8 @@ textarea.field{min-height:150px;resize:vertical;line-height:1.55}
 .orgs figcaption{font-size:11.5px;color:var(--mute);font-weight:600}
 .cn .orgs{box-shadow:none;background:rgba(255,255,255,.75);margin:auto 0 0}
 .hlogos{position:absolute;right:0;top:0;display:flex;gap:6px;background:#fff;border-radius:12px;padding:6px 10px;box-shadow:0 4px 14px -6px rgba(0,0,0,.3)}
-.hlogos img{height:22px;max-width:90px;object-fit:contain}
-@media(max-width:520px){.hlogos{display:none}}
+.hlogos img{height:22px;max-width:none;object-fit:contain}
+@media(max-width:520px){.hlogos{position:static;display:inline-flex;margin:0 0 6px;padding:6px 12px}.hlogos img{height:24px;max-width:none}}
 .dock{position:fixed;left:0;right:0;bottom:0;z-index:9;background:linear-gradient(to top,var(--bg) 70%,rgba(245,246,251,0));padding:18px 0 calc(14px + env(safe-area-inset-bottom))}
 .dock .wrap{display:flex;gap:10px}
 .dock .cta{margin:0}
@@ -250,7 +264,7 @@ textarea.field{min-height:150px;resize:vertical;line-height:1.55}
 const CONFIG = {
   API_URL: 'https://script.google.com/macros/s/AKfycbznViu76RBQkllGVUk-A_4ajY1rnLgGShpj_VE-hxbH2F1upghjizTDMC4lQtwjh41Bkg/exec',              // 예: 'https://script.google.com/macros/s/AKfy.../exec'
   DEMO_PASSWORD: 'demo',    // 데모 모드 관리자 비밀번호 (실서비스는 Apps Script 쪽 ADMIN_PW 사용)
-  VERSION: '0.8.0'
+  VERSION: '0.9.0'
 };
 
 const LANGS = [
@@ -260,6 +274,25 @@ const LANGS = [
   { code: 'vi', name: 'Tiếng Việt', short: 'VI', ko: '베트남어' },
   { code: 'km', name: 'ភាសាខ្មែរ',  short: 'KM', ko: '크메르어(캄보디아)' }
 ];
+
+/* 기관 로고 — 관리자 화면에서 올린 로고가 있으면 그것을, 없으면 기본 경운대학교 로고를 씀 */
+const LOGO_KEYS = [['logo_kw', '경운대학교']];
+const DEFAULT_LOGO = { logo_kw: 'data:image/png;base64,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' };
+function logoSrc(meta, k) { const v = meta && meta[k] && meta[k].ko; return v || DEFAULT_LOGO[k] || ''; }
+
+/* 언어 선택용 원형 국기 (단순화한 SVG) */
+const FLAG = (() => {
+  const star = (cx, cy, r, rot = 0, fill = '#FFDE00') => { const p = []; for (let i = 0; i < 10; i++) { const a = (rot - 90 + i * 36) * Math.PI / 180, rr = i % 2 ? r * 0.382 : r; p.push((cx + rr * Math.cos(a)).toFixed(2) + ',' + (cy + rr * Math.sin(a)).toFixed(2)); } return `<polygon points="${p.join(' ')}" fill="${fill}"/>`; };
+  const bars = (ang, pat) => `<g transform="rotate(${ang} 20 20)">${pat.map((b, k) => { const y = 5.2 + k * 2.1; return b ? `<rect x="15.5" y="${y}" width="9" height="1.4" fill="#000"/>` : `<rect x="15.5" y="${y}" width="4" height="1.4" fill="#000"/><rect x="20.5" y="${y}" width="4" height="1.4" fill="#000"/>`; }).join('')}</g>`;
+  const svg = (vb, body, par = 'xMidYMid slice') => `<svg viewBox="${vb}" preserveAspectRatio="${par}" aria-hidden="true">${body}</svg>`;
+  return {
+    ko: svg('0 0 40 40', `<rect width="40" height="40" fill="#fff"/><g transform="rotate(33.7 20 20)"><circle cx="20" cy="20" r="8" fill="#0047A0"/><path d="M12 20a8 8 0 0 1 16 0a4 4 0 0 1-8 0a4 4 0 0 0-8 0z" fill="#CD2E3A"/></g>${bars(-56.3, [1, 1, 1])}${bars(56.3, [1, 0, 1])}${bars(123.7, [0, 0, 0])}${bars(-123.7, [0, 1, 0])}`),
+    en: (() => { const H = 20 / 13, cw = 15.2, ch = H * 7; let b = '<rect width="38" height="20" fill="#fff"/>'; for (let k = 0; k < 13; k += 2) b += `<rect y="${(k * H).toFixed(3)}" width="38" height="${H.toFixed(3)}" fill="#B22234"/>`; b += `<rect width="${cw}" height="${ch.toFixed(3)}" fill="#3C3B6E"/>`; for (let r = 0; r < 9; r++) for (let c = 0; c < (r % 2 ? 5 : 6); c++) b += star((r % 2 ? 2 : 1) * cw / 12 + c * cw / 6, (r + 1) * ch / 10, 0.48, 0, '#fff'); return svg('0 0 38 20', b, 'xMinYMid slice'); })(),
+    zh: svg('0 0 30 20', `<rect width="30" height="20" fill="#EE1C25"/>${star(5, 5, 3)}${star(10, 2, 1, 23)}${star(12, 4, 1, 46)}${star(12, 7, 1, 70)}${star(10, 9, 1, 21)}`, 'xMinYMid slice'),
+    vi: svg('0 0 30 20', `<rect width="30" height="20" fill="#DA251D"/>${star(15, 10, 6)}`),
+    km: svg('0 0 30 20', `<rect width="30" height="20" fill="#032EA1"/><rect y="5" width="30" height="10" fill="#E00025"/><g fill="#fff"><rect x="9" y="12.6" width="12" height="1.1"/><rect x="10" y="11.4" width="10" height="1.3"/><path d="M10.4 11.4l.6-2.6h.9l.6 2.6zM17.5 11.4l.6-2.6h.9l.6 2.6zM12.8 11.4l.6-2.2h.8l.6 2.2zM15.4 11.4l.6-2.2h.8l.6 2.2zM13.9 11.4l.7-4.6h.8l.7 4.6z"/></g>`)
+  };
+})();
 
 /* 화면 공통 문구 (문항 외). 번역 단계에서 vi/km/zh 채움 — 비어 있으면 en → ko 순으로 대체 */
 const UI = {
@@ -1169,25 +1202,12 @@ function welcomeView() {
 }
 function logoList() {
   const m = S.survey.meta || {};
-  return [['logo_kw', 'org1'], ['logo_kiet', 'org2']].filter(([k]) => m[k] && m[k].ko).map(([k, c]) => ({ src: m[k].ko, cap: U(c) }));
+  return [['logo_kw', 'org1']].map(([k, c]) => ({ src: logoSrc(m, k), cap: U(c) })).filter((x) => x.src);
 }
 function orgsHtml(extra = '') {
   const l = logoList(); if (!l.length) return '';
   return `<div class="orgs ${extra}">${l.map((x) => `<figure><img src="${esc(x.src)}" alt="${esc(x.cap)}"><figcaption>${fmt(x.cap)}</figcaption></figure>`).join('')}</div>`;
 }
-/* 언어 선택용 원형 국기 (단순화한 SVG) */
-const FLAG = (() => {
-  const star = (cx, cy, r, rot = 0, fill = '#FFDE00') => { const p = []; for (let i = 0; i < 10; i++) { const a = (rot - 90 + i * 36) * Math.PI / 180, rr = i % 2 ? r * 0.382 : r; p.push((cx + rr * Math.cos(a)).toFixed(2) + ',' + (cy + rr * Math.sin(a)).toFixed(2)); } return `<polygon points="${p.join(' ')}" fill="${fill}"/>`; };
-  const bars = (ang, pat) => `<g transform="rotate(${ang} 20 20)">${pat.map((b, k) => { const y = 5.2 + k * 2.1; return b ? `<rect x="15.5" y="${y}" width="9" height="1.4" fill="#000"/>` : `<rect x="15.5" y="${y}" width="4" height="1.4" fill="#000"/><rect x="20.5" y="${y}" width="4" height="1.4" fill="#000"/>`; }).join('')}</g>`;
-  const svg = (vb, body, par = 'xMidYMid slice') => `<svg viewBox="${vb}" preserveAspectRatio="${par}" aria-hidden="true">${body}</svg>`;
-  return {
-    ko: svg('0 0 40 40', `<rect width="40" height="40" fill="#fff"/><g transform="rotate(33.7 20 20)"><circle cx="20" cy="20" r="8" fill="#0047A0"/><path d="M12 20a8 8 0 0 1 16 0a4 4 0 0 1-8 0a4 4 0 0 0-8 0z" fill="#CD2E3A"/></g>${bars(-56.3, [1, 1, 1])}${bars(56.3, [1, 0, 1])}${bars(123.7, [0, 0, 0])}${bars(-123.7, [0, 1, 0])}`),
-    en: (() => { const H = 20 / 13, cw = 15.2, ch = H * 7; let b = '<rect width="38" height="20" fill="#fff"/>'; for (let k = 0; k < 13; k += 2) b += `<rect y="${(k * H).toFixed(3)}" width="38" height="${H.toFixed(3)}" fill="#B22234"/>`; b += `<rect width="${cw}" height="${ch.toFixed(3)}" fill="#3C3B6E"/>`; for (let r = 0; r < 9; r++) for (let c = 0; c < (r % 2 ? 5 : 6); c++) b += star((r % 2 ? 2 : 1) * cw / 12 + c * cw / 6, (r + 1) * ch / 10, 0.48, 0, '#fff'); return svg('0 0 38 20', b, 'xMinYMid slice'); })(),
-    zh: svg('0 0 30 20', `<rect width="30" height="20" fill="#EE1C25"/>${star(5, 5, 3)}${star(10, 2, 1, 23)}${star(12, 4, 1, 46)}${star(12, 7, 1, 70)}${star(10, 9, 1, 21)}`, 'xMinYMid slice'),
-    vi: svg('0 0 30 20', `<rect width="30" height="20" fill="#DA251D"/>${star(15, 10, 6)}`),
-    km: svg('0 0 30 20', `<rect width="30" height="20" fill="#032EA1"/><rect y="5" width="30" height="10" fill="#E00025"/><g fill="#fff"><rect x="9" y="12.6" width="12" height="1.1"/><rect x="10" y="11.4" width="10" height="1.3"/><path d="M10.4 11.4l.6-2.6h.9l.6 2.6zM17.5 11.4l.6-2.6h.9l.6 2.6zM12.8 11.4l.6-2.2h.8l.6 2.2zM15.4 11.4l.6-2.2h.8l.6 2.2zM13.9 11.4l.7-4.6h.8l.7 4.6z"/></g>`)
-  };
-})();
 const ICON2 = {
   up: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>',
   down: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>'
@@ -1260,7 +1280,7 @@ function introView() {
     <button class="ib" id="back" aria-label="${esc(L('prev'))}">${ICON.back}</button>
     <div class="pg"><div class="bar"><i style="width:${Math.round((S.card + 1) / n * 100)}%"></i></div>
       <div class="meta"><span>${fmt(U('intro'))}</span><span>${S.card + 1} / ${n}</span></div></div>
-    <button class="lbtn" id="lang" aria-label="${esc(U('lang'))}">${ICON.globe}${esc((LANGS.find((l) => l.code === S.lang) || {}).short || 'KO')}</button></div></div>
+    <button class="lbtn" id="lang" aria-haspopup="menu" aria-expanded="false" aria-label="${esc(U('lang'))}"><span class="lflag">${FLAG[S.lang] || ''}</span>${esc((LANGS.find((l) => l.code === S.lang) || {}).short || 'KO')}<svg class="car" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button></div></div>
   <main class="wrap"><section class="cardview view ${S.dir < 0 ? 'back' : ''}">${cardHtml(cards[S.card], S.card, n)}</section></main>`
     + navHtml({ pill: last ? L('start') : '', hint: !last && (!S.swiped || S.card < 2), hintKey: 'upCard' });
   $('#back').onclick = introPrev; $('#pvb').onclick = introPrev; $('#nx').onclick = introNext;
@@ -1284,7 +1304,7 @@ function topBar(st, i) {
     <button class="ib" id="back" aria-label="${esc(L('prev'))}">${ICON.back}</button>
     <div class="pg"><div class="bar"><i style="width:${Math.round(pos / qs.length * 100)}%"></i></div>
       <div class="meta"><span>${esc(L('step', { a: pos, b: qs.length }))}</span><span>${esc(U('left', { n: left }))}</span></div></div>
-    <button class="lbtn" id="lang" aria-label="${esc(U('lang'))}">${ICON.globe}${esc((LANGS.find((l) => l.code === S.lang) || {}).short || 'KO')}</button>
+    <button class="lbtn" id="lang" aria-haspopup="menu" aria-expanded="false" aria-label="${esc(U('lang'))}"><span class="lflag">${FLAG[S.lang] || ''}</span>${esc((LANGS.find((l) => l.code === S.lang) || {}).short || 'KO')}<svg class="car" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
   </div></div>`;
 }
 function stepView() {
@@ -1451,11 +1471,17 @@ function doneView() {
   }
 }
 function langSheet() {
-  const act = langs();
-  const el = document.createElement('div'); el.className = 'sheet';
-  el.innerHTML = `<div class="in" role="dialog" aria-label="${esc(U('lang'))}"><h3>${esc(U('lang'))} · Language</h3><div class="lgrid">${LANGS.map((l) => `<button class="lg" data-lang="${l.code}" aria-pressed="${S.lang === l.code}" aria-label="${esc(l.name)} (${esc(l.ko)})" ${act.includes(l.code) ? '' : 'disabled'}><span class="flag">${FLAG[l.code] || ''}</span><b>${esc(l.name)}</b></button>`).join('')}</div></div>`;
-  el.onclick = (e) => { const b = e.target.closest('.lg'); if (b && !b.disabled) { S.lang = b.dataset.lang; saveDraft(); el.remove(); S.dir = 0; render(); } else if (e.target === el) el.remove(); };
-  document.body.appendChild(el);
+  /* 언어 버튼 바로 아래로 펼쳐지는 국기 드롭다운 */
+  const act = langs(), btn = $('#lang'); if (!btn) return;
+  const r = btn.getBoundingClientRect();
+  const el = document.createElement('div'); el.className = 'sheet ddwrap';
+  el.innerHTML = `<div class="dd" role="menu" aria-label="${esc(U('lang'))}" style="top:${Math.round(r.bottom + 8)}px;right:${Math.max(8, Math.round(innerWidth - r.right))}px">${LANGS.map((l) => `<button class="ddi" role="menuitemradio" aria-checked="${S.lang === l.code}" data-lang="${l.code}" ${act.includes(l.code) ? '' : 'disabled'}><span class="flag">${FLAG[l.code] || ''}</span><b>${esc(l.name)}</b>${S.lang === l.code ? '<i class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"/></svg></i>' : ''}</button>`).join('')}</div>`;
+  const close = () => { el.remove(); btn.setAttribute('aria-expanded', 'false'); document.removeEventListener('keydown', esc_); };
+  const esc_ = (e) => { if (e.key === 'Escape') close(); };
+  el.onclick = (e) => { const b = e.target.closest('.ddi'); if (b && !b.disabled) { const nl = b.dataset.lang; close(); if (nl !== S.lang) { S.lang = nl; saveDraft(); S.dir = 0; render(); } } else if (!e.target.closest('.dd')) close(); };
+  document.addEventListener('keydown', esc_);
+  document.body.appendChild(el); btn.setAttribute('aria-expanded', 'true');
+  const first = el.querySelector('.ddi[aria-checked=true]') || el.querySelector('.ddi'); if (first) first.focus({ preventScroll: true });
 }
 /* ---------- 쇼츠처럼 세로로 밀어 넘기기 ---------- */
 (() => {
