@@ -12,11 +12,12 @@
    PICTURE 현황 대시보드의 응답 수·분포 막대, 문항 편집기, 자동 보고서
    COLOUR 옥스퍼드 블루 띠·흰 패널, 결과 강조는 마젠타, 척도는 블루↔마젠타 발산형
    TYPE   Pretendard / Noto Sans KR, 숫자 tabular */
-:root{color-scheme:light dark;
- --bg:light-dark(#eef0f5,#070f26);--paper:light-dark(#fff,#0f1a3a);--ink:light-dark(#0e1530,#e8ecf7);--mute:light-dark(#5a6380,#9aa4c4);
- --line:light-dark(#dde1ec,#24305a);--band:#0b1f4b;--acc:#e0115f;--soft:light-dark(#f5f6fa,#16224a);--track:light-dark(#e9ecf3,#1c2850);
- --s5:#0b1f4b;--s4:#5872b0;--s3:light-dark(#c3c8d6,#5a6380);--s2:#ee7aa3;--s1:#e0115f;--blue:light-dark(#2c4a96,#8fa8ec)}
-:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark;--s5:#8fa8ec}
+:root{color-scheme:light;
+ --bg:#f5f6fb;--paper:#fff;--ink:#141a33;--mute:#5d6583;--line:#e2e6f3;--band:#2f54eb;--acc:#2f54eb;--soft:#eef1ff;--track:#e9ecf6;
+ --sun:#ffcc33;--mint:#1fbf9f;--coral:#ff6b6b;--blue2:#1d3bc4;
+ --s5:#2f54eb;--s4:#5f86ff;--s3:#a3aac0;--s2:#ff9a76;--s1:#ff5d5d;--blue:#2f54eb;
+ --r:18px;--sh:0 1px 2px rgba(20,26,51,.06),0 8px 24px -12px rgba(20,26,51,.18)}
+
 *{box-sizing:border-box;min-width:0}
 body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 Pretendard,"Noto Sans KR","Noto Sans Khmer","Noto Sans SC",system-ui,sans-serif;word-break:keep-all;overflow-wrap:break-word;overflow-x:clip}
 button,input,select,textarea{font:inherit;color:inherit}
@@ -220,16 +221,87 @@ details.adv[open]{padding-bottom:14px}details.adv .fg{border:0;padding:8px 0;bac
  table{font-size:13px}.stack thead{display:none}.stack tr{display:grid;padding-block:10px}.stack td{display:flow-root;border:0;padding:3px 0;padding-inline-start:7em;text-align:start}.stack td::before{content:attr(data-l);float:inline-start;width:6.5em;margin-inline-start:-7em;color:var(--mute)}.stack td:empty{display:none}}
 @media print{body{background:#fff}.band,nav.tabs,.noprint{display:none!important}main{padding:0;max-width:none}.rep{border:0;padding:0}
  .rep h2{break-after:avoid}@page{size:A4;margin:16mm 14mm}}
+
+/* ===== 설문 페이지와 통일한 디자인 (블루·옐로, 둥근 카드) ===== */
+body{font-size:15px}
+.band{background:linear-gradient(135deg,#2f54eb 0%,#4867f5 60%,#5f86ff 100%);color:#fff;padding:14px max(4vw,16px) 16px;position:relative;overflow:hidden}
+.band::after{content:"";position:absolute;right:-60px;top:-80px;width:260px;height:260px;border-radius:50%;background:rgba(255,255,255,.08);pointer-events:none}
+.bin{max-width:1240px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;position:relative;z-index:1}
+.brand{display:flex;align-items:center;gap:10px}
+.brand i{flex:none;width:38px;height:38px;border-radius:11px;background:var(--sun);color:#141a33;font-style:normal;font-weight:900;font-size:20px;display:grid;place-items:center;box-shadow:0 6px 14px -8px rgba(0,0,0,.5)}
+.brand b{display:block;font-size:18px;font-weight:800;letter-spacing:-.2px;line-height:1.2}
+.brand small{display:block;font-size:12.5px;opacity:.85;line-height:1.3}
+.badge{font-size:12px;font-weight:700;border-radius:999px;padding:4px 11px;background:rgba(255,255,255,.18)}
+.badge.demo{background:var(--sun);color:#141a33}
+.band .sp{flex:1}
+.who{font-size:13px;opacity:.85}
+.band button{background:rgba(255,255,255,.16);border:0;color:#fff;border-radius:999px;padding:7px 15px;font-weight:700;min-height:36px;cursor:pointer}
+.band button:hover{background:rgba(255,255,255,.28)}
+.hlogos img{height:30px;background:#fff;border-radius:8px;padding:3px 8px}
+nav.tabs{background:rgba(245,246,251,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+nav.tabs .bin{gap:6px;flex-wrap:nowrap;overflow-x:auto;padding:10px 0}
+nav.tabs a{flex:none;padding:8px 16px;border-radius:999px;text-decoration:none;color:var(--mute);font-weight:700;font-size:14.5px;border:0;background:transparent;transition:background .15s,color .15s}
+nav.tabs a:hover{background:var(--soft);color:var(--blue)}
+nav.tabs a[aria-current=page]{background:var(--blue);color:#fff;box-shadow:0 6px 14px -8px rgba(47,84,235,.9)}
+main{padding-top:26px}
+h2{font-size:24px;font-weight:800;letter-spacing:-.3px}h3{font-size:16.5px;font-weight:800}
+.panel{border:0;border-radius:var(--r);box-shadow:var(--sh);padding:20px 22px}
+.kpi b{color:var(--ink);font-weight:800}.kpi.hi{background:linear-gradient(135deg,#2f54eb,#5f86ff);color:#fff}.kpi.hi b{color:#fff}.kpi.hi span{color:rgba(255,255,255,.85)}
+.hb .t{height:12px;border-radius:99px}.hb .t i{border-radius:99px}.hb.top .t i{background:var(--coral)}
+.cols div{border-radius:8px 8px 3px 3px;background:linear-gradient(#5f86ff,#2f54eb)}
+.stk{border-radius:99px}
+th{background:var(--soft);color:var(--mute)}
+.btn{border-radius:12px;font-weight:700;min-height:42px;padding:0 16px}
+.btn:hover{border-color:var(--blue);color:var(--blue)}
+.btn.pri{background:var(--blue);border-color:var(--blue);color:#fff;box-shadow:0 8px 18px -10px rgba(47,84,235,.9)}.btn.pri:hover{background:var(--blue2);color:#fff}
+.btn.dark{background:var(--ink);border-color:var(--ink);color:#fff}.btn.dark:hover{color:#fff;opacity:.9}
+.btn.sm{border-radius:10px;min-height:34px}
+input[type=text],input[type=password],input[type=number],select,textarea,.inp{border-radius:12px;border:1.5px solid var(--line)}
+input:focus,select:focus,textarea:focus,.inp:focus{border-color:var(--blue);outline:0;box-shadow:0 0 0 4px rgba(47,84,235,.12)}
+:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+.warn{background:#fff8e1;border:0;border-radius:14px;color:#6b5200}
+.login{margin:8vh auto;padding:30px 28px;text-align:left}
+.login::before{content:"M";display:grid;place-items:center;width:52px;height:52px;border-radius:15px;background:var(--sun);color:#141a33;font-weight:900;font-size:26px;margin-bottom:14px}
+.login input{margin:6px 0 14px}.login .btn{width:100%;min-height:50px;font-size:16px}
+.savebar{top:61px;background:rgba(245,246,251,.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.tr{border:0;background:var(--paper);box-shadow:var(--sh)}
+.sechd{background:linear-gradient(135deg,#2f54eb,#5f86ff);border-radius:var(--r);box-shadow:0 10px 22px -14px rgba(47,84,235,.9)}
+.qc{border:1.5px solid transparent;border-radius:16px;box-shadow:var(--sh)}
+.qc:hover,.qc:focus-visible{border-color:var(--blue);box-shadow:0 10px 24px -14px rgba(47,84,235,.7)}
+.qno{background:var(--ink);border-radius:10px}
+.qtt{background:var(--soft);color:var(--blue)}
+.op{border:0;background:var(--soft);border-radius:10px}
+.ab{border-radius:10px}.ab:hover{border-color:var(--blue);color:var(--blue)}.ab.del:hover{border-color:#b42318;color:#b42318}
+.addq{border-radius:12px;border-color:#a9b8f5}
+.tp{border-radius:16px}.tpi{border-radius:12px}
+.dpanel{background:var(--bg)}.dhead{border-bottom:1px solid var(--line)}
+.idb{background:var(--blue)}
+.fg,details.adv{border:0;border-radius:16px;box-shadow:var(--sh)}
+details.adv .fg{box-shadow:none}
+.tch{border-radius:999px}.tch[aria-pressed=true]{border-color:var(--blue);background:var(--soft);color:var(--blue)}
+.onum{border-radius:9px}
+.toast{background:var(--ink);border-radius:14px}
+dialog{border-radius:var(--r)}
+/* 언어 탭: 동그란 국기 */
+.ltabs{gap:6px}
+.ltabs button{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--line);background:var(--paper);border-radius:999px;padding:4px 12px 4px 4px;font-weight:700;font-size:13px}
+.ltabs button[aria-pressed=true]{background:var(--soft);color:var(--blue);border-color:var(--blue)}
+.mflag{flex:none;width:22px;height:22px;border-radius:50%;overflow:hidden;display:inline-block;box-shadow:0 0 0 1px rgba(20,26,51,.12)}
+.mflag svg{width:100%;height:100%;display:block}
+.tr{display:inline-flex;align-items:center;gap:6px;padding:3px 10px 3px 3px}
+.lgset{display:flex;align-items:center;gap:10px;margin:8px 0;padding:8px 12px;border-radius:14px;background:var(--soft)}
+.lgset .mflag{width:28px;height:28px}
 </style>
 <script>new MutationObserver(()=>{for(const c of document.querySelectorAll('.stack td:not([data-l])')){let i=0,p=c;while(p=p.previousElementSibling)i+=p.colSpan;c.dataset.l=c.closest('table').rows[0].cells[i]?.textContent||''}}).observe(document,{childList:true,subtree:true})</script>
 </head>
 <body>
-<header class="band"><div class="inp">
-  <span id="hlogos" class="hlogos"></span><h1>MEGAversity 유학생 만족도 조사 · 관리자</h1><span class="badge" id="mode"></span><span class="sp"></span>
-  <span id="who" class="hint" style="color:#cfd6ea"></span>
+<header class="band"><div class="bin">
+  <div class="brand"><i>M</i><div><b>MEGAversity</b><small>유학생 만족도 조사 · 관리자</small></div></div>
+  <span class="badge" id="mode"></span><span class="sp"></span><span id="hlogos" class="hlogos"></span>
+  <span id="who" class="who"></span>
   <button id="reload" hidden>새로고침</button><button id="logout" hidden>로그아웃</button>
 </div></header>
-<nav class="tabs" id="tabs" hidden><div class="inp">
+<nav class="tabs" id="tabs" hidden><div class="bin">
   <a href="#dash">응답 현황</a><a href="#items">문항 관리</a><a href="#responses">응답 결과</a><a href="#settings">설정</a>
 </div></nav>
 <main id="main"></main>
@@ -244,7 +316,7 @@ details.adv[open]{padding-bottom:14px}details.adv .fg{border:0;padding:8px 0;bac
 const CONFIG = {
   API_URL: 'https://script.google.com/macros/s/AKfycbznViu76RBQkllGVUk-A_4ajY1rnLgGShpj_VE-hxbH2F1upghjizTDMC4lQtwjh41Bkg/exec',              // 예: 'https://script.google.com/macros/s/AKfy.../exec'
   DEMO_PASSWORD: 'demo',    // 데모 모드 관리자 비밀번호 (실서비스는 Apps Script 쪽 ADMIN_PW 사용)
-  VERSION: '0.8.0'
+  VERSION: '0.9.0'
 };
 
 const LANGS = [
@@ -254,6 +326,25 @@ const LANGS = [
   { code: 'vi', name: 'Tiếng Việt', short: 'VI', ko: '베트남어' },
   { code: 'km', name: 'ភាសាខ្មែរ',  short: 'KM', ko: '크메르어(캄보디아)' }
 ];
+
+/* 기관 로고 — 관리자 화면에서 올린 로고가 있으면 그것을, 없으면 기본 경운대학교 로고를 씀 */
+const LOGO_KEYS = [['logo_kw', '경운대학교']];
+const DEFAULT_LOGO = { logo_kw: 'data:image/png;base64,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' };
+function logoSrc(meta, k) { const v = meta && meta[k] && meta[k].ko; return v || DEFAULT_LOGO[k] || ''; }
+
+/* 언어 선택용 원형 국기 (단순화한 SVG) */
+const FLAG = (() => {
+  const star = (cx, cy, r, rot = 0, fill = '#FFDE00') => { const p = []; for (let i = 0; i < 10; i++) { const a = (rot - 90 + i * 36) * Math.PI / 180, rr = i % 2 ? r * 0.382 : r; p.push((cx + rr * Math.cos(a)).toFixed(2) + ',' + (cy + rr * Math.sin(a)).toFixed(2)); } return `<polygon points="${p.join(' ')}" fill="${fill}"/>`; };
+  const bars = (ang, pat) => `<g transform="rotate(${ang} 20 20)">${pat.map((b, k) => { const y = 5.2 + k * 2.1; return b ? `<rect x="15.5" y="${y}" width="9" height="1.4" fill="#000"/>` : `<rect x="15.5" y="${y}" width="4" height="1.4" fill="#000"/><rect x="20.5" y="${y}" width="4" height="1.4" fill="#000"/>`; }).join('')}</g>`;
+  const svg = (vb, body, par = 'xMidYMid slice') => `<svg viewBox="${vb}" preserveAspectRatio="${par}" aria-hidden="true">${body}</svg>`;
+  return {
+    ko: svg('0 0 40 40', `<rect width="40" height="40" fill="#fff"/><g transform="rotate(33.7 20 20)"><circle cx="20" cy="20" r="8" fill="#0047A0"/><path d="M12 20a8 8 0 0 1 16 0a4 4 0 0 1-8 0a4 4 0 0 0-8 0z" fill="#CD2E3A"/></g>${bars(-56.3, [1, 1, 1])}${bars(56.3, [1, 0, 1])}${bars(123.7, [0, 0, 0])}${bars(-123.7, [0, 1, 0])}`),
+    en: (() => { const H = 20 / 13, cw = 15.2, ch = H * 7; let b = '<rect width="38" height="20" fill="#fff"/>'; for (let k = 0; k < 13; k += 2) b += `<rect y="${(k * H).toFixed(3)}" width="38" height="${H.toFixed(3)}" fill="#B22234"/>`; b += `<rect width="${cw}" height="${ch.toFixed(3)}" fill="#3C3B6E"/>`; for (let r = 0; r < 9; r++) for (let c = 0; c < (r % 2 ? 5 : 6); c++) b += star((r % 2 ? 2 : 1) * cw / 12 + c * cw / 6, (r + 1) * ch / 10, 0.48, 0, '#fff'); return svg('0 0 38 20', b, 'xMinYMid slice'); })(),
+    zh: svg('0 0 30 20', `<rect width="30" height="20" fill="#EE1C25"/>${star(5, 5, 3)}${star(10, 2, 1, 23)}${star(12, 4, 1, 46)}${star(12, 7, 1, 70)}${star(10, 9, 1, 21)}`, 'xMinYMid slice'),
+    vi: svg('0 0 30 20', `<rect width="30" height="20" fill="#DA251D"/>${star(15, 10, 6)}`),
+    km: svg('0 0 30 20', `<rect width="30" height="20" fill="#032EA1"/><rect y="5" width="30" height="10" fill="#E00025"/><g fill="#fff"><rect x="9" y="12.6" width="12" height="1.1"/><rect x="10" y="11.4" width="10" height="1.3"/><path d="M10.4 11.4l.6-2.6h.9l.6 2.6zM17.5 11.4l.6-2.6h.9l.6 2.6zM12.8 11.4l.6-2.2h.8l.6 2.2zM15.4 11.4l.6-2.2h.8l.6 2.2zM13.9 11.4l.7-4.6h.8l.7 4.6z"/></g>`)
+  };
+})();
 
 /* 화면 공통 문구 (문항 외). 번역 단계에서 vi/km/zh 채움 — 비어 있으면 en → ko 순으로 대체 */
 const UI = {
@@ -1141,6 +1232,7 @@ const SCALE_PRESETS = {
   '원활함': ['매우 원활했다', '원활했다', '보통이었다', '원활하지 않았다', '매우 원활하지 않았다']
 };
 const LN = { ko: '한국어', vi: '베트남어', zh: '중국어', km: '크메르어', en: '영어' };
+const mflag = (c) => `<span class="mflag">${(typeof FLAG !== 'undefined' && FLAG[c]) || ''}</span>`;
 const isLogoKey = (k) => /^logo/.test(k);
 function transRate(lang) {
   let tot = 0, ok = 0;
@@ -1170,7 +1262,7 @@ function itemsView() {
     <details class="more"><summary class="btn">더보기</summary><div class="menu"><button id="exp">문항 JSON 복사</button><button id="def">원본 문항으로 되돌리기</button></div></details></div>
   ${has ? `<div class="warn">이미 응답 ${R.length}건이 있어요. 보기의 <b>순서나 개수</b>를 바꾸면 기존 응답과 번호가 어긋나니, 글자 수정과 번역만 하시길 권해요.</div>` : ''}
   ${D.fromDefault && !Api.demo ? '<div class="warn">시트에 문항이 아직 없어 원본 문항을 보여 주고 있어요. 저장하면 시트에 등록됩니다.</div>' : ''}
-  <div class="tl">번역 현황 ${LANGS.slice(1).map((l) => { const r = transRate(l.code); return `<span class="tr ${r === 100 ? 'ok' : ''}">${esc(LN[l.code])} <b>${r}%</b></span>`; }).join('')}</div>
+  <div class="tl">번역 현황 ${LANGS.slice(1).map((l) => { const r = transRate(l.code); return `<span class="tr ${r === 100 ? 'ok' : ''}">${mflag(l.code)}${esc(LN[l.code])} <b>${r}%</b></span>`; }).join('')}</div>
   <div id="qlist" class="qlist"></div>`;
   $('#save').onclick = saveSurvey;
   $('#metaBtn').onclick = openMeta;
@@ -1273,7 +1365,7 @@ function drawEditor() {
   dr.innerHTML = `<div class="dpanel" role="dialog" aria-label="문항 편집">
    <div class="dhead"><b>${isNew ? '새 ' : ''}${sec ? '파트 구분' : '문항'} ${isNew ? '추가' : '수정'}</b><span class="idb">${esc(it.id)}</span><span class="sp"></span>
      <button class="btn" id="eCancel">취소</button><button class="btn pri" id="eOk">${isNew ? '추가하기' : '적용하기'}</button></div>
-   <div class="ltabs" id="elt">${LANGS.map((l) => { const miss = l.code === 'ko' ? 0 : itemMissing(it, l.code); return `<button type="button" data-l="${l.code}" aria-pressed="${wLang === l.code}">${esc(LN[l.code])}${l.code === 'ko' ? '' : `<span class="dot${miss ? '' : ' ok'}"></span>`}</button>`; }).join('')}
+   <div class="ltabs" id="elt">${LANGS.map((l) => { const miss = l.code === 'ko' ? 0 : itemMissing(it, l.code); return `<button type="button" data-l="${l.code}" aria-pressed="${wLang === l.code}">${mflag(l.code)}${esc(LN[l.code])}${l.code === 'ko' ? '' : `<span class="dot${miss ? '' : ' ok'}"></span>`}</button>`; }).join('')}
      ${ko ? '' : '<span class="hint">회색 글씨의 한국어를 보고 같은 뜻으로 입력하세요. 비워 두면 한국어가 보여요.</span>'}</div>
    <div class="dbody"><div class="dform">
     ${ko && !sec && !contact ? `<div class="fg"><label class="fl2">문항 유형</label><div class="tchips">${['scale', 'single', 'multi', 'text', 'longtext'].map((t) => `<button type="button" class="tch" data-type="${t}" aria-pressed="${it.type === t}">${TYPE_ICON[t]}${TYPE_INFO[t].name}</button>`).join('')}</div></div>` : ''}
@@ -1394,12 +1486,12 @@ function openMeta() {
 function drawMeta() {
   const m = E.meta, ko = mLang === 'ko', dr = $('#drawer');
   const F_ = [['kicker', '머리말 (예: 교육부 RISE 사업)'], ['title', '설문 제목'], ['org', '조사기관 표시'], ['notice', '통계법 안내'], ['intro', '조사 안내문 — 카드뉴스로 보여요'], ['date', '날짜·기관'], ['thanks', '제출 후 감사 문구']];
-  const logo = (k, name) => { const v = (m[k] || {}).ko; return `<div class="logo-up"><div class="lprev">${v ? `<img src="${esc(v)}" alt="${esc(name)} 로고">` : '<span>로고 없음</span>'}</div><div><b>${esc(name)}</b><p class="hint">PNG(배경 투명) 권장 · 자동으로 줄여 저장해요</p>
-    <label class="btn sm">이미지 선택<input type="file" accept="image/*" data-logo="${k}" hidden></label>${v ? ` <button type="button" class="btn sm" data-logodel="${k}">삭제</button>` : ''}</div></div>`; };
+  const logo = (k, name) => { const own = (m[k] || {}).ko, v = logoSrc(m, k); return `<div class="logo-up"><div class="lprev">${v ? `<img src="${esc(v)}" alt="${esc(name)} 로고">` : '<span>로고 없음</span>'}</div><div><b>${esc(name)}</b><p class="hint">기본 로고가 들어가 있어요 · 바꾸려면 PNG(배경 투명)를 올리세요</p>
+    <label class="btn sm">이미지 선택<input type="file" accept="image/*" data-logo="${k}" hidden></label>${own ? ` <button type="button" class="btn sm" data-logodel="${k}">기본 로고로</button>` : ''}</div></div>`; };
   dr.innerHTML = `<div class="dpanel narrow" role="dialog" aria-label="표지와 안내문"><div class="dhead"><b>표지·안내문·로고</b><span class="sp"></span><button class="btn pri" id="mDone">완료</button></div>
-   <div class="ltabs">${LANGS.map((l) => `<button type="button" data-l="${l.code}" aria-pressed="${mLang === l.code}">${esc(LN[l.code])}</button>`).join('')}</div>
+   <div class="ltabs">${LANGS.map((l) => `<button type="button" data-l="${l.code}" aria-pressed="${mLang === l.code}">${mflag(l.code)}${esc(LN[l.code])}</button>`).join('')}</div>
    <div class="dbody one"><div class="dform">
-    ${ko ? `<div class="fg"><label class="fl2">기관 로고 <small>설문 첫 화면·안내 카드·완료 화면·관리자 화면에 표시돼요</small></label><div class="logos2">${logo('logo_kw', '경운대학교')}${logo('logo_kiet', '한국교육공학연구소')}</div></div>` : ''}
+    ${ko ? `<div class="fg"><label class="fl2">기관 로고 <small>설문 첫 화면·안내 카드·완료 화면·관리자 화면에 표시돼요</small></label><div class="logos2">${logo('logo_kw', '경운대학교')}</div></div>` : ''}
     ${F_.map(([k, lab]) => `<div class="fg"><label class="fl2">${esc(lab)}</label>${!ko && (m[k] || {}).ko ? `<p class="koref">${esc(m[k].ko).slice(0, 400)}${(m[k].ko || '').length > 400 ? '…' : ''}</p>` : ''}
       ${k === 'intro' || k === 'notice' ? `<textarea class="inp" data-m="${k}" rows="${k === 'intro' ? 14 : 3}">${esc((m[k] || {})[mLang] || '')}</textarea>` : `<input class="inp" data-m="${k}" value="${esc((m[k] || {})[mLang] || '')}">`}
       ${k === 'intro' && ko ? '<p class="hint">## 큰 제목(카드 묶음) · ### 작은 제목(카드 한 장) · - 목록 · ※ 주석 · → 가 있는 줄은 단계 그림으로 바뀌어요</p>' : ''}</div>`).join('')}
@@ -1449,7 +1541,7 @@ async function saveSurvey() {
 
 function logoImgs(meta) {
   const m = meta || {};
-  return [['logo_kw', '경운대학교'], ['logo_kiet', '한국교육공학연구소']].filter(([k]) => m[k] && m[k].ko).map(([k, n]) => `<img src="${esc(m[k].ko)}" alt="${n}">`).join('');
+  return LOGO_KEYS.map(([k, n]) => { const v = logoSrc(m, k); return v ? `<img src="${esc(v)}" alt="${n}">` : ''; }).join('');
 }
 function renderLogos() { const h = $('#hlogos'); if (h) h.innerHTML = logoImgs((E || D.survey || {}).meta); }
 /* ---------------- 응답 결과 ---------------- */
@@ -1582,7 +1674,7 @@ function settingsView() {
     <label style="display:flex;gap:10px;align-items:flex-start;margin:0 0 6px"><input type="checkbox" id="rvm" ${st.reviewMode ? 'checked' : ''} style="margin-top:4px"> <span>켜기 — 응답하지 않아도 다음 문항으로 넘어가고, 조건부 문항(Q12-1·Q13 등)도 모두 표시합니다. 이때 제출된 응답은 <b>구분=검토</b>로 저장되어 통계에서 제외됩니다.</span></label>
     <p class="hint">문항 검토·피드백 기간에만 켜고, 학생 배포 전에는 반드시 끄세요.</p>
     <h3 style="margin-top:20px">공개 언어</h3><p class="hint" style="margin-top:-6px">번역을 마친 언어만 켜세요. 미리보기에서는 모든 언어를 볼 수 있습니다.</p>
-    ${LANGS.map((l) => `<label style="display:flex;gap:10px;align-items:center;margin:6px 0"><input type="checkbox" data-lang="${l.code}" ${(st.activeLangs || []).includes(l.code) ? 'checked' : ''} ${l.code === 'ko' ? 'disabled' : ''}> ${esc(l.name)} <span class="hint">번역 ${l.code === 'ko' ? 100 : transRate(l.code)}%</span></label>`).join('')}
+    ${LANGS.map((l) => `<label class="lgset"><input type="checkbox" data-lang="${l.code}" ${(st.activeLangs || []).includes(l.code) ? 'checked' : ''} ${l.code === 'ko' ? 'disabled' : ''}> ${mflag(l.code)} <b>${esc(l.name)}</b> <span class="hint">번역 ${l.code === 'ko' ? 100 : transRate(l.code)}%</span></label>`).join('')}
     <div class="bar" style="margin-top:14px"><button class="btn pri" id="ss">설정 저장</button></div></div>
    <div class="panel"><h3>연결 정보</h3><table><tbody>
     <tr><th>저장 방식</th><td>${Api.demo ? '데모 (이 브라우저 localStorage)' : '구글 시트 · Apps Script 웹앱'}</td></tr>
