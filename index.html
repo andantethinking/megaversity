@@ -52,13 +52,15 @@ html,body{overflow-x:hidden}
 .wrap{max-width:640px;margin:0 auto;padding:0 16px}
 .langbox{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:18px;margin-top:-18px;position:relative;z-index:2}
 .langbox h2{font-size:15px;margin:0 0 12px;color:var(--mute);font-weight:600}
-.lgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-.lgrid .lg:last-child:nth-child(odd){grid-column:1/-1}
-.lg{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;border:2px solid var(--line);background:var(--card);border-radius:14px;padding:12px 14px;min-height:64px;transition:border-color .15s,background .15s}
-.lg b{font-size:17px;font-weight:700}
-.lg small{font-size:12.5px;color:var(--mute)}
-.lg[aria-pressed=true]{border-color:var(--blue);background:var(--sky)}
+.lgrid{display:flex;justify-content:space-between;gap:2px}
+.lg{flex:1 1 0;min-width:0;display:flex;flex-direction:column;align-items:center;gap:7px;background:none;border:0;padding:6px 0 4px;border-radius:14px;transition:transform .15s}
+.lg:active{transform:scale(.94)}
+.lg .flag{width:48px;height:48px;border-radius:50%;overflow:hidden;display:block;box-shadow:0 0 0 1px rgba(20,26,51,.12),0 6px 14px -8px rgba(20,26,51,.45);transition:box-shadow .15s}
+.lg .flag svg{width:100%;height:100%;display:block}
+.lg b{font-size:11.5px;font-weight:700;line-height:1.2;white-space:nowrap;letter-spacing:-.2px;color:var(--mute);transition:color .15s}
+.lg[aria-pressed=true] .flag{box-shadow:0 0 0 3px var(--card),0 0 0 5.5px var(--blue),0 8px 16px -8px rgba(47,84,235,.8)}
 .lg[aria-pressed=true] b{color:var(--blue)}
+.lg:disabled{opacity:.35}
 .cta{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:58px;margin-top:14px;border:0;border-radius:16px;background:var(--blue);color:#fff;font-size:18px;font-weight:800;box-shadow:0 10px 22px -10px rgba(47,84,235,.8);transition:transform .12s,background .15s}
 .cta:active{transform:scale(.98)}
 .cta:disabled{background:#b7c1e8;box-shadow:none;cursor:not-allowed}
@@ -248,15 +250,15 @@ textarea.field{min-height:150px;resize:vertical;line-height:1.55}
 const CONFIG = {
   API_URL: 'https://script.google.com/macros/s/AKfycbznViu76RBQkllGVUk-A_4ajY1rnLgGShpj_VE-hxbH2F1upghjizTDMC4lQtwjh41Bkg/exec',              // 예: 'https://script.google.com/macros/s/AKfy.../exec'
   DEMO_PASSWORD: 'demo',    // 데모 모드 관리자 비밀번호 (실서비스는 Apps Script 쪽 ADMIN_PW 사용)
-  VERSION: '0.7.0'
+  VERSION: '0.8.0'
 };
 
 const LANGS = [
   { code: 'ko', name: '한국어',     short: 'KO', ko: '한국어' },
-  { code: 'vi', name: 'Tiếng Việt', short: 'VI', ko: '베트남어' },
+  { code: 'en', name: 'English',    short: 'EN', ko: '영어' },
   { code: 'zh', name: '中文',        short: 'ZH', ko: '중국어' },
-  { code: 'km', name: 'ភាសាខ្មែរ',  short: 'KM', ko: '크메르어(캄보디아)' },
-  { code: 'en', name: 'English',    short: 'EN', ko: '영어' }
+  { code: 'vi', name: 'Tiếng Việt', short: 'VI', ko: '베트남어' },
+  { code: 'km', name: 'ភាសាខ្មែរ',  short: 'KM', ko: '크메르어(캄보디아)' }
 ];
 
 /* 화면 공통 문구 (문항 외). 번역 단계에서 vi/km/zh 채움 — 비어 있으면 en → ko 순으로 대체 */
@@ -1150,7 +1152,7 @@ function welcomeView() {
   </div></header>
   <main class="wrap wmain">
     <section class="langbox"><h2>${esc(U('pick'))} · Language</h2>
-      <div class="lgrid">${LANGS.map((l) => `<button class="lg" data-lang="${l.code}" aria-pressed="${S.lang === l.code}" ${act.includes(l.code) ? '' : 'disabled'}><b>${esc(l.name)}</b><small>${esc(l.ko)}</small></button>`).join('')}</div>
+      <div class="lgrid">${LANGS.map((l) => `<button class="lg" data-lang="${l.code}" aria-pressed="${S.lang === l.code}" aria-label="${esc(l.name)} (${esc(l.ko)})" ${act.includes(l.code) ? '' : 'disabled'}><span class="flag">${FLAG[l.code] || ''}</span><b>${esc(l.name)}</b></button>`).join('')}</div>
       <p class="anon">${esc(U('anon'))}</p>
     </section>
     ${orgsHtml()}
@@ -1172,6 +1174,19 @@ function orgsHtml(extra = '') {
   const l = logoList(); if (!l.length) return '';
   return `<div class="orgs ${extra}">${l.map((x) => `<figure><img src="${esc(x.src)}" alt="${esc(x.cap)}"><figcaption>${fmt(x.cap)}</figcaption></figure>`).join('')}</div>`;
 }
+/* 언어 선택용 원형 국기 (단순화한 SVG) */
+const FLAG = (() => {
+  const star = (cx, cy, r, rot = 0) => { const p = []; for (let i = 0; i < 10; i++) { const a = (rot - 90 + i * 36) * Math.PI / 180, rr = i % 2 ? r * 0.382 : r; p.push((cx + rr * Math.cos(a)).toFixed(2) + ',' + (cy + rr * Math.sin(a)).toFixed(2)); } return `<polygon points="${p.join(' ')}" fill="#FFDE00"/>`; };
+  const bars = (ang, pat) => `<g transform="rotate(${ang} 20 20)">${pat.map((b, k) => { const y = 5.2 + k * 2.1; return b ? `<rect x="15.5" y="${y}" width="9" height="1.4" fill="#000"/>` : `<rect x="15.5" y="${y}" width="4" height="1.4" fill="#000"/><rect x="20.5" y="${y}" width="4" height="1.4" fill="#000"/>`; }).join('')}</g>`;
+  const svg = (vb, body, par = 'xMidYMid slice') => `<svg viewBox="${vb}" preserveAspectRatio="${par}" aria-hidden="true">${body}</svg>`;
+  return {
+    ko: svg('0 0 40 40', `<rect width="40" height="40" fill="#fff"/><g transform="rotate(33.7 20 20)"><circle cx="20" cy="20" r="8" fill="#0047A0"/><path d="M12 20a8 8 0 0 1 16 0a4 4 0 0 1-8 0a4 4 0 0 0-8 0z" fill="#CD2E3A"/></g>${bars(-56.3, [1, 1, 1])}${bars(56.3, [1, 0, 1])}${bars(123.7, [0, 0, 0])}${bars(-123.7, [0, 1, 0])}`),
+    en: svg('0 0 60 30', `<clipPath id="ukT"><path d="M30 15h30v15zv15H0zH0V0zV0h30z"/></clipPath><rect width="60" height="30" fill="#012169"/><path d="M0 0l60 30M60 0L0 30" stroke="#fff" stroke-width="6"/><path d="M0 0l60 30M60 0L0 30" clip-path="url(#ukT)" stroke="#C8102E" stroke-width="4"/><path d="M30 0v30M0 15h60" stroke="#fff" stroke-width="10"/><path d="M30 0v30M0 15h60" stroke="#C8102E" stroke-width="6"/>`),
+    zh: svg('0 0 30 20', `<rect width="30" height="20" fill="#EE1C25"/>${star(5, 5, 3)}${star(10, 2, 1, 23)}${star(12, 4, 1, 46)}${star(12, 7, 1, 70)}${star(10, 9, 1, 21)}`, 'xMinYMid slice'),
+    vi: svg('0 0 30 20', `<rect width="30" height="20" fill="#DA251D"/>${star(15, 10, 6)}`),
+    km: svg('0 0 30 20', `<rect width="30" height="20" fill="#032EA1"/><rect y="5" width="30" height="10" fill="#E00025"/><g fill="#fff"><rect x="9" y="12.6" width="12" height="1.1"/><rect x="10" y="11.4" width="10" height="1.3"/><path d="M10.4 11.4l.6-2.6h.9l.6 2.6zM17.5 11.4l.6-2.6h.9l.6 2.6zM12.8 11.4l.6-2.2h.8l.6 2.2zM15.4 11.4l.6-2.2h.8l.6 2.2zM13.9 11.4l.7-4.6h.8l.7 4.6z"/></g>`)
+  };
+})();
 const ICON2 = {
   up: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>',
   down: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>'
@@ -1437,7 +1452,7 @@ function doneView() {
 function langSheet() {
   const act = langs();
   const el = document.createElement('div'); el.className = 'sheet';
-  el.innerHTML = `<div class="in" role="dialog" aria-label="${esc(U('lang'))}"><h3>${esc(U('lang'))} · Language</h3><div class="lgrid">${LANGS.map((l) => `<button class="lg" data-lang="${l.code}" aria-pressed="${S.lang === l.code}" ${act.includes(l.code) ? '' : 'disabled'}><b>${esc(l.name)}</b><small>${esc(l.ko)}</small></button>`).join('')}</div></div>`;
+  el.innerHTML = `<div class="in" role="dialog" aria-label="${esc(U('lang'))}"><h3>${esc(U('lang'))} · Language</h3><div class="lgrid">${LANGS.map((l) => `<button class="lg" data-lang="${l.code}" aria-pressed="${S.lang === l.code}" aria-label="${esc(l.name)} (${esc(l.ko)})" ${act.includes(l.code) ? '' : 'disabled'}><span class="flag">${FLAG[l.code] || ''}</span><b>${esc(l.name)}</b></button>`).join('')}</div></div>`;
   el.onclick = (e) => { const b = e.target.closest('.lg'); if (b && !b.disabled) { S.lang = b.dataset.lang; saveDraft(); el.remove(); S.dir = 0; render(); } else if (e.target === el) el.remove(); };
   document.body.appendChild(el);
 }
