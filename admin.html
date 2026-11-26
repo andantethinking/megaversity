@@ -5,9 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MEGAversity 설문 관리자</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Sans&#43;KR:wght@400;500;700&amp;family=Noto&#43;Sans&#43;Khmer:wght@400;600&amp;family=Noto&#43;Sans&#43;SC:wght@400;600&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Sans+Khmer:wght@400;600&family=Noto+Sans+SC:wght@400;600&display=swap">
 <style>
- 
+/* VOICE  조사 담당자의 작업대 — 정확하고 조용하게
+   IDEA   연구소 결과표: 진한 띠 아래 흰 패널, 숫자는 표와 막대로
+   PICTURE 현황 대시보드의 응답 수·분포 막대, 문항 편집기, 자동 보고서
+   COLOUR 옥스퍼드 블루 띠·흰 패널, 결과 강조는 마젠타, 척도는 블루↔마젠타 발산형
+   TYPE   Pretendard / Noto Sans KR, 숫자 tabular */
 :root{color-scheme:light dark;
  --bg:light-dark(#eef0f5,#070f26);--paper:light-dark(#fff,#0f1a3a);--ink:light-dark(#0e1530,#e8ecf7);--mute:light-dark(#5a6380,#9aa4c4);
  --line:light-dark(#dde1ec,#24305a);--band:#0b1f4b;--acc:#e0115f;--soft:light-dark(#f5f6fa,#16224a);--track:light-dark(#e9ecf3,#1c2850);
@@ -64,7 +68,7 @@ label.f{display:block;font-size:13px;color:var(--mute);font-weight:600;margin:12
 .login input{width:100%;margin:8px 0 12px}
 .hint{font-size:13px;color:var(--mute)}
 .warn{background:light-dark(#fff4e5,#3a2a0a);border:1px solid light-dark(#f3c98b,#6b4d16);border-radius:10px;padding:10px 14px;font-size:14px;margin-bottom:14px}
- 
+/* 문항 편집기 */
 .ed{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:14px;align-items:start}
 .list{max-height:72vh;overflow:auto;padding:6px}
 .li{display:flex;gap:8px;align-items:flex-start;padding:8px 10px;border-radius:8px;cursor:pointer;font-size:13.5px;line-height:1.4}
@@ -88,7 +92,7 @@ dialog .db{padding:12px 18px 18px;max-height:70vh;overflow:auto}
 .qa{padding:8px 0;border-bottom:1px solid var(--line);font-size:14px}.qa b{display:block;font-size:12.5px;color:var(--mute)}
 .toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--band);color:#fff;padding:12px 18px;border-radius:10px;font-size:14px;z-index:20}
 .copybox{width:100%;min-height:160px;font-family:ui-monospace,Menlo,monospace;font-size:12px}
- 
+/* 보고서 */
 .rep{background:#fff;color:#111;border-radius:12px;padding:clamp(18px,4vw,48px);border:1px solid var(--line)}
 .rep h1{font-size:26px;margin:0 0 6px;line-height:1.3}.rep h2{font-size:19px;margin:34px 0 12px;padding-bottom:6px;border-bottom:2px solid #0b1f4b}
 .rep h3{font-size:15.5px;margin:22px 0 8px}.rep .meta{color:#555;font-size:13.5px}
@@ -118,13 +122,15 @@ dialog .db{padding:12px 18px 18px;max-height:70vh;overflow:auto}
 <main id="main"></main>
 <dialog id="dlg"><div class="dh"><b id="dlgT"></b><span style="flex:1"></span><button class="btn sm" id="dlgX">닫기</button></div><div class="db" id="dlgB"></div></dialog>
 <div id="toast" class="toast" hidden></div>
-<script>window.APP_PARAMS = {};</script>
 <script>
-
-
+/* =========================================================================
+   MEGAversity 유학생 만족도 조사 — 공통 모듈 (설문 페이지 · 관리자 페이지 공용)
+   - CONFIG.API_URL 에 Apps Script 웹앱 URL을 넣으면 구글 시트에 저장
+   - 비워 두면 '데모 모드' (이 브라우저의 localStorage에만 저장)
+   ========================================================================= */
 const CONFIG = {
-  API_URL: 'https://script.google.com/macros/s/AKfycbznViu76RBQkllGVUk-A_4ajY1rnLgGShpj_VE-hxbH2F1upghjizTDMC4lQtwjh41Bkg/exec',              
-  DEMO_PASSWORD: 'demo',    
+  API_URL: 'https://script.google.com/macros/s/AKfycbznViu76RBQkllGVUk-A_4ajY1rnLgGShpj_VE-hxbH2F1upghjizTDMC4lQtwjh41Bkg/exec',              // 예: 'https://script.google.com/macros/s/AKfy.../exec'
+  DEMO_PASSWORD: 'demo',    // 데모 모드 관리자 비밀번호 (실서비스는 Apps Script 쪽 ADMIN_PW 사용)
   VERSION: '0.2.0'
 };
 
@@ -135,7 +141,7 @@ const LANGS = [
   { code: 'km', name: 'ភាសាខ្មែរ',  short: 'KM', ko: '크메르어(캄보디아)' }
 ];
 
- 
+/* 화면 공통 문구 (문항 외). 번역 단계에서 vi/km/zh 채움 — 비어 있으면 en → ko 순으로 대체 */
 const UI = {
   ko: { start:'설문 시작하기', next:'다음', prev:'이전', submit:'제출하기', required:'필수 응답 문항입니다.',
         maxPick:'최대 {n}개까지 선택할 수 있습니다.', picked:'{n}개 선택', otherPh:'직접 작성해 주세요',
@@ -160,13 +166,13 @@ function ui(lang, key, vars) {
   return s;
 }
 
- 
+/* ---------- 기본 문항 정의 (원본 HWP 기준, 2026-11-26) ---------- */
 const DEFAULT_SURVEY = (() => {
   const L = (ko) => ({ ko });
   const opts = (arr) => arr.map((s) => {
     const o = { t: L(s.replace(/^!|\*$/g, '')) };
-    if (s.endsWith('*')) o.other = true;   
-    if (s.startsWith('!')) o.none = true;  
+    if (s.endsWith('*')) o.other = true;   // '기타' — 직접 작성란 표시
+    if (s.startsWith('!')) o.none = true;  // '없음' — 다른 보기와 동시 선택 불가
     return o;
   });
   const sec = (id, ko, en) => ({ id, type: 'section', title: L(ko), text: L(en) });
@@ -295,7 +301,7 @@ const DEFAULT_SURVEY = (() => {
       note: L('수집 항목: 휴대전화 번호 · 수집 목적: 기프티콘 추첨 및 발송 · 보유 기간: 경품 발송 완료 후 즉시 파기 · 동의를 거부할 수 있으며, 거부 시 추첨 대상에서만 제외됩니다.'),
       required: false }
   ];
-   
+  /* 보고서·관리자 화면용 약칭 */
   const SHORT = {
     Q1: '사업 사전 인지도', 'Q1-1': '정보 습득 경로', 'Q1-2': '참여 결정 계기', Q2: '공동 교육과정 만족도', 'Q2-1': '수업 내 배려·지원',
     'Q2-2': '수업 우선 개선 요인', Q3: '교과 프로그램 만족도', 'Q3-1': '연합 운영 방식 효과성', 'Q3-2': '수업 참여 애로사항', Q4: '비교과 프로그램 만족도',
@@ -310,7 +316,7 @@ const DEFAULT_SURVEY = (() => {
 })();
 const shortLabel = (it) => it.short || tr(it.title, 'ko') || (tr(it.text, 'ko').slice(0, 24) + '…');
 
- 
+/* ---------- 유틸 ---------- */
 const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 function tr(obj, lang) { if (!obj) return ''; return (obj[lang] && String(obj[lang]).trim()) ? obj[lang] : (obj.ko || ''); }
 function hasLang(obj, lang) { return !!(obj && obj[lang] && String(obj[lang]).trim()); }
@@ -330,7 +336,7 @@ function nowStr() {
   const d = new Date(), p = (n) => String(n).padStart(2, '0');
   return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`;
 }
- 
+/* 응답(객체) → 시트 한 행(평면 객체). 복수응답은 '1;3' 형태 */
 function flattenAnswers(survey, answers) {
   const row = {};
   for (const it of survey.items) {
@@ -342,7 +348,7 @@ function flattenAnswers(survey, answers) {
   }
   return row;
 }
- 
+/* 시트 한 행 → 응답 객체 */
 function parseRow(survey, obj) {
   const ans = {};
   for (const it of survey.items) {
@@ -357,7 +363,7 @@ function parseRow(survey, obj) {
   return ans;
 }
 
- 
+/* ---------- 저장소: Apps Script API 또는 데모(localStorage) ---------- */
 const Store = (() => {
   const mem = {};
   const get = (k, d) => { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return k in mem ? mem[k] : d; } };
@@ -366,7 +372,7 @@ const Store = (() => {
   return { get, set, del };
 })();
 
-const GAS = typeof google !== 'undefined' && google.script && google.script.run; 
+const GAS = typeof google !== 'undefined' && google.script && google.script.run; // Apps Script 웹앱에서 열린 경우
 const Api = {
   demo: !CONFIG.API_URL && !GAS,
   async request(action, data = {}) {
@@ -377,7 +383,7 @@ const Api = {
       .api(Object.assign({ action }, data)));
     const res = await fetch(CONFIG.API_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' }, 
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // 프리플라이트 회피
       body: JSON.stringify({ action, ...data })
     });
     const json = await res.json();
@@ -388,7 +394,7 @@ const Api = {
 
 const Demo = {
   survey() { return Store.get('mv_survey', null) || clone(DEFAULT_SURVEY); },
-  settings() { return Object.assign({ open: true, activeLangs: ['ko', 'vi', 'zh', 'km'] }, Store.get('mv_settings', {})); },
+  settings() { return Object.assign({ open: true, reviewMode: false, activeLangs: ['ko', 'vi', 'zh', 'km'] }, Store.get('mv_settings', {})); },
   getSurvey() { return { ok: true, survey: this.survey(), settings: this.settings() }; },
   submit({ row, contact, lang, durationSec }) {
     const list = Store.get('mv_responses', []);
@@ -443,8 +449,12 @@ const Demo = {
 
 </script>
 <script>
-
-
+/* =========================================================================
+   MEGAversity 유학생 만족도 조사 — 다국어 번역 (베트남어 vi · 중국어 zh · 크메르어 km)
+   - 초벌 번역(2026-11-26). 배포 전 원어민 검수 권장 — 특히 크메르어
+   - 형식: 문항ID: { 언어: [대괄호 소제목, 질문, 안내, [보기…]] }
+   - 실제 운영 중 문구는 구글 시트 Questions 탭(언어별 열)에서 수정
+   ========================================================================= */
 Object.assign(UI, {
   vi: { start:'Bắt đầu khảo sát', next:'Tiếp theo', prev:'Quay lại', submit:'Gửi câu trả lời', required:'Đây là câu hỏi bắt buộc.',
         maxPick:'Có thể chọn tối đa {n} mục.', picked:'Đã chọn {n}', otherPh:'Vui lòng ghi cụ thể', textPh:'Hãy viết tự do',
@@ -551,7 +561,7 @@ Object.assign(UI, {
     }
   };
 
-   
+  /* 안내(note) 공통 번역 */
   const NOTE = {
     '1개 선택': { vi: 'Chọn 1', zh: '单选', km: 'ជ្រើសរើស ១' },
     '최대 2개 선택': { vi: 'Chọn tối đa 2', zh: '最多选 2 项', km: 'ជ្រើសរើសបានច្រើនបំផុត ២' },
@@ -569,7 +579,7 @@ Object.assign(UI, {
     S4: { vi: 'IV. Thông tin người trả lời', zh: 'IV. 答卷人信息', km: 'IV. ព័ត៌មានអំពីអ្នកឆ្លើយ' }
   };
 
-   
+  /* 문항: [소제목, 질문, 안내(없으면 한국어 안내를 NOTE로 변환), 보기] */
   const Q = {
     Q1: {
       vi: ['', "Trước đây, bạn biết về dự án 'Đại học Liên kết MEGAversity' ở mức độ nào?", '', ['Biết rất rõ', 'Biết khá rõ', 'Đã nghe tên (bình thường)', 'Không biết rõ', 'Hoàn toàn không biết (lần đầu biết đến)']],
@@ -758,7 +768,7 @@ Object.assign(UI, {
     }
   };
 
-   
+  /* DEFAULT_SURVEY 에 병합 */
   const S = DEFAULT_SURVEY;
   for (const l of ['vi', 'zh', 'km']) {
     for (const k in META[l]) { S.meta[k] = S.meta[k] || {}; S.meta[k][l] = META[l][k]; }
@@ -819,9 +829,10 @@ async function load() {
   const r = await Api.request('getAll', { pw: PW });
   D.survey = r.survey && r.survey.items && r.survey.items.length ? r.survey : clone(DEFAULT_SURVEY);
   D.fromDefault = !(r.survey && r.survey.items && r.survey.items.length);
-  D.settings = Object.assign({ open: true, activeLangs: ['ko', 'vi', 'zh', 'km'] }, r.settings || {});
+  D.settings = Object.assign({ open: true, reviewMode: false, activeLangs: ['ko', 'vi', 'zh', 'km'] }, r.settings || {});
   D.responses = r.responses || []; D.contacts = r.contacts || [];
-  R = D.responses.map((o) => ({ rid: o['응답ID'], ts: String(o['제출시각'] || ''), lang: o['언어'] || '', dur: Number(o['소요시간(초)']) || 0, ans: parseRow(D.survey, o) }));
+  D.reviewCount = D.responses.filter((o) => o['구분'] === '검토').length;
+  R = D.responses.filter((o) => o['구분'] !== '검토').map((o) => ({ rid: o['응답ID'], ts: String(o['제출시각'] || ''), lang: o['언어'] || '', dur: Number(o['소요시간(초)']) || 0, ans: parseRow(D.survey, o) }));
   if (!dirty) E = clone(D.survey);
   $('#tabs').hidden = false; $('#reload').hidden = $('#logout').hidden = false;
   route();
@@ -835,7 +846,7 @@ function route() {
   ({ dash: dashView, items: itemsView, responses: respView, report: reportView, settings: settingsView }[v] || dashView)();
 }
 
- 
+/* ---------------- 통계 ---------------- */
 const item = (id) => D.survey.items.find((i) => i.id === id);
 function stat(it, rows) {
   const vals = rows.map((r) => r.ans[it.id]).filter((v) => v != null && v !== '');
@@ -874,6 +885,8 @@ function dashView() {
   const scales = D.survey.items.filter((i) => i.type === 'scale' && !/^D/.test(i.id)).map((i) => stat(i, R));
   $('#main').innerHTML = `<h2>응답 현황</h2><p class="lede">${Api.demo ? '데모 데이터 기준입니다. 설정 탭에서 샘플 응답을 만들거나 지울 수 있습니다.' : '구글 시트에 저장된 응답 기준입니다.'}</p>
   ${D.settings.open ? '' : '<div class="warn">현재 설문이 <b>마감</b> 상태입니다. 설정 탭에서 다시 열 수 있습니다.</div>'}
+  ${D.settings.reviewMode ? '<div class="warn"><b>검토 모드</b>가 켜져 있습니다. 학생 배포 전에 설정 탭에서 꺼 주세요.</div>' : ''}
+  ${D.reviewCount ? `<p class="hint">검토 모드로 제출된 응답 ${D.reviewCount}건은 모든 집계에서 제외됩니다(시트에는 구분=검토로 남아 있음).</p>` : ''}
   <div class="grid g4"><div class="panel kpi hi"><b>${n}</b><span>총 응답</span></div><div class="panel kpi"><b>${td}</b><span>오늘 응답</span></div>
   <div class="panel kpi"><b>${avgDur ? avgDur.toFixed(1) : '-'}<small style="font-size:16px"> 분</small></b><span>평균 소요시간</span></div><div class="panel kpi"><b>${D.contacts.length}</b><span>추첨 연락처 등록</span></div></div>
   <div class="grid g2" style="margin-top:14px">
@@ -1119,6 +1132,9 @@ function settingsView() {
   <div class="grid g2"><div class="panel"><h3>설문 상태</h3>
     <label class="chk" style="display:flex;gap:10px;align-items:center;margin-bottom:10px"><input type="radio" name="open" value="1" ${st.open ? 'checked' : ''}> 응답 받는 중</label>
     <label class="chk" style="display:flex;gap:10px;align-items:center"><input type="radio" name="open" value="0" ${st.open ? '' : 'checked'}> 마감 (안내 문구만 표시)</label>
+    <h3 style="margin-top:20px">검토 모드</h3>
+    <label style="display:flex;gap:10px;align-items:flex-start;margin:0 0 6px"><input type="checkbox" id="rvm" ${st.reviewMode ? 'checked' : ''} style="margin-top:4px"> <span>켜기 — 응답하지 않아도 다음 문항으로 넘어가고, 조건부 문항(Q12-1·Q13 등)도 모두 표시합니다. 이때 제출된 응답은 <b>구분=검토</b>로 저장되어 통계에서 제외됩니다.</span></label>
+    <p class="hint">문항 검토·피드백 기간에만 켜고, 학생 배포 전에는 반드시 끄세요.</p>
     <h3 style="margin-top:20px">공개 언어</h3><p class="hint" style="margin-top:-6px">번역을 마친 언어만 켜세요. 미리보기에서는 모든 언어를 볼 수 있습니다.</p>
     ${LANGS.map((l) => `<label style="display:flex;gap:10px;align-items:center;margin:6px 0"><input type="checkbox" data-lang="${l.code}" ${(st.activeLangs || []).includes(l.code) ? 'checked' : ''} ${l.code === 'ko' ? 'disabled' : ''}> ${esc(l.name)} <span class="hint">번역 ${l.code === 'ko' ? 100 : transRate(l.code)}%</span></label>`).join('')}
     <div class="bar" style="margin-top:14px"><button class="btn pri" id="ss">설정 저장</button></div></div>
@@ -1131,7 +1147,7 @@ function settingsView() {
     ${Api.demo ? `<h3 style="margin-top:20px">데모 도구</h3><div class="bar"><button class="btn dark" id="seed">샘플 응답 60건 만들기</button><button class="btn" id="rst">데모 데이터 모두 지우기</button></div><p class="hint">샘플 응답은 화면 확인용 가상 데이터입니다.</p>`
       : `<h3 style="margin-top:20px">시트 초기 등록</h3><div class="bar"><button class="btn dark" id="seedQ">기본 문항을 시트에 등록</button></div><p class="hint">시트 Questions 탭이 비어 있을 때 한 번 실행하세요.</p>`}</div></div>`;
   $('#ss').onclick = async () => {
-    const s = { open: $('input[name=open]:checked').value === '1', activeLangs: ['ko', ...$$('input[data-lang]:checked').map((x) => x.dataset.lang).filter((x) => x !== 'ko')] };
+    const s = { open: $('input[name=open]:checked').value === '1', reviewMode: $('#rvm').checked, activeLangs: ['ko', ...$$('input[data-lang]:checked').map((x) => x.dataset.lang).filter((x) => x !== 'ko')] };
     try { await Api.request('saveSettings', { pw: PW, settings: s }); D.settings = s; toast('설정을 저장했습니다.'); } catch (e) { toast('저장 실패: ' + e.message); }
   };
   $('#cu').onclick = () => copy(base + (window.APP_URL ? '' : 'index.html'));
