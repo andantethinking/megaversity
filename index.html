@@ -125,7 +125,7 @@ p,li,.tx,.qt,.hint{text-wrap:pretty}
 .pull i{margin-top:-46px;width:40px;height:40px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;opacity:0;transform:scale(.6);transition:opacity .15s,transform .15s;box-shadow:0 8px 18px -8px rgba(47,84,235,.9)}
 .pull i.on{opacity:1;transform:scale(1)}
 .pull i svg{width:20px;height:20px}
-.qwrap{padding:14px 0 120px}
+.qwrap{padding:14px 0 110px}
 .qh{margin:6px 2px 18px}
 .tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
 .tag{font-size:12.5px;font-weight:800;padding:4px 10px;border-radius:99px;background:var(--ink);color:#fff;white-space:nowrap}
@@ -157,13 +157,34 @@ textarea.field{min-height:150px;resize:vertical;line-height:1.55}
 .err{color:var(--coral);font-weight:700;font-size:14.5px;margin:12px 2px 0}
 .shake{animation:sh .35s}
 @keyframes sh{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+.fnav{position:fixed;left:0;right:0;bottom:0;z-index:9;pointer-events:none;padding:0 0 calc(16px + env(safe-area-inset-bottom))}
+.fnav .wrap{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.fab{pointer-events:auto;flex:none;width:58px;height:58px;border-radius:50%;border:0;background:var(--blue);color:#fff;display:grid;place-items:center;box-shadow:0 10px 22px -8px rgba(47,84,235,.75);transition:transform .12s,background .15s}
+.fab svg{width:24px;height:24px}
+.fab:active{transform:scale(.94)}
+.fab.gh{background:#fff;color:var(--ink);box-shadow:var(--sh)}
+.fab.gh[hidden]{display:grid;visibility:hidden}
+.fab.pill{width:auto;border-radius:999px;padding:0 22px 0 24px;display:flex;align-items:center;gap:8px;font-weight:800;font-size:17px}
+.fab.pill svg{width:20px;height:20px}
+.fhint{flex:1;display:flex;flex-direction:column;align-items:center;gap:0;font-size:12px;font-weight:700;color:var(--mute);text-align:center;line-height:1.3}
+.fhint svg{width:20px;height:20px;color:var(--blue);animation:bob 1.4s ease-in-out infinite}
+.cardview{padding:12px 0 104px}
+.cardview .cn{min-height:calc(100dvh - 196px);box-shadow:var(--sh)}
+.orgs{display:flex;justify-content:center;align-items:flex-end;gap:22px;flex-wrap:wrap;background:#fff;border-radius:var(--r);box-shadow:var(--sh);padding:16px;margin-top:14px}
+.orgs figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:6px}
+.orgs img{height:42px;max-width:170px;object-fit:contain}
+.orgs figcaption{font-size:11.5px;color:var(--mute);font-weight:600}
+.cn .orgs{box-shadow:none;background:rgba(255,255,255,.75);margin:auto 0 0}
+.hlogos{position:absolute;right:0;top:0;display:flex;gap:6px;background:#fff;border-radius:12px;padding:6px 10px;box-shadow:0 4px 14px -6px rgba(0,0,0,.3)}
+.hlogos img{height:22px;max-width:90px;object-fit:contain}
+@media(max-width:520px){.hlogos{display:none}}
 .dock{position:fixed;left:0;right:0;bottom:0;z-index:9;background:linear-gradient(to top,var(--bg) 70%,rgba(245,246,251,0));padding:18px 0 calc(14px + env(safe-area-inset-bottom))}
 .dock .wrap{display:flex;gap:10px}
 .dock .cta{margin:0}
 .ghost{flex:none;min-height:58px;padding:0 18px;border-radius:16px;border:0;background:var(--card);box-shadow:var(--sh);font-weight:700;color:var(--mute)}
 
 /* 파트 시작 */
-.part{padding:26px 0 120px;text-align:left}
+.part{padding:26px 0 110px;text-align:left}
 .pnum{display:inline-flex;align-items:center;gap:8px;background:var(--sun);color:var(--ink);font-weight:800;border-radius:99px;padding:6px 14px;font-size:14px}
 .part h2{font-size:clamp(26px,7vw,34px);line-height:1.25;margin:16px 0 8px;font-weight:800;text-wrap:balance}
 :lang(km) .part h2{font-size:clamp(22px,6vw,28px);line-height:1.6}
@@ -884,10 +905,10 @@ const ADMIN_URL = window.APP_URL ? APP_URL + '?page=admin' : 'admin.html';
 
 /* 이 페이지에서 새로 쓰는 문구 */
 const X = {
-  ko: { up:'위로 밀어 다음 문항', intro:'조사 안내', swipe:'옆으로 넘겨 보세요', ready:'이제 설문을 시작해 볼까요?', readySub:'안내를 모두 읽어 주셔서 감사합니다. 솔직한 경험을 들려주세요.', hello:'안녕하세요!', sub:'MEGAversity에 참여한 여러분의 경험을 들려주세요. 여러분의 의견이 더 좋은 수업과 생활 지원으로 이어집니다.', c1:'약 10분', c2:'{n}개 문항', c3:'기프티콘 추첨', pick:'편한 언어를 선택하세요', more:'조사 안내 자세히 보기', anon:'응답 내용은 통계 목적으로만 사용됩니다.', part:'파트 {n}', left:'약 {n}분 남음', skip:'건너뛰기', go:'시작하기', giftOn:'기프티콘 추첨에 참여했어요', lang:'언어 선택', last:'마지막 문항이에요' },
-  vi: { up:'Vuốt lên để sang câu tiếp', intro:'Giới thiệu khảo sát', swipe:'Vuốt sang để xem tiếp', ready:'Bắt đầu khảo sát nhé?', readySub:'Cảm ơn bạn đã đọc hết phần giới thiệu. Hãy chia sẻ trải nghiệm thật của bạn.', hello:'Xin chào!', sub:'Hãy chia sẻ trải nghiệm của bạn khi tham gia MEGAversity. Ý kiến của bạn sẽ giúp lớp học và các hỗ trợ cuộc sống trở nên tốt hơn.', c1:'Khoảng 10 phút', c2:'{n} câu hỏi', c3:'Bốc thăm quà tặng', pick:'Chọn ngôn ngữ bạn thấy thoải mái', more:'Xem chi tiết hướng dẫn khảo sát', anon:'Câu trả lời chỉ được sử dụng cho mục đích thống kê.', part:'Phần {n}', left:'Còn khoảng {n} phút', skip:'Bỏ qua', go:'Bắt đầu', giftOn:'Bạn đã tham gia bốc thăm quà tặng', lang:'Chọn ngôn ngữ', last:'Đây là câu hỏi cuối cùng' },
-  zh: { up:'上滑进入下一题', intro:'调查说明', swipe:'左右滑动查看', ready:'现在开始答题吧？', readySub:'感谢你读完说明，请真实地分享你的经历。', hello:'你好！', sub:'请分享你参加 MEGAversity 的经历。你的意见将帮助我们把课程和生活支援做得更好。', c1:'约 10 分钟', c2:'{n} 道题', c3:'礼品券抽奖', pick:'请选择你习惯的语言', more:'查看调查说明详情', anon:'回答内容仅用于统计目的。', part:'第 {n} 部分', left:'还剩约 {n} 分钟', skip:'跳过', go:'开始', giftOn:'你已参加礼品券抽奖', lang:'选择语言', last:'这是最后一题' },
-  km: { up:'អូសឡើងលើ ដើម្បីទៅសំណួរបន្ទាប់', intro:'ការណែនាំអំពីការស្ទង់មតិ', swipe:'អូសទៅចំហៀងដើម្បីមើលបន្ត', ready:'តោះចាប់ផ្តើមការស្ទង់មតិ?', readySub:'សូមអរគុណដែលបានអានការណែនាំទាំងអស់។ សូមចែករំលែកបទពិសោធន៍ពិតរបស់អ្នក។', hello:'សួស្តី!', sub:'សូមចែករំលែកបទពិសោធន៍របស់អ្នកក្នុងការចូលរួម MEGAversity។ មតិរបស់អ្នកនឹងជួយកែលម្អការសិក្សា និងការគាំទ្រការរស់នៅឱ្យកាន់តែប្រសើរ។', c1:'ប្រហែល ១០ នាទី', c2:'{n} សំណួរ', c3:'ចាប់ឆ្នោតកាតអំណោយ', pick:'សូមជ្រើសរើសភាសាដែលអ្នកងាយស្រួល', more:'មើលការណែនាំលម្អិតអំពីការស្ទង់មតិ', anon:'ចម្លើយត្រូវបានប្រើសម្រាប់គោលបំណងស្ថិតិតែប៉ុណ្ណោះ។', part:'ផ្នែកទី {n}', left:'នៅសល់ប្រហែល {n} នាទី', skip:'រំលង', go:'ចាប់ផ្តើម', giftOn:'អ្នកបានចូលរួមការចាប់ឆ្នោតកាតអំណោយ', lang:'ជ្រើសរើសភាសា', last:'នេះជាសំណួរចុងក្រោយ' }
+  ko: { upCard:'위로 밀어 다음 장', org1:'조사기관', org2:'조사 수행기관', up:'위로 밀어 다음 문항', intro:'조사 안내', swipe:'옆으로 넘겨 보세요', ready:'이제 설문을 시작해 볼까요?', readySub:'안내를 모두 읽어 주셔서 감사합니다. 솔직한 경험을 들려주세요.', hello:'안녕하세요!', sub:'MEGAversity에 참여한 여러분의 경험을 들려주세요. 여러분의 의견이 더 좋은 수업과 생활 지원으로 이어집니다.', c1:'약 10분', c2:'{n}개 문항', c3:'기프티콘 추첨', pick:'편한 언어를 선택하세요', more:'조사 안내 자세히 보기', anon:'응답 내용은 통계 목적으로만 사용됩니다.', part:'파트 {n}', left:'약 {n}분 남음', skip:'건너뛰기', go:'시작하기', giftOn:'기프티콘 추첨에 참여했어요', lang:'언어 선택', last:'마지막 문항이에요' },
+  vi: { upCard:'Vuốt lên để xem tiếp', org1:'Cơ quan khảo sát', org2:'Đơn vị thực hiện', up:'Vuốt lên để sang câu tiếp', intro:'Giới thiệu khảo sát', swipe:'Vuốt sang để xem tiếp', ready:'Bắt đầu khảo sát nhé?', readySub:'Cảm ơn bạn đã đọc hết phần giới thiệu. Hãy chia sẻ trải nghiệm thật của bạn.', hello:'Xin chào!', sub:'Hãy chia sẻ trải nghiệm của bạn khi tham gia MEGAversity. Ý kiến của bạn sẽ giúp lớp học và các hỗ trợ cuộc sống trở nên tốt hơn.', c1:'Khoảng 10 phút', c2:'{n} câu hỏi', c3:'Bốc thăm quà tặng', pick:'Chọn ngôn ngữ bạn thấy thoải mái', more:'Xem chi tiết hướng dẫn khảo sát', anon:'Câu trả lời chỉ được sử dụng cho mục đích thống kê.', part:'Phần {n}', left:'Còn khoảng {n} phút', skip:'Bỏ qua', go:'Bắt đầu', giftOn:'Bạn đã tham gia bốc thăm quà tặng', lang:'Chọn ngôn ngữ', last:'Đây là câu hỏi cuối cùng' },
+  zh: { upCard:'上滑查看下一页', org1:'调查机构', org2:'执行机构', up:'上滑进入下一题', intro:'调查说明', swipe:'左右滑动查看', ready:'现在开始答题吧？', readySub:'感谢你读完说明，请真实地分享你的经历。', hello:'你好！', sub:'请分享你参加 MEGAversity 的经历。你的意见将帮助我们把课程和生活支援做得更好。', c1:'约 10 分钟', c2:'{n} 道题', c3:'礼品券抽奖', pick:'请选择你习惯的语言', more:'查看调查说明详情', anon:'回答内容仅用于统计目的。', part:'第 {n} 部分', left:'还剩约 {n} 分钟', skip:'跳过', go:'开始', giftOn:'你已参加礼品券抽奖', lang:'选择语言', last:'这是最后一题' },
+  km: { upCard:'អូសឡើងលើ ដើម្បីមើលបន្ត', org1:'ស្ថាប័នស្ទង់មតិ', org2:'ស្ថាប័នអនុវត្ត', up:'អូសឡើងលើ ដើម្បីទៅសំណួរបន្ទាប់', intro:'ការណែនាំអំពីការស្ទង់មតិ', swipe:'អូសទៅចំហៀងដើម្បីមើលបន្ត', ready:'តោះចាប់ផ្តើមការស្ទង់មតិ?', readySub:'សូមអរគុណដែលបានអានការណែនាំទាំងអស់។ សូមចែករំលែកបទពិសោធន៍ពិតរបស់អ្នក។', hello:'សួស្តី!', sub:'សូមចែករំលែកបទពិសោធន៍របស់អ្នកក្នុងការចូលរួម MEGAversity។ មតិរបស់អ្នកនឹងជួយកែលម្អការសិក្សា និងការគាំទ្រការរស់នៅឱ្យកាន់តែប្រសើរ។', c1:'ប្រហែល ១០ នាទី', c2:'{n} សំណួរ', c3:'ចាប់ឆ្នោតកាតអំណោយ', pick:'សូមជ្រើសរើសភាសាដែលអ្នកងាយស្រួល', more:'មើលការណែនាំលម្អិតអំពីការស្ទង់មតិ', anon:'ចម្លើយត្រូវបានប្រើសម្រាប់គោលបំណងស្ថិតិតែប៉ុណ្ណោះ។', part:'ផ្នែកទី {n}', left:'នៅសល់ប្រហែល {n} នាទី', skip:'រំលង', go:'ចាប់ផ្តើម', giftOn:'អ្នកបានចូលរួមការចាប់ឆ្នោតកាតអំណោយ', lang:'ជ្រើសរើសភាសា', last:'នេះជាសំណួរចុងក្រោយ' }
 };
 
 /* 표시용 텍스트: 이스케이프 + 괄호 묶음은 앞 어절과 함께 줄바꿈되지 않게 */
@@ -1010,6 +1031,7 @@ function welcomeView() {
   $('#app').innerHTML = rvBar() + `
   <header class="hero"><div class="hin">
     <div class="brand"><i>M</i>MEGAversity <span>· ${fmt(T(m.kicker))}</span></div>
+    ${logoList().length ? `<div class="hlogos">${logoList().map((x) => `<img src="${esc(x.src)}" alt="${esc(x.cap)}">`).join('')}</div>` : ''}
     ${heroArt()}
     <h1>${fmt(T(m.title))}</h1>
     <p class="sub">${fmt(U('sub'))}</p>
@@ -1021,6 +1043,7 @@ function welcomeView() {
       <button class="cta" id="go">${esc(L('start'))} ${ICON.arrow}</button>
       <p class="anon">${esc(U('anon'))}</p>
     </section>
+    ${orgsHtml()}
     <p class="foot">MEGAversity · RISE · <a href="${esc(ADMIN_URL)}"${window.APP_URL ? ' target="_top"' : ''}>admin</a></p>
   </main>`;
   document.querySelectorAll('.lg').forEach((b) => b.onclick = () => { S.lang = b.dataset.lang; saveDraft(); welcomeView(); document.documentElement.lang = S.lang; });
@@ -1030,6 +1053,24 @@ function welcomeView() {
     if (S.cur && st.some((s) => s.key === S.cur)) return go(S.cur, 1);
     S.view = 'intro'; S.card = 0; S.dir = 1; saveDraft(); render(); window.scrollTo(0, 0);
   };
+}
+function logoList() {
+  const m = S.survey.meta || {};
+  return [['logo_kw', 'org1'], ['logo_kiet', 'org2']].filter(([k]) => m[k] && m[k].ko).map(([k, c]) => ({ src: m[k].ko, cap: U(c) }));
+}
+function orgsHtml(extra = '') {
+  const l = logoList(); if (!l.length) return '';
+  return `<div class="orgs ${extra}">${l.map((x) => `<figure><img src="${esc(x.src)}" alt="${esc(x.cap)}"><figcaption>${fmt(x.cap)}</figcaption></figure>`).join('')}</div>`;
+}
+const ICON2 = {
+  up: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg>',
+  down: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>'
+};
+/* 하단 좌(이전)·우(다음) 원형 버튼. 마지막 동작은 글자가 있는 알약 버튼 */
+function navHtml(o) {
+  const right = o.pill ? `<button class="fab pill" id="nx">${esc(o.pill)} ${ICON.arrow}</button>` : `<button class="fab" id="nx" aria-label="${esc(L('next'))}" title="${esc(L('next'))}">${ICON2.down}</button>`;
+  return `<nav class="fnav"><div class="wrap"><button class="fab gh" id="pvb" aria-label="${esc(L('prev'))}" title="${esc(L('prev'))}" ${o.noPrev ? 'hidden' : ''}>${ICON2.up}</button>
+    <span class="fhint">${o.hint ? `${ICON.up}<span>${fmt(U(o.hintKey || 'up'))}</span>` : ''}</span>${right}</div></nav><div class="pull"><i id="pullI">${ICON.up}</i></div>`;
 }
 function rvBar() {
   return RV() ? '<div class="rv"><b>검토 모드</b> 응답하지 않아도 넘어갈 수 있고 조건부 문항도 모두 보입니다 · Review mode</div>' : '';
@@ -1077,7 +1118,7 @@ function cardHtml(c, i, n) {
     const m = S.survey.meta;
     return `<article class="cn sun" aria-label="${i + 1} / ${n}"><p class="kk"><i>${i + 1} / ${n}</i></p><h2>${fmt(U('ready'))}</h2><p>${fmt(U('readySub'))}</p>
       <p class="notice2">${fmt(T(m.notice))}</p><p>${fmt(U('anon'))}</p>
-      <p class="sig"><b>${fmt(T(m.org))}</b><br>${fmt(T(m.date))}</p></article>`;
+      <p class="sig"><b>${fmt(T(m.org))}</b><br>${fmt(T(m.date))}</p>${orgsHtml()}</article>`;
   }
   const cls = c.kind === 'hello' ? 'cn blue' : 'cn';
   const body = c.blocks.map((b) => b.t === 'ul' ? tileHtml(b.items) : b.t === 'flow' ? flowHtml(b.s) : b.t === 'rem' ? `<p class="rem2">${fmt(b.s)}</p>` : `<p>${fmt(b.s)}</p>`).join('');
@@ -1088,34 +1129,26 @@ function cardHtml(c, i, n) {
 function introView() {
   const cards = introCards(), n = cards.length;
   S.card = Math.min(Math.max(S.card || 0, 0), n - 1);
+  const last = S.card === n - 1;
   $('#app').innerHTML = rvBar() + `<div class="top"><div class="tin">
     <button class="ib" id="back" aria-label="${esc(L('prev'))}">${ICON.back}</button>
-    <div class="ttl">${fmt(U('intro'))}</div>
+    <div class="pg"><div class="bar"><i style="width:${Math.round((S.card + 1) / n * 100)}%"></i></div>
+      <div class="meta"><span>${fmt(U('intro'))}</span><span>${S.card + 1} / ${n}</span></div></div>
     <button class="lbtn" id="lang" aria-label="${esc(U('lang'))}">${ICON.globe}${esc((LANGS.find((l) => l.code === S.lang) || {}).short || 'KO')}</button></div></div>
-  <main class="wrap deckwrap view"><div class="deck" id="deck">${cards.map((c, i) => cardHtml(c, i, n)).join('')}</div>
-    <div class="dots" id="dots">${cards.map((_, i) => `<i class="${i === S.card ? 'on' : ''}"></i>`).join('')}</div>
-    <p class="swipe">${fmt(U('swipe'))}</p></main>
-  <div class="dock"><div class="wrap"><button class="ghost" id="cprev">${esc(L('prev'))}</button><button class="cta" id="cnext"></button></div></div>`;
-  const deck = $('#deck');
-  const setBtn = () => {
-    const last = S.card === n - 1, b = $('#cnext'); if (!b || S.view !== 'intro') return;
-    b.innerHTML = (last ? esc(L('start')) : esc(L('next'))) + ' ' + ICON.arrow;
-    $('#cprev').style.visibility = S.card === 0 ? 'hidden' : 'visible';
-    document.querySelectorAll('#dots i').forEach((d, k) => d.classList.toggle('on', k === S.card));
-  };
-  const toCard = (k, smooth = true) => { S.card = k; deck.scrollTo({ left: deck.children[k].offsetLeft - deck.children[0].offsetLeft, behavior: smooth ? 'smooth' : 'auto' }); setBtn(); saveDraft(); };
-  deck.addEventListener('scroll', () => {
-    clearTimeout(deck.t); deck.t = setTimeout(() => {
-      if (S.view !== 'intro' || !deck.isConnected) return;
-      const k = Math.round(deck.scrollLeft / (deck.children[0].offsetWidth + 12));
-      if (k !== S.card) { S.card = Math.min(n - 1, Math.max(0, k)); setBtn(); saveDraft(); }
-    }, 80);
-  });
-  $('#cnext').onclick = () => { if (S.card < n - 1) toCard(S.card + 1); else { const st = steps(); go(st[0].key, 1); } };
-  $('#cprev').onclick = () => { if (S.card > 0) toCard(S.card - 1); };
-  $('#back').onclick = () => { S.view = 'welcome'; saveDraft(); render(); window.scrollTo(0, 0); };
+  <main class="wrap"><section class="cardview view ${S.dir < 0 ? 'back' : ''}">${cardHtml(cards[S.card], S.card, n)}</section></main>`
+    + navHtml({ pill: last ? L('start') : '', hint: !last && (!S.swiped || S.card < 2), hintKey: 'upCard' });
+  $('#back').onclick = introPrev; $('#pvb').onclick = introPrev; $('#nx').onclick = introNext;
   $('#lang').onclick = langSheet;
-  requestAnimationFrame(() => toCard(S.card, false));
+  window.scrollTo(0, 0);
+}
+function introNext() {
+  const n = introCards().length;
+  if (S.card < n - 1) { S.card++; S.dir = 1; saveDraft(); introView(); return; }
+  const st = steps(); go(st[0].key, 1);
+}
+function introPrev() {
+  if (S.card > 0) { S.card--; S.dir = -1; saveDraft(); introView(); return; }
+  S.view = 'welcome'; saveDraft(); render(); window.scrollTo(0, 0);
 }
 function topBar(st, i) {
   const qs = st.filter((s) => s.kind === 'q'), done = st.slice(0, i + 1).filter((s) => s.kind === 'q').length;
@@ -1132,29 +1165,20 @@ function stepView() {
   const st = steps(); let i = st.findIndex((s) => s.key === S.cur); if (i < 0) i = 0;
   const step = st[i]; S.cur = step.key;
   const isLast = i === st.length - 1;
-  let body = '', dock = '';
+  let body = '';
   if (step.kind === 'section') {
     const n = step.part, pc = partCount();
     body = `<section class="part view ${S.dir < 0 ? 'back' : ''}"><span class="pnum">${esc(U('part', { n }))} / ${pc}</span>
       <h2>${fmt(T(step.it.title).replace(/^[IVX]+\.\s*/, ''))}</h2><p>${fmt(T(step.it.text))}</p>${partArt(n)}
       <div class="plist">${Array.from({ length: pc }, (_, k) => `<i class="${k < n ? 'on' : ''}"></i>`).join('')}</div></section>`;
-    dock = `<button class="cta" id="next">${esc(U('go'))} ${ICON.arrow}</button>`;
   } else {
     body = `<section class="qwrap view ${S.dir < 0 ? 'back' : ''}" id="q">${qHtml(step.it)}<p class="err" id="err" hidden></p></section>`;
-    const it = step.it;
-    const needBtn = RV() || !(it.type === 'scale' || (it.type === 'single' && !otherSelected(it)));
-    const optional = !RV() && !it.required && it.type !== 'contact';
-    if (isLast) dock = `<button class="cta" id="next">${esc(L('submit'))} ${ICON.arrow}</button>`;
-    else if (needBtn || answered(it)) dock = `${optional && !answered(it) ? `<button class="ghost" id="skip">${esc(U('skip'))}</button>` : ''}<button class="cta" id="next" ${!RV() && !optional && !answered(it) && it.type !== 'contact' ? 'disabled' : ''}>${esc(L('next'))} ${ICON.arrow}</button>`;
   }
-  const hint = !S.swiped || st.slice(0, i + 1).filter((x) => x.kind === 'q').length <= 2;
-  $('#app').innerHTML = rvBar() + topBar(st, i) + `<main class="wrap">${body}</main>` + (dock ? `<div class="dock"><div class="wrap">${dock}</div></div>` : '')
-    + (hint && !isLast ? `<div class="swhint">${ICON.up}<span>${fmt(U('up'))}</span></div>` : '') + `<div class="pull"><i id="pullI">${ICON.up}</i></div>`;
-  document.body.classList.toggle('nodock', !dock);
+  const hint = !isLast && (!S.swiped || st.slice(0, i + 1).filter((x) => x.kind === 'q').length <= 2);
+  $('#app').innerHTML = rvBar() + topBar(st, i) + `<main class="wrap">${body}</main>` + navHtml({ pill: isLast ? L('submit') : '', hint });
+  $('#pvb').onclick = prev; $('#nx').onclick = next;
   $('#back').onclick = prev;
   $('#lang').onclick = langSheet;
-  if ($('#next')) $('#next').onclick = next;
-  if ($('#skip')) $('#skip').onclick = next;
   if (step.kind === 'q') bindQ(step.it);
   window.scrollTo(0, 0);
 }
@@ -1198,6 +1222,7 @@ function qHtml(it) {
   return `<div class="qh">${tags}<h2 class="qt">${fmt(T(it.text))}${it.required ? ' <span class="req">*</span>' : ''}</h2></div>${body}`;
 }
 function setNextEnabled(it) {
+  return;
   const b = $('#next'); if (!b) { stepView(); return; }
   if (RV() || !it.required || it.type === 'contact') return;
   b.disabled = !answered(it);
@@ -1224,6 +1249,7 @@ function refreshDock(it) {
   const optional = !it.required;
   const sk = $('#skip');
   if (optional && sk && answered(it)) { sk.remove(); }
+  return;
   setNextEnabled(it);
 }
 function choose(it, v) {
@@ -1273,7 +1299,7 @@ async function next() {
   const st = steps(), i = st.findIndex((s) => s.key === S.cur), step = st[i];
   if (step.kind === 'q' && !validate(step.it)) return;
   if (i < st.length - 1) return go(st[i + 1].key, 1);
-  const btn = $('#next'); btn.disabled = true; btn.textContent = L('sending');
+  const btn = $('#nx'); btn.disabled = true; btn.textContent = L('sending');
   try {
     const gift = S.contact.consent === 'Y' && S.contact.phone;
     if (!PREVIEW) {
@@ -1290,7 +1316,7 @@ function doneView() {
     <svg class="ok" viewBox="0 0 96 96" aria-hidden="true"><circle cx="48" cy="48" r="46" fill="#2f54eb"/><circle cx="48" cy="48" r="36" fill="#5f86ff"/><path d="M30 49l12 12 25-27" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg>
     <h2>${esc(L('doneTitle'))}</h2><p>${fmt(T(S.survey.meta.thanks) || L('doneBody'))}</p>
     ${S.gift ? `<span class="badge">${esc(U('giftOn'))}</span>` : ''}
-    <div style="margin-top:28px"><button class="ghost" id="again">${esc(L('again'))}</button></div></main><div class="conf" id="conf"></div>`;
+    <div style="margin-top:28px"><button class="ghost" id="again">${esc(L('again'))}</button></div>${orgsHtml()}</main><div class="conf" id="conf"></div>`;
   $('#again').onclick = () => { S.view = 'welcome'; render(); window.scrollTo(0, 0); };
   if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
     const cols = ['#2f54eb', '#ffcc33', '#1fbf9f', '#ff8a65', '#5f86ff'];
@@ -1317,7 +1343,10 @@ function langSheet() {
     if (el && !matchMedia('(prefers-reduced-motion: reduce)').matches) { el.classList.remove('drag'); el.style.transform = ''; el.classList.add(up ? 'fly' : 'flyb'); setTimeout(() => { busy = false; fn(); }, 200); }
     else { busy = false; fn(); }
   };
-  const canSwipe = (e) => S.view === 'step' && !document.querySelector('.sheet') && !(e.target.closest && e.target.closest('textarea,input'));
+  const SW_VIEWS = ['step', 'intro', 'welcome'];
+  const canSwipe = (e) => SW_VIEWS.includes(S.view) && !document.querySelector('.sheet') && !(e.target.closest && e.target.closest('textarea,input'));
+  const goNext = () => { if (S.view === 'intro') introNext(); else if (S.view === 'welcome') { const g = $('#go'); if (g) g.click(); } else next(); };
+  const goPrev = () => { if (S.view === 'intro') introPrev(); else if (S.view === 'step') prev(); };
   document.addEventListener('touchstart', (e) => {
     if (!canSwipe(e) || e.touches.length !== 1) { y0 = null; return; }
     y0 = e.touches[0].clientY; x0 = e.touches[0].clientX; t0 = Date.now(); atBottom = edgeB(); atTop = edgeT(); v = $('.view');
@@ -1336,34 +1365,35 @@ function langSheet() {
     const t = e.changedTouches[0], dy = t.clientY - y0, dx = t.clientX - x0, th = Date.now() - t0 < 350 ? 45 : 80;
     y0 = null;
     if (Math.abs(dx) > Math.abs(dy)) { reset(); return; }
-    if (dy < -th && atBottom) { const ok = trySwipeNext(); if (ok) fly(true, next); else reset(); }
-    else if (dy > th && atTop) fly(false, prev);
+    if (dy < -th && atBottom) { const ok = trySwipeNext(); if (ok) fly(true, goNext); else reset(); }
+    else if (dy > th && atTop && S.view !== 'welcome') fly(false, goPrev);
     else reset();
   });
   /* PC: 휠을 끝까지 내린 뒤 한 번 더 굴리면 다음 */
   let acc = 0, cool = 0;
   addEventListener('wheel', (e) => {
-    if (S.view !== 'step' || document.querySelector('.sheet') || Date.now() < cool) return;
+    if (!SW_VIEWS.includes(S.view) || document.querySelector('.sheet') || Date.now() < cool) return;
     if (e.deltaY > 0 && edgeB()) acc += e.deltaY; else if (e.deltaY < 0 && edgeT()) acc += e.deltaY; else { acc = 0; return; }
-    if (acc > 140) { acc = 0; cool = Date.now() + 900; if (trySwipeNext()) fly(true, next); }
-    else if (acc < -140) { acc = 0; cool = Date.now() + 900; fly(false, prev); }
+    if (acc > 140) { acc = 0; cool = Date.now() + 900; if (trySwipeNext()) fly(true, goNext); }
+    else if (acc < -140 && S.view !== 'welcome') { acc = 0; cool = Date.now() + 900; fly(false, goPrev); }
   }, { passive: true });
   function trySwipeNext() {
+    if (S.view !== 'step') return true;
     const st = steps(), i = st.findIndex((x) => x.key === S.cur), step = st[i];
-    if (!step || i === st.length - 1) { if (step && step.kind === 'q' && validate(step.it)) { const b = $('#next'); if (b) b.focus(); } return false; }
+    if (!step || i === st.length - 1) { if (step && step.kind === 'q' && validate(step.it)) { const b = $('#nx'); if (b) b.focus(); } return false; }
     return step.kind === 'section' || validate(step.it);
   }
 })();
 document.addEventListener('keydown', (e) => {
   if (S.view === 'intro' && !document.querySelector('.sheet')) {
-    if (e.key === 'ArrowRight' || e.key === 'Enter') { e.preventDefault(); $('#cnext').click(); }
-    if (e.key === 'ArrowLeft') { e.preventDefault(); $('#cprev').click(); }
+    if (['ArrowRight', 'ArrowDown', 'Enter'].includes(e.key)) { e.preventDefault(); introNext(); }
+    if (['ArrowLeft', 'ArrowUp'].includes(e.key)) { e.preventDefault(); introPrev(); }
     return;
   }
   if (S.view !== 'step' || document.querySelector('.sheet')) return;
   const tag = (e.target.tagName || '').toLowerCase(); if (tag === 'input' || tag === 'textarea') return;
   const st = steps(), step = st.find((s) => s.key === S.cur); if (!step) return;
-  if (e.key === 'Enter') { const b = $('#next'); if (b && !b.disabled) next(); return; }
+  if (e.key === 'Enter') { next(); return; }
   if (step.kind === 'q' && /^[1-9]$/.test(e.key)) { const b = document.querySelectorAll('.opt[data-v]')[Number(e.key) - 1]; if (b && !b.disabled) b.click(); }
 });
 
