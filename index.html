@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MEGAversity 유학생 만족도 조사</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Sans&#43;KR:wght@400;500;700&amp;family=Noto&#43;Sans&#43;Khmer:wght@400;600&amp;family=Noto&#43;Sans&#43;SC:wght@400;600&amp;display=swap">
+<style>
+ 
+:root{color-scheme:light dark;
+ --bg:light-dark(#eef0f5,#070f26);--paper:light-dark(#fff,#0f1a3a);--ink:light-dark(#0e1530,#e8ecf7);
+ --mute:light-dark(#5a6380,#9aa4c4);--line:light-dark(#dde1ec,#24305a);--band:#0b1f4b;--band2:#13306e;
+ --acc:#e0115f;--accSoft:light-dark(#fde7ef,#3a0f24);--sel:light-dark(#0b1f4b,#e8ecf7);--selInk:light-dark(#fff,#0b1f4b)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Pretendard,"Pretendard Variable","Noto Sans KR","Noto Sans Khmer","Noto Sans SC",system-ui,sans-serif;overflow-x:clip;word-break:keep-all;overflow-wrap:break-word}
+:lang(zh) body,:lang(zh) *{word-break:normal}:lang(km) body,:lang(km) *{word-break:normal;line-height:1.8}
+button,input,textarea{font:inherit;color:inherit}
+.band{background:var(--band);color:#fff;padding:clamp(28px,5vw,56px) max(5vw,16px) 28px}
+.wrap{max-width:760px;margin:0 auto}
+.kicker{font-size:14px;opacity:.8;margin:0 0 8px}
+h1{font-size:clamp(26px,5vw,40px);line-height:1.2;margin:0 0 12px;text-wrap:balance;font-weight:700}
+.org{font-size:14px;opacity:.85;margin:0}
+.langs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-top:22px;max-width:560px}
+.langs button{border:1px solid rgba(255,255,255,.35);background:transparent;color:#fff;border-radius:999px;padding:8px 6px;min-height:42px;cursor:pointer;font-size:14px;white-space:nowrap}
+.langs button[aria-pressed=true]{background:#fff;color:var(--band);border-color:#fff;font-weight:700}
+.langs button:disabled{opacity:.45;cursor:not-allowed}
+.langs small{font-size:11px;margin-left:4px}
+.ll{grid-column:1/-1;font-size:12.5px;opacity:.75}
+.prog{position:sticky;top:0;z-index:5;background:var(--paper);border-bottom:1px solid var(--line)}
+.prog .wrap{display:flex;align-items:center;gap:12px;padding:10px max(5vw,16px)}
+.bar{flex:1;height:6px;border-radius:9px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--acc);transition:width .3s}
+.prog span{font-size:13px;color:var(--mute);white-space:nowrap}
+main{padding:24px max(4vw,12px) 80px}
+.paper{background:var(--paper);border-radius:14px;padding:clamp(20px,4vw,40px);box-shadow:0 1px 0 var(--line),0 10px 30px -18px rgba(11,31,75,.35)}
+.notice{font-size:13px;color:var(--mute);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:0 0 22px}
+.intro p{margin:0 0 12px}.intro h3{font-size:19px;margin:26px 0 10px;color:var(--acc)}.intro h4{font-size:16px;margin:18px 0 6px}
+.intro ul{margin:0 0 12px;padding-left:20px}.intro li{margin:4px 0}.intro .rem{font-size:13px;color:var(--mute);margin-top:18px}
+.date{margin-top:22px;font-weight:600;text-align:right}
+.sec-head{margin:0 0 6px}.sec-head h2{font-size:clamp(21px,3.4vw,26px);line-height:1.3;margin:0}
+.sec-head p{margin:4px 0 0;color:var(--mute);font-size:14px}
+.q{padding:26px 0;border-top:1px solid var(--line)}
+.q:first-of-type{border-top:0}
+.q.sub{padding-left:clamp(10px,3vw,28px)}
+.q[hidden]{display:none}
+.qh{display:flex;gap:10px;align-items:flex-start;margin-bottom:14px}
+.no{flex:none;font-weight:700;font-size:13px;background:var(--band);color:#fff;border-radius:6px;padding:3px 8px;margin-top:2px;white-space:nowrap}
+.sub .no{background:transparent;color:var(--band);border:1.5px solid var(--band)}
+:root[data-theme=dark] .sub .no{color:#e8ecf7;border-color:#e8ecf7}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]) .sub .no{color:#e8ecf7;border-color:#e8ecf7}}
+.qt{font-size:17px;font-weight:600;line-height:1.55}
+.qt b{color:var(--acc);font-weight:700;margin-right:4px}
+.note{display:inline-block;font-size:12.5px;font-weight:500;color:var(--mute);border:1px solid var(--line);border-radius:999px;padding:1px 9px;margin-left:6px;vertical-align:2px}
+.req{color:var(--acc)}
+.scale{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.scale button{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;padding:12px 6px;min-height:92px;border:1.5px solid var(--line);background:var(--paper);border-radius:10px;cursor:pointer;font-size:13.5px;line-height:1.35}
+.scale button em{font-style:normal;font-weight:700;font-size:18px}
+.scale button[aria-checked=true]{background:var(--sel);color:var(--selInk);border-color:var(--sel)}
+.opts{display:grid;gap:8px}
+.opt{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;min-height:48px;border:1.5px solid var(--line);border-radius:10px;cursor:pointer;line-height:1.45}
+.opt input{width:20px;height:20px;margin:1px 0 0;flex:none;accent-color:var(--acc)}
+.opt:has(input:checked){border-color:var(--acc);background:var(--accSoft)}
+.opt:has(input:disabled){opacity:.45;cursor:not-allowed}
+.other{margin:8px 0 0 46px}
+.counter{font-size:13px;color:var(--mute);margin-top:8px}
+input[type=text],input[type=tel],textarea{width:100%;font-size:16px;border:1.5px solid var(--line);background:var(--paper);border-radius:10px;padding:12px 14px}
+textarea{min-height:120px;resize:vertical}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.err{color:var(--acc);font-size:14px;font-weight:600;margin-top:10px}
+.q.bad .qt{color:var(--acc)}
+.consent{font-size:13.5px;color:var(--mute);background:var(--bg);border-radius:10px;padding:12px 14px;margin:0 0 12px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.nav{display:flex;justify-content:space-between;gap:10px;margin-top:28px}
+.btn{min-height:50px;padding:0 26px;border-radius:10px;border:1.5px solid var(--line);background:var(--paper);cursor:pointer;font-weight:600;font-size:16px}
+.btn.pri{background:var(--acc);border-color:var(--acc);color:#fff;margin-left:auto}
+.btn:disabled{opacity:.6;cursor:wait}
+.done{text-align:center;padding:40px 10px}.done h2{font-size:28px;margin:12px 0}
+.done svg{width:84px;height:84px}
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--band);color:#fff;padding:12px 18px;border-radius:10px;font-size:14px;z-index:9;max-width:90vw}
+.pv{background:var(--acc);color:#fff;text-align:center;font-size:14px;padding:8px}
+.foot{text-align:center;color:var(--mute);font-size:12.5px;margin-top:22px}
+@media(max-width:600px){.scale{grid-template-columns:1fr}.scale button{flex-direction:row;min-height:52px;text-align:left;padding:10px 14px;font-size:15px}.scale button em{font-size:16px;width:22px}.other{margin-left:0}}
+@media(prefers-reduced-motion:reduce){.bar i{transition:none}}
+</style>
+</head>
+<body>
+<div id="pv" class="pv" hidden></div>
+<header class="band"><div class="wrap">
+  <p class="kicker" id="kicker"></p>
+  <h1 id="title">MEGAversity 유학생 만족도 조사</h1>
+  <p class="org" id="org"></p>
+  <div class="langs" id="langs" role="group" aria-label="언어"></div>
+</div></header>
+<div class="prog" id="prog" hidden><div class="wrap"><div class="bar"><i id="barI" style="width:0"></i></div><span id="stepTxt"></span></div></div>
+<main><div class="wrap"><div class="paper" id="app"><p>불러오는 중…</p></div>
+<p class="foot">MEGAversity 연합대학 · 교육부 RISE 사업 · <a href="admin.html" id="adminLink" style="color:inherit">관리자</a></p></div></main>
+<div id="toast" class="toast" hidden></div>
+<script>window.APP_PARAMS = {};</script>
+<script>
+
+
+const CONFIG = {
+  API_URL: 'https://script.google.com/macros/s/AKfycbznViu76RBQkllGVUk-A_4ajY1rnLgGShpj_VE-hxbH2F1upghjizTDMC4lQtwjh41Bkg/exec',              
+  DEMO_PASSWORD: 'demo',    
+  VERSION: '0.2.0'
+};
+
+const LANGS = [
+  { code: 'ko', name: '한국어',     short: 'KO', ko: '한국어' },
+  { code: 'vi', name: 'Tiếng Việt', short: 'VI', ko: '베트남어' },
+  { code: 'zh', name: '中文',        short: 'ZH', ko: '중국어' },
+  { code: 'km', name: 'ភាសាខ្មែរ',  short: 'KM', ko: '크메르어(캄보디아)' }
+];
+
+ 
+const UI = {
+  ko: { start:'설문 시작하기', next:'다음', prev:'이전', submit:'제출하기', required:'필수 응답 문항입니다.',
+        maxPick:'최대 {n}개까지 선택할 수 있습니다.', picked:'{n}개 선택', otherPh:'직접 작성해 주세요',
+        textPh:'자유롭게 작성해 주세요', step:'{a} / {b}', time:'소요 시간 약 10분', sending:'제출 중…',
+        doneTitle:'응답이 제출되었습니다', doneBody:'소중한 의견 감사합니다.', again:'처음 화면으로',
+        closed:'현재 설문 응답 기간이 아닙니다.', fail:'제출에 실패했습니다. 잠시 후 다시 시도해 주세요.',
+        restore:'작성 중이던 응답을 불러왔습니다.', preview:'미리보기 모드 — 응답이 저장되지 않습니다.',
+        agree:'동의합니다', disagree:'동의하지 않습니다', phonePh:'010-0000-0000', phoneBad:'휴대전화 번호 형식을 확인해 주세요.',
+        consentNeed:'동의 여부를 선택해 주세요.', soon:'번역 준비 중', lang:'언어', unanswered:'응답하지 않은 문항이 있습니다.' },
+  en: { start:'Start survey', next:'Next', prev:'Back', submit:'Submit', required:'This question is required.',
+        maxPick:'You can choose up to {n}.', picked:'{n} selected', otherPh:'Please specify',
+        textPh:'Write freely', step:'{a} / {b}', time:'About 10 minutes', sending:'Submitting…',
+        doneTitle:'Your response has been submitted', doneBody:'Thank you for your valuable opinion.', again:'Back to start',
+        closed:'The survey is not open at the moment.', fail:'Submission failed. Please try again shortly.',
+        restore:'Your unfinished answers have been restored.', preview:'Preview mode — responses are not saved.',
+        agree:'I agree', disagree:'I do not agree', phonePh:'010-0000-0000', phoneBad:'Please check the phone number format.',
+        consentNeed:'Please choose whether you agree.', soon:'Translation in progress', lang:'Language', unanswered:'Some questions are not answered yet.' }
+};
+function ui(lang, key, vars) {
+  let s = (UI[lang] && UI[lang][key]) || UI.en[key] || UI.ko[key] || key;
+  if (vars) for (const k in vars) s = s.replace('{' + k + '}', vars[k]);
+  return s;
+}
+
+ 
+const DEFAULT_SURVEY = (() => {
+  const L = (ko) => ({ ko });
+  const opts = (arr) => arr.map((s) => {
+    const o = { t: L(s.replace(/^!|\*$/g, '')) };
+    if (s.endsWith('*')) o.other = true;   
+    if (s.startsWith('!')) o.none = true;  
+    return o;
+  });
+  const sec = (id, ko, en) => ({ id, type: 'section', title: L(ko), text: L(en) });
+  const scale = (id, title, text, labels, x = {}) =>
+    ({ id, type: 'scale', title: L(title), text: L(text), options: opts(labels), required: true, ...x });
+  const pick = (id, type, title, text, note, labels, x = {}) =>
+    ({ id, type, title: L(title), text: L(text), note: L(note), options: opts(labels), required: true, ...x });
+
+  const SAT = ['매우 만족', '만족', '보통', '불만족', '매우 불만족'];
+
+  const meta = {
+    kicker: L('교육부 RISE 사업'),
+    title: L('MEGAversity 연합대학 참여 유학생 만족도 조사'),
+    org: L('조사기관 경운대학교 · 조사 수행기관 한국교육공학연구소'),
+    notice: L('통계법 제33조(비밀의 보호 등) — 통계작성과정에서 알려진 사항으로서 개인 또는 법인이나 단체의 비밀에 속하는 사항은 보호되어야 한다.'),
+    intro: L([
+      '안녕하십니까?',
+      "본 설문조사는 교육부 RISE(지역혁신중심대학지원체계) 사업의 일환으로 추진되는 'MEGAversity 연합대학' 프로그램에 참여한 외국인 유학생 여러분의 교육만족도를 진단하고, 향후 유학생 맞춤형 교육과정 고도화 및 지역정주지원정책을 수립하기 위해 실시됩니다.",
+      '## MEGAversity 연합대학사업 소개',
+      '### 1. MEGAversity 연합대학사업이란?',
+      "'MEGAversity 연합대학'은 경운대학교(주관대학), 국립금오공과대학교, 구미대학교 3개 대학이 대학 간 경계를 허물고, 교육자원과 캠퍼스 인프라를 공유·결합하여 운영하는 경북지역 기반 연합교육체계입니다. 유학생 유치수량의 확대를 넘어 교육의 질적 고도화 및 지역정주형 글로벌 인재 양성을 핵심목적으로 하고 있습니다.",
+      '### 2. 주요 교육체계(3대 핵심축)',
+      '- 공동교육과정(교과): 3개 대학연합 교과목 운영(글로벌연합캠퍼스 기반 온·오프라인 병행 및 이동수업)',
+      '- 비교과프로그램: K-Culture 문화체험, 지역산업체 현장견학, 취업·비자 특강, 3개 대학 연합학생 교류',
+      '- 한국어 및 지역학(경북학) 교육: 한국어 어휘·실무능력 강화 및 경북지역 문화·산업이해를 통한 정주기반 마련',
+      '### 3. 사업의 최종목표',
+      '교육(Teaching) → 교류(Networking) → 지원(Support) → 정주(Settlement)의 선순환 체계를 구축하여, 유학생 여러분의 학업 성공을 도모하고 졸업 후 경북지역 내 우수기업 취업 및 안정적인 지역정착을 종합 지원합니다.',
+      '## Survey Guidelines',
+      '- 조사 대상: 경운대학교, 국립금오공과대학교, 구미대학교 MEGAversity 참여 유학생',
+      '- 소요 시간: 약 10분 내외',
+      '※ RISE: 지역혁신중심 대학지원체계(Regional Innovation System & Education)의 약자로, 대학이 지역 혁신의 핵심 주체가 되어 지자체, 산업체와 협력하며 지역 특화 산업과 연계된 인재를 양성하고 지역 발전을 이끄는 것을 목표로 하는 교육부의 지역균형발전 사업'
+    ].join('\n')),
+    date: L('2026년 12월 경운대학교'),
+    thanks: L('소중한 의견 감사합니다.')
+  };
+
+  const items = [
+    sec('S1', 'I. 프로그램 인지도 및 프로그램 세부 만족도', 'Program Awareness & Program Details Satisfaction'),
+    scale('Q1', '', "귀하는 'MEGAversity 연합대학' 사업에 대해 사전에 어느 정도로 알고 계셨습니까?",
+      ['매우 잘 알고 있었다', '어느 정도 알고 있었다', '이름 정도는 들어봤다 (보통)', '잘 몰랐다', '전혀 몰랐다 (이번에 처음 알게 됨)']),
+    pick('Q1-1', 'single', '정보 습득 경로', '본 사업에 대한 정보를 주로 어떤 경로를 통해 처음 접하셨습니까?', '1개 선택',
+      ['소속학과/대학홈페이지 및 공식 공지사항', '대학공식 SNS (인스타그램, 유튜브 등)', '유학생지원센터/국제교류처 안내(메일, 단톡방 등)',
+       '지도교수님 또는 친구·선후배 추천', '캠퍼스 내 포스터, 현수막, 리플렛', '기타*'], { sub: true }),
+    pick('Q1-2', 'single', '참여 결정 계기', '본 프로그램에 참여하게 된 가장 결정적인 계기는 무엇입니까?', '1개 선택',
+      ['타 대학 학생들과의 교류 및 네트워크 형성', '새로운 교과/비교과 학습 경험 및 학점 이수', '한국어능력 향상 및 지역문화(경북학) 이해',
+       '장학금 및 프로그램 참여 혜택 지원', '지도교수/유학생지원센터의 적극 권유'], { sub: true }),
+    scale('Q2', '', "MEGAversity의 '공동 교육과정(수업)' 전반에 대해 얼마나 만족하십니까?", SAT),
+    scale('Q2-1', '수업 내 배려 및 지원', '수업 진행 시 외국인 유학생을 위한 배려(쉬운 한국어 설명, 질의응답 대응 등)가 충분히 제공되었습니까?',
+      ['매우 충분', '충분', '보통', '부족', '매우 부족'], { sub: true }),
+    pick('Q2-2', 'multi', '우선 개선 요인', '공동 교육과정 수업에서 향후 가장 우선적으로 개선되어야 할 부분은 무엇입니까?', '최대 2개 선택',
+      ['강의내용 및 난이도 조절(유학생 한국어 수준 고려)', '교재 및 수업 보조자료의 품질(다국어 번역 및 요약본 제공)', '교수자의 강의 전달력 및 외국인 학생과의 소통',
+       '성적평가 방식의 공정성 및 명확한 기준 안내', '수업 시간표 편성(소속대학 정규수업과의 충돌 방지)', '기타*'], { sub: true, max: 2 }),
+    scale('Q3', '', "3개 대학 학생이 함께 참여하는 '교과(수업)' 프로그램 전반에 대한 귀하의 전반적인 만족도는 어떻습니까?", SAT),
+    scale('Q3-1', '연합 운영 방식의 효과성', '타 대학 학생들과 함께 수업을 듣는 운영 방식(이동수업, 온·오프라인 병행 등)이 학습에 얼마나 효과적이었습니까?',
+      ['매우 효과적임', '효과적임', '보통', '별로 효과적이지 않음', '매우 효과적이지 않음'], { sub: true }),
+    pick('Q3-2', 'single', '수업 참여 애로사항', '연합교과 수업참여 시 느꼈던 가장 큰 어려움은 무엇입니까?', '1개 선택',
+      ['대학 간 이동거리 및 셔틀버스 배차 시간 불편', '소속대학 정규수업/일정과 시간표 중복', '한국인 및 타 대학 학생들과의 팀 프로젝트/소통 부담',
+       '생각보다 높았던 수업 난이도 및 전공용어 이해 부담', '특별한 어려움 없음', '기타*'], { sub: true }),
+    scale('Q4', '', "3개 대학 학생이 함께 참여하는 '비교과(특강, 체험 등)' 프로그램 전반에 대한 귀하의 전반적인 만족도는 어떻습니까?", SAT),
+    pick('Q4-1', 'single', '유익했던 프로그램 유형', '참여했던 비교과 활동 중 가장 유익했던 프로그램 유형은 무엇입니까?', '1개 선택',
+      ['K-Culture 및 지역문화 탐방·체험', '지역기업 현장 견학 및 산업체 탐방', '취업·비자 특강 및 전공 관련 역량강화 특강',
+       '3개 대학 학생 연합네트워킹 및 친목 행사', '한국어(TOPIK) 집중 자격증 준비반'], { sub: true }),
+    pick('Q4-2', 'single', '운영 개선점', '비교과 프로그램의 만족도를 높이기 위해 가장 개선되어야 할 점은 무엇입니까?', '1개 선택',
+      ['모임/행사 개최 장소의 접근성 향상', '주말/방학 등 참여 가능한 시간대 다양화', '모집 및 신청 공지 기간의 사전에 넉넉한 확보',
+       '모집인원 확대 및 선발기회 균등 제공', '프로그램 내용의 체계화 및 질적 향상', '기타*'], { sub: true }),
+    scale('Q5', '', '공동 교육과정(수업)의 난이도와 내용은 귀하의 한국어 실력이나 전공 수준에 적절했습니까?',
+      ['매우 적절', '적절', '보통', '부적절', '매우 부적절']),
+    scale('Q5-1', '한국어 이해 부담도', '수업 중 한국어 어휘나 전공 용어를 이해하는 데 어느 정도의 어려움을 겪으셨습니까?',
+      ['전혀 어렵지 않음', '별로 어렵지 않음', '보통', '약간 어려움', '매우 어려움'], { sub: true }),
+    pick('Q5-2', 'multi', '학습 지원 제도 수요', '수업 이해도를 높이기 위해 대학 측에서 우선적으로 제공해 주길 바라는 지원은 무엇입니까?', '최대 2개 선택',
+      ['강의핵심 요약본 및 다국어 자막/번역자료', '한국인 학생 1:1 멘토링/튜터링 연계 지원', '복습을 위한 강의녹화본(VOD) 재시청 서비스',
+       '주요 전공용어집/비즈니스 한국어 용어사전', '교수님과의 1:1 질의응답(오피스아워) 활성화', '기타*'], { sub: true, max: 2 }),
+    scale('Q6', '', '한국어 교육 및 지역학(경북학) 프로그램이 향후 지역(경북) 취업 및 정주에 어느 정도로 도움이 된다고 생각하십니까?',
+      ['매우 도움이 된다', '도움이 되는 편이다', '보통이다', '별로 도움이 되지 않는다', '전혀 도움이 되지 않는다']),
+    pick('Q6-1', 'single', '교육 내용의 실질적 유익성', '한국어 교육 및 지역학(경북학) 프로그램 내용 중 본인의 지역사회 이해 및 생활·취업 준비에 가장 실질적으로 유익했던 부분은 무엇입니까?', '1개 선택',
+      ['실전 비즈니스 한국어 및 직무 관련 전문 어휘 학습', '경북 지역 역사·문화·생활 환경 및 거주 정보 이해', '경북 지역 주요 산업(IT, 공학, 보건 등) 및 기업 채용 정보 안내',
+       'TOPIK(한국어능력시험) 대비 및 언어 자격 취득 지원', '한국 사회 문화 적응 및 타 대학 학생과의 소통 역량 강화', '기타*'], { sub: true }),
+    pick('Q6-2', 'multi', '지역 정착 장벽 요인', '졸업 후 지역 내 정착을 결정할 때 가장 우려되거나 보완이 필요한 부분은 무엇입니까?', '최대 2개 선택',
+      ['지역 내 유학생 채용 기업 및 구인 정보 부족', '비자(E-7 취업비자, F-2-R 지역특화비자 등) 발급 및 체류자격 문제', '실전 비즈니스 한국어 및 직무역량 부족',
+       '지역정주 여건(주거환경, 대중교통, 편의시설 등)', '대도시(수도권) 선호 및 임금/복지 격차', '기타*'], { sub: true, max: 2 }),
+
+    sec('S2', 'II. 프로그램 운영 만족도 및 개선 방향', 'Program Operation Satisfaction and Improvement Directions'),
+    scale('Q7', '', '다른 대학 학생들과의 교류 기회는 충분히 제공되었다고 생각하십니까?',
+      ['매우 충분했다', '충분했다', '보통이었다', '부족했다', '매우 부족했다']),
+    pick('Q7-1', 'single', '주요 교류 대상', '교류과정에서 주로 어떤 학생들과의 관계 형성이 가장 활발했습니까?', '1개 선택',
+      ['타 대학의 외국인 유학생', '타 대학의 한국인 학생', '소속대학의 유학생 및 한국인 동료', '모든 학생과 고르게 교류함', '교류기회가 적어 친밀도를 쌓지 못함'], { sub: true }),
+    pick('Q7-2', 'single', '교류 어려움의 사유', '타 대학 학생들과의 교류활동 진행 시 느낀 가장 큰 어려움은 무엇이었습니까?', '1개 선택',
+      ['언어 및 소통의 장벽', '지속적으로 소통할 수 있는 모임 공간 및 시간 부족', '대학 간 이동거리 및 시간 조율의 부담', '문화적 차이 및 초반의 서먹함',
+       '특별한 어려움 없음', '기타*'], { sub: true }),
+    scale('Q8', '', '프로그램 참여 중 행정적 지원(안내, 시설 이용 등)은 어느 정도로 원활하게 이루어졌습니까?',
+      ['매우 원활했다', '원활했다', '보통이었다', '원활하지 않았다', '매우 원활하지 않았다']),
+    scale('Q8-1', '정보 전달의 신속·정확성', '프로그램 일정, 이동수단(셔틀버스 등), 준비사항에 대한 안내가 적시에 명확하게 전달되었습니까?',
+      ['매우 명확', '명확', '보통', '미흡', '매우 미흡'], { sub: true }),
+    pick('Q9', 'multi', '', 'MEGAversity 연합대학 사업 참여 중 가장 만족스러웠던 점을 1~2가지 선택해 주십시오.', '최대 2개 선택',
+      ['다양한 대학의 학생들과 교류할 수 있었던 점', '새로운 캠퍼스(글로벌연합캠퍼스) 시설을 이용할 수 있었던 점', '공동 교육과정을 통해 새로운 학습 경험을 한 점',
+       '한국어 교육 및 지역학(경북학) 프로그램이 도움이 된 점', '함께 참여하는 비교과 프로그램(문화체험, 특강 등)이 유익했던 점', '기타*'], { max: 2 }),
+    scale('Q9-1', '추천 의향', '동료 유학생이나 후배들에게 MEGAversity 연합대학 프로그램 참여를 추천하시겠습니까?',
+      ['적극 추천', '추천하는 편', '보통', '별로 추천 안 함', '전혀 추천 안 함'], { sub: true }),
+    pick('Q10', 'multi', '', '글로벌연합캠퍼스 등 관련 시설 이용이나 이동 과정에서 가장 우선적으로 개선되어야 할 점은 무엇입니까?', '복수 응답 가능',
+      ['대학 간 이동셔틀버스 운행 횟수 증편 및 배차시간 최적화', '타 대학 캠퍼스 내 편의시설(식당, 카페, 휴게공간) 이용 접근성', '강의실 내 Wi-Fi 및 IT/학습 기자재 환경 개선',
+       '시설 위치 및 이용수칙에 대한 사전 다국어 안내', '!특별히 불편한 점 없음', '기타*']),
+    pick('Q11', 'multi', '', '향후 MEGAversity 연합대학에서 가장 우선적으로 신설되길 희망하는 프로그램은 무엇입니까?', '복수 응답 가능',
+      ['경북지역 기업 인턴십 및 현장실습 프로그램', 'TOPIK(한국어능력시험) 급수별 집중 대비반', 'K-Culture 심화체험 및 지역문화탐방',
+       '3개 대학 유학생-한국인학생 1:1 멘토링/동아리', '외국인 유학생 전용 취업박람회 및 비자상담회', '기타*']),
+
+    sec('S3', 'III. 지역 정주 및 미래 계획', 'Regional Settlement & Future Plan'),
+    scale('Q12', '', '졸업 후 한국(특히 경북 지역)에 취업하고 정주(거주)할 의향이 어느 정도 있으십니까?',
+      ['적극적으로 희망한다 (의향 매우 높음)', '긍정적으로 고려 중이다', '잘 모르겠다 (고민 중)', '희망하지 않는다 (본국 또는 타 지역 이동 계획)', '전혀 희망하지 않는다 (의향 없음)']),
+    { id: 'Q12-1', type: 'longtext', title: L('희망 이유·직종'), text: L('희망하시는 경우, 그 이유나 희망 직종을 작성해 주십시오.'), required: false, sub: true,
+      cond: { q: 'Q12', in: [4, 5] } },
+    pick('Q13', 'single', '', '경북 지역 거주를 망설이는 가장 큰 이유는 무엇입니까?', '1개 선택',
+      ['일자리 정보 부족', '비자 문제 해결의 어려움', '한국어 소통의 어려움', '문화적 차이의 어려움', '대도시(서울 등) 선호', '기타*'],
+      { cond: { q: 'Q12', in: [1, 2, 3] } }),
+    { id: 'Q14', type: 'longtext', title: L(''), text: L('귀하가 우리나라(한국)에서 궁극적으로 이루고 싶은 목표는 무엇입니까?'),
+      note: L('예: 특정 분야 전문가 되기, 취업 후 영주권 취득, 창업, 한국 문화 체험 등 구체적인 목표를 작성해 주십시오.'), required: false },
+
+    sec('S4', 'IV. 응답자 정보', 'Demographic Information'),
+    pick('D1', 'single', '소속 대학', '소속 대학을 선택해 주십시오.', 'School', ['경운대학교', '국립금오공과대학교', '구미대학교']),
+    pick('D0', 'single', '국적', '국적을 선택해 주십시오.', 'Nationality', ['베트남', '캄보디아', '중국', '기타*'], { proposed: true }),
+    pick('D2', 'single', '학년', '학년을 선택해 주십시오.', 'Grade', ['1학년', '2학년', '3학년', '4학년']),
+    { id: 'D3', type: 'text', title: L('전공'), text: L('전공을 입력해 주십시오.'), note: L('Major'), required: true },
+    scale('D4', '한국어 구사능력', '본인의 한국어 구사능력은 어느 수준입니까?',
+      ['매우 능숙하게 구사함 / 최고 수준', '능숙하게 구사함 / 상급 수준', '보통 수준으로 구사함 / 중급 수준', '능숙하지 못하게 구사함 / 초급 수준', '전혀 구사하지 못함 / 기초 수준']),
+    { id: 'CONTACT', type: 'contact', title: L('한국 연락처 (기프티콘 추첨용)'),
+      text: L('추첨을 통해 기프티콘을 보내 드립니다. 원하지 않으시면 비워 두셔도 됩니다.'),
+      note: L('수집 항목: 휴대전화 번호 · 수집 목적: 기프티콘 추첨 및 발송 · 보유 기간: 경품 발송 완료 후 즉시 파기 · 동의를 거부할 수 있으며, 거부 시 추첨 대상에서만 제외됩니다.'),
+      required: false }
+  ];
+   
+  const SHORT = {
+    Q1: '사업 사전 인지도', 'Q1-1': '정보 습득 경로', 'Q1-2': '참여 결정 계기', Q2: '공동 교육과정 만족도', 'Q2-1': '수업 내 배려·지원',
+    'Q2-2': '수업 우선 개선 요인', Q3: '교과 프로그램 만족도', 'Q3-1': '연합 운영 방식 효과성', 'Q3-2': '수업 참여 애로사항', Q4: '비교과 프로그램 만족도',
+    'Q4-1': '유익했던 비교과 유형', 'Q4-2': '비교과 운영 개선점', Q5: '수업 난이도 적절성', 'Q5-1': '한국어 이해 용이성', 'Q5-2': '학습 지원 수요',
+    Q6: '정주 도움 정도', 'Q6-1': '한국어·지역학 유익 내용', 'Q6-2': '지역 정착 장벽', Q7: '교류 기회 충분성', 'Q7-1': '주요 교류 대상',
+    'Q7-2': '교류 어려움', Q8: '행정 지원 원활성', 'Q8-1': '안내 전달 명확성', Q9: '만족 요인', 'Q9-1': '추천 의향', Q10: '시설·이동 개선점',
+    Q11: '신설 희망 프로그램', Q12: '지역 정주 의향', 'Q12-1': '정주 희망 이유·직종', Q13: '정주 망설임 이유', Q14: '한국에서의 목표',
+    D1: '소속 대학', D0: '국적', D2: '학년', D3: '전공', D4: '한국어 구사능력', CONTACT: '연락처(추첨)'
+  };
+  items.forEach((it) => { if (SHORT[it.id]) it.short = SHORT[it.id]; });
+  return { meta, items, version: '2026-11-26' };
+})();
+const shortLabel = (it) => it.short || tr(it.title, 'ko') || (tr(it.text, 'ko').slice(0, 24) + '…');
+
+ 
+const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+function tr(obj, lang) { if (!obj) return ''; return (obj[lang] && String(obj[lang]).trim()) ? obj[lang] : (obj.ko || ''); }
+function hasLang(obj, lang) { return !!(obj && obj[lang] && String(obj[lang]).trim()); }
+const isQuestion = (it) => !['section', 'contact'].includes(it.type);
+function optValue(item, idx) { return item.type === 'scale' ? item.options.length - idx : idx + 1; }
+function optIndex(item, v) { return item.type === 'scale' ? item.options.length - Number(v) : Number(v) - 1; }
+function optLabel(item, v, lang = 'ko') { const o = (item.options || [])[optIndex(item, v)]; return o ? tr(o.t, lang) : String(v); }
+function isVisible(item, answers) {
+  if (!item.cond || !item.cond.q) return true;
+  const a = answers[item.cond.q];
+  if (a == null || a === '') return false;
+  const vals = Array.isArray(a) ? a : [a];
+  return vals.some((v) => item.cond.in.map(Number).includes(Number(v)));
+}
+function clone(o) { return JSON.parse(JSON.stringify(o)); }
+function nowStr() {
+  const d = new Date(), p = (n) => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`;
+}
+ 
+function flattenAnswers(survey, answers) {
+  const row = {};
+  for (const it of survey.items) {
+    if (!isQuestion(it)) continue;
+    const vis = isVisible(it, answers);
+    const a = vis ? answers[it.id] : undefined;
+    row[it.id] = Array.isArray(a) ? a.join(';') : (a == null ? '' : a);
+    if ((it.options || []).some((o) => o.other)) row[it.id + '_기타'] = vis ? (answers[it.id + '_기타'] || '') : '';
+  }
+  return row;
+}
+ 
+function parseRow(survey, obj) {
+  const ans = {};
+  for (const it of survey.items) {
+    if (!isQuestion(it)) continue;
+    const raw = obj[it.id];
+    if (raw === '' || raw == null) continue;
+    if (it.type === 'multi') ans[it.id] = String(raw).split(';').filter(Boolean).map(Number);
+    else if (it.type === 'scale' || it.type === 'single') ans[it.id] = Number(raw);
+    else ans[it.id] = String(raw);
+    if (obj[it.id + '_기타']) ans[it.id + '_기타'] = String(obj[it.id + '_기타']);
+  }
+  return ans;
+}
+
+ 
+const Store = (() => {
+  const mem = {};
+  const get = (k, d) => { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return k in mem ? mem[k] : d; } };
+  const set = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { mem[k] = v; } };
+  const del = (k) => { try { localStorage.removeItem(k); } catch (e) { delete mem[k]; } };
+  return { get, set, del };
+})();
+
+const GAS = typeof google !== 'undefined' && google.script && google.script.run; 
+const Api = {
+  demo: !CONFIG.API_URL && !GAS,
+  async request(action, data = {}) {
+    if (this.demo) return Demo[action](data);
+    if (GAS) return new Promise((res, rej) => google.script.run
+      .withSuccessHandler((r) => (r && r.ok ? res(r) : rej(new Error((r && r.error) || '요청 실패'))))
+      .withFailureHandler((e) => rej(e instanceof Error ? e : new Error(String(e))))
+      .api(Object.assign({ action }, data)));
+    const res = await fetch(CONFIG.API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' }, 
+      body: JSON.stringify({ action, ...data })
+    });
+    const json = await res.json();
+    if (!json.ok) throw new Error(json.error || '요청 실패');
+    return json;
+  }
+};
+
+const Demo = {
+  survey() { return Store.get('mv_survey', null) || clone(DEFAULT_SURVEY); },
+  settings() { return Object.assign({ open: true, activeLangs: ['ko', 'vi', 'zh', 'km'] }, Store.get('mv_settings', {})); },
+  getSurvey() { return { ok: true, survey: this.survey(), settings: this.settings() }; },
+  submit({ row, contact, lang, durationSec }) {
+    const list = Store.get('mv_responses', []);
+    const rid = 'R' + Date.now().toString(36).toUpperCase() + Math.random().toString(36).slice(2, 5).toUpperCase();
+    list.push(Object.assign({ 응답ID: rid, 제출시각: nowStr(), 언어: lang, '소요시간(초)': durationSec }, row));
+    Store.set('mv_responses', list);
+    if (contact && contact.phone) {
+      const c = Store.get('mv_contacts', []); c.push({ 응답ID: rid, 제출시각: nowStr(), 연락처: contact.phone, 동의: 'Y' }); Store.set('mv_contacts', c);
+    }
+    return { ok: true, rid };
+  },
+  check(pw) { if (pw !== CONFIG.DEMO_PASSWORD) throw new Error('비밀번호가 올바르지 않습니다.'); },
+  login({ pw }) { this.check(pw); return { ok: true }; },
+  getAll({ pw }) {
+    this.check(pw);
+    return { ok: true, survey: this.survey(), settings: this.settings(), responses: Store.get('mv_responses', []), contacts: Store.get('mv_contacts', []) };
+  },
+  saveSurvey({ pw, survey }) { this.check(pw); Store.set('mv_survey', survey); return { ok: true }; },
+  saveSettings({ pw, settings }) { this.check(pw); Store.set('mv_settings', settings); return { ok: true }; },
+  resetDemo({ pw }) { this.check(pw); ['mv_survey', 'mv_settings', 'mv_responses', 'mv_contacts'].forEach(Store.del); return { ok: true }; },
+  seedDemo({ pw, n = 60 }) {
+    this.check(pw);
+    const s = this.survey(), list = Store.get('mv_responses', []), contacts = Store.get('mv_contacts', []);
+    const rnd = (a) => a[Math.floor(Math.random() * a.length)];
+    const bias = [5, 5, 4, 4, 4, 4, 3, 3, 2, 1];
+    for (let i = 0; i < n; i++) {
+      const ans = {};
+      for (const it of s.items) {
+        if (!isQuestion(it) || !isVisible(it, ans)) continue;
+        const k = (it.options || []).length;
+        if (it.type === 'scale') ans[it.id] = it.id === 'Q5-1' ? rnd([2, 3, 3, 4, 2, 1, 3]) : rnd(bias);
+        else if (it.type === 'single') { ans[it.id] = 1 + Math.floor(Math.random() * k); if (it.options[ans[it.id] - 1].other) ans[it.id] = 1; }
+        else if (it.type === 'multi') {
+          const m = Math.min(it.max || 3, 1 + Math.floor(Math.random() * 2)), set = new Set();
+          while (set.size < m) { const v = 1 + Math.floor(Math.random() * (k - 1)); if (!it.options[v - 1].none) set.add(v); }
+          ans[it.id] = [...set];
+        } else if (it.id === 'D3') ans[it.id] = rnd(['컴퓨터공학', '항공서비스', '경영학', '기계공학', '간호학', '한국어학']);
+        else if (Math.random() < 0.35) ans[it.id] = rnd(['한국 IT 기업에 취업해 경북에서 살고 싶습니다.', '한국어를 더 공부해서 통역사가 되고 싶습니다.', '졸업 후 본국에 돌아가 한국 기업과 무역을 하고 싶습니다.', '영주권을 받아 가족과 함께 살고 싶습니다.']);
+      }
+      const d = new Date(Date.now() - Math.random() * 9 * 864e5), p = (x) => String(x).padStart(2, '0');
+      const ts = `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`;
+      const rid = 'D' + (Date.now() + i).toString(36).toUpperCase();
+      const nat = ans['D0'];
+      list.push(Object.assign({ 응답ID: rid, 제출시각: ts, 언어: nat === 1 ? 'vi' : nat === 2 ? 'km' : nat === 3 ? 'zh' : 'ko', '소요시간(초)': 300 + Math.floor(Math.random() * 600) }, flattenAnswers(s, ans)));
+      if (Math.random() < 0.6) contacts.push({ 응답ID: rid, 제출시각: ts, 연락처: '010-' + (1000 + Math.floor(Math.random() * 8999)) + '-' + (1000 + Math.floor(Math.random() * 8999)), 동의: 'Y' });
+    }
+    list.sort((a, b) => a.제출시각.localeCompare(b.제출시각));
+    Store.set('mv_responses', list); Store.set('mv_contacts', contacts);
+    return { ok: true };
+  }
+};
+
+</script>
+<script>
+
+
+Object.assign(UI, {
+  vi: { start:'Bắt đầu khảo sát', next:'Tiếp theo', prev:'Quay lại', submit:'Gửi câu trả lời', required:'Đây là câu hỏi bắt buộc.',
+        maxPick:'Có thể chọn tối đa {n} mục.', picked:'Đã chọn {n}', otherPh:'Vui lòng ghi cụ thể', textPh:'Hãy viết tự do',
+        step:'{a} / {b}', time:'Khoảng 10 phút', sending:'Đang gửi…', doneTitle:'Câu trả lời của bạn đã được gửi',
+        doneBody:'Xin chân thành cảm ơn ý kiến quý báu của bạn.', again:'Về trang đầu', closed:'Hiện không trong thời gian khảo sát.',
+        fail:'Gửi không thành công. Vui lòng thử lại sau.', restore:'Đã khôi phục câu trả lời đang làm dở.',
+        preview:'Chế độ xem trước — câu trả lời không được lưu.', agree:'Tôi đồng ý', disagree:'Tôi không đồng ý',
+        phonePh:'010-0000-0000', phoneBad:'Vui lòng kiểm tra định dạng số điện thoại.', consentNeed:'Vui lòng chọn đồng ý hoặc không.',
+        soon:'Đang chuẩn bị bản dịch', lang:'Ngôn ngữ', unanswered:'Còn câu hỏi chưa trả lời.' },
+  zh: { start:'开始答题', next:'下一步', prev:'上一步', submit:'提交', required:'此题为必答题。',
+        maxPick:'最多可选择 {n} 项。', picked:'已选 {n} 项', otherPh:'请具体填写', textPh:'请自由填写',
+        step:'{a} / {b}', time:'约需 10 分钟', sending:'提交中…', doneTitle:'您的回答已提交',
+        doneBody:'衷心感谢您的宝贵意见。', again:'返回首页', closed:'目前不在问卷作答期间。',
+        fail:'提交失败，请稍后再试。', restore:'已恢复您未完成的回答。',
+        preview:'预览模式——回答不会被保存。', agree:'同意', disagree:'不同意',
+        phonePh:'010-0000-0000', phoneBad:'请检查手机号码格式。', consentNeed:'请选择是否同意。',
+        soon:'翻译准备中', lang:'语言', unanswered:'还有未回答的问题。' },
+  km: { start:'ចាប់ផ្តើមការស្ទង់មតិ', next:'បន្ទាប់', prev:'ត្រឡប់ក្រោយ', submit:'បញ្ជូន', required:'សំណួរនេះត្រូវតែឆ្លើយ។',
+        maxPick:'អាចជ្រើសរើសបានច្រើនបំផុត {n}។', picked:'បានជ្រើសរើស {n}', otherPh:'សូមសរសេរឱ្យបានជាក់លាក់', textPh:'សូមសរសេរដោយសេរី',
+        step:'{a} / {b}', time:'ប្រហែល ១០ នាទី', sending:'កំពុងបញ្ជូន…', doneTitle:'ចម្លើយរបស់អ្នកត្រូវបានបញ្ជូនរួចរាល់',
+        doneBody:'សូមអរគុណយ៉ាងជ្រាលជ្រៅចំពោះមតិដ៏មានតម្លៃរបស់អ្នក។', again:'ត្រឡប់ទៅទំព័រដើម', closed:'បច្ចុប្បន្នមិនស្ថិតក្នុងរយៈពេលស្ទង់មតិទេ។',
+        fail:'ការបញ្ជូនបរាជ័យ។ សូមព្យាយាមម្តងទៀតនៅពេលក្រោយ។', restore:'បានស្តារចម្លើយដែលអ្នកកំពុងបំពេញ។',
+        preview:'របៀបមើលជាមុន — ចម្លើយមិនត្រូវបានរក្សាទុកទេ។', agree:'ខ្ញុំយល់ព្រម', disagree:'ខ្ញុំមិនយល់ព្រម',
+        phonePh:'010-0000-0000', phoneBad:'សូមពិនិត្យទម្រង់លេខទូរស័ព្ទ។', consentNeed:'សូមជ្រើសរើសថាយល់ព្រម ឬមិនយល់ព្រម។',
+        soon:'កំពុងរៀបចំការបកប្រែ', lang:'ភាសា', unanswered:'មានសំណួរមិនទាន់ឆ្លើយ។' }
+});
+
+(() => {
+  const META = {
+    vi: {
+      kicker: 'Dự án RISE của Bộ Giáo dục Hàn Quốc',
+      title: 'Khảo sát mức độ hài lòng của du học sinh tham gia Đại học Liên kết MEGAversity',
+      org: 'Cơ quan khảo sát: Đại học Kyungwoon · Đơn vị thực hiện: Viện Nghiên cứu Công nghệ Giáo dục Hàn Quốc',
+      notice: 'Luật Thống kê, Điều 33 (Bảo vệ bí mật) — Những thông tin thuộc bí mật của cá nhân, pháp nhân hoặc tổ chức được biết trong quá trình thống kê phải được bảo vệ.',
+      intro: [
+        'Xin chào các bạn!',
+        "Khảo sát này được thực hiện trong khuôn khổ dự án RISE (Hệ thống hỗ trợ đại học lấy đổi mới vùng làm trung tâm) của Bộ Giáo dục Hàn Quốc, nhằm đánh giá mức độ hài lòng về giáo dục của các bạn du học sinh đã tham gia chương trình 'Đại học Liên kết MEGAversity', từ đó nâng cao chương trình đào tạo phù hợp với du học sinh và xây dựng chính sách hỗ trợ định cư tại địa phương.",
+        '## Giới thiệu dự án Đại học Liên kết MEGAversity',
+        '### 1. Dự án Đại học Liên kết MEGAversity là gì?',
+        "'Đại học Liên kết MEGAversity' là hệ thống giáo dục liên kết dựa trên vùng Gyeongbuk, do 3 trường Đại học Kyungwoon (trường chủ trì), Học viện Công nghệ Quốc gia Kumoh và Đại học Gumi cùng vận hành bằng cách xóa bỏ ranh giới giữa các trường, chia sẻ và kết hợp nguồn lực giáo dục cũng như cơ sở hạ tầng khuôn viên. Mục tiêu cốt lõi không chỉ là tăng số lượng du học sinh mà còn là nâng cao chất lượng giáo dục và đào tạo nhân tài toàn cầu gắn bó lâu dài với địa phương.",
+        '### 2. Hệ thống giáo dục chính (3 trụ cột)',
+        '- Chương trình đào tạo chung (môn học chính khóa): các môn học liên kết của 3 trường (học trực tiếp kết hợp trực tuyến và học luân chuyển tại Khuôn viên Liên kết Toàn cầu)',
+        '- Chương trình ngoại khóa: trải nghiệm văn hóa K-Culture, tham quan doanh nghiệp địa phương, chuyên đề về việc làm và visa, giao lưu sinh viên 3 trường',
+        '- Giáo dục tiếng Hàn và Địa phương học (Gyeongbuk học): nâng cao từ vựng và năng lực tiếng Hàn thực tế, hiểu văn hóa và công nghiệp vùng Gyeongbuk để tạo nền tảng định cư',
+        '### 3. Mục tiêu cuối cùng',
+        'Xây dựng vòng tuần hoàn Giáo dục (Teaching) → Giao lưu (Networking) → Hỗ trợ (Support) → Định cư (Settlement), giúp các bạn thành công trong học tập và hỗ trợ toàn diện để các bạn tìm được việc làm tại các doanh nghiệp tốt ở Gyeongbuk và ổn định cuộc sống tại địa phương sau khi tốt nghiệp.',
+        '## Hướng dẫn khảo sát',
+        '- Đối tượng: du học sinh tham gia MEGAversity tại Đại học Kyungwoon, Học viện Công nghệ Quốc gia Kumoh và Đại học Gumi',
+        '- Thời gian: khoảng 10 phút',
+        '※ RISE: viết tắt của Regional Innovation System & Education (Hệ thống hỗ trợ đại học lấy đổi mới vùng làm trung tâm) — dự án phát triển cân bằng vùng của Bộ Giáo dục Hàn Quốc, trong đó trường đại học trở thành chủ thể đổi mới của địa phương, hợp tác với chính quyền địa phương và doanh nghiệp để đào tạo nhân lực gắn với ngành công nghiệp đặc thù của vùng và dẫn dắt sự phát triển của địa phương.'
+      ].join('\n'),
+      date: 'Tháng 12 năm 2026 · Đại học Kyungwoon',
+      thanks: 'Xin chân thành cảm ơn ý kiến quý báu của bạn.'
+    },
+    zh: {
+      kicker: '韩国教育部 RISE 项目',
+      title: 'MEGAversity 联合大学参与留学生满意度调查',
+      org: '调查机构：庆云大学 · 执行机构：韩国教育工学研究所',
+      notice: '《统计法》第33条（保密）——在统计过程中获知的属于个人、法人或团体秘密的事项应受到保护。',
+      intro: [
+        '您好！',
+        '本问卷调查是韩国教育部 RISE（以地区创新为中心的大学支援体系）项目的一部分，旨在诊断参加“MEGAversity 联合大学”项目的外国留学生的教育满意度，为今后完善面向留学生的定制化课程以及制定地区定居支援政策提供依据。',
+        '## MEGAversity 联合大学项目介绍',
+        '### 1. 什么是 MEGAversity 联合大学项目？',
+        '“MEGAversity 联合大学”是由庆云大学（主管大学）、国立金乌工科大学、龟尾大学 3 所大学打破校际界限，共享并整合教育资源与校园基础设施而运营的、立足庆北地区的联合教育体系。其核心目标不仅在于扩大留学生规模，更在于提升教育质量，培养扎根地区的全球化人才。',
+        '### 2. 主要教育体系（三大核心支柱）',
+        '- 联合课程（学分课程）：3 所大学联合开设课程（以全球联合校区为基础，线上线下并行及移动授课）',
+        '- 非学分项目：K-Culture 文化体验、地区企业现场参观、就业·签证专题讲座、3 所大学学生联合交流',
+        '- 韩国语及地区学（庆北学）教育：强化韩国语词汇与实务能力，了解庆北地区文化与产业，为定居打下基础',
+        '### 3. 项目最终目标',
+        '构建 教育（Teaching）→ 交流（Networking）→ 支援（Support）→ 定居（Settlement）的良性循环体系，助力各位留学生学业成功，并为毕业后在庆北地区优秀企业就业及稳定定居提供全方位支援。',
+        '## 调查说明',
+        '- 调查对象：庆云大学、国立金乌工科大学、龟尾大学参与 MEGAversity 的留学生',
+        '- 所需时间：约 10 分钟',
+        '※ RISE：Regional Innovation System & Education（以地区创新为中心的大学支援体系）的缩写，是韩国教育部的地区均衡发展项目，旨在使大学成为地区创新的核心主体，与地方政府和产业界合作，培养与地区特色产业相衔接的人才，引领地区发展。'
+      ].join('\n'),
+      date: '2026年12月 · 庆云大学',
+      thanks: '衷心感谢您的宝贵意见。'
+    },
+    km: {
+      kicker: 'គម្រោង RISE របស់ក្រសួងអប់រំកូរ៉េ',
+      title: 'ការស្ទង់មតិអំពីកម្រិតពេញចិត្តរបស់និស្សិតបរទេសដែលចូលរួមក្នុងសាកលវិទ្យាល័យសម្ព័ន្ធ MEGAversity',
+      org: 'ស្ថាប័នស្ទង់មតិ៖ សាកលវិទ្យាល័យ Kyungwoon · ស្ថាប័នអនុវត្ត៖ វិទ្យាស្ថានស្រាវជ្រាវបច្ចេកវិទ្យាអប់រំកូរ៉េ',
+      notice: 'ច្បាប់ស្ថិតិ មាត្រា ៣៣ (ការការពារការសម្ងាត់) — ព័ត៌មានដែលបានដឹងក្នុងដំណើរការធ្វើស្ថិតិ ហើយជាការសម្ងាត់របស់បុគ្គល នីតិបុគ្គល ឬអង្គភាព ត្រូវតែត្រូវបានការពារ។',
+      intro: [
+        'សួស្តី!',
+        "ការស្ទង់មតិនេះត្រូវបានធ្វើឡើងជាផ្នែកមួយនៃគម្រោង RISE (ប្រព័ន្ធគាំទ្រសាកលវិទ្យាល័យផ្តោតលើការច្នៃប្រឌិតក្នុងតំបន់) របស់ក្រសួងអប់រំកូរ៉េ ដើម្បីវាយតម្លៃកម្រិតពេញចិត្តលើការអប់រំរបស់និស្សិតបរទេសដែលបានចូលរួមក្នុងកម្មវិធី 'សាកលវិទ្យាល័យសម្ព័ន្ធ MEGAversity' និងដើម្បីកែលម្អកម្មវិធីសិក្សាឱ្យស័ក្តិសមនឹងនិស្សិតបរទេស ព្រមទាំងរៀបចំគោលនយោបាយគាំទ្រការតាំងទីលំនៅក្នុងតំបន់នាពេលអនាគត។",
+        '## សេចក្តីណែនាំអំពីគម្រោងសាកលវិទ្យាល័យសម្ព័ន្ធ MEGAversity',
+        '### ១. តើគម្រោងសាកលវិទ្យាល័យសម្ព័ន្ធ MEGAversity ជាអ្វី?',
+        "'សាកលវិទ្យាល័យសម្ព័ន្ធ MEGAversity' គឺជាប្រព័ន្ធអប់រំសម្ព័ន្ធដែលផ្អែកលើតំបន់ Gyeongbuk ដែលស្ថាប័នចំនួន ៣ គឺ សាកលវិទ្យាល័យ Kyungwoon (សាកលវិទ្យាល័យដឹកនាំ) វិទ្យាស្ថានបច្ចេកវិទ្យាជាតិ Kumoh និងសាកលវិទ្យាល័យ Gumi រួមគ្នាដំណើរការ ដោយលុបបំបាត់ព្រំដែនរវាងសាកលវិទ្យាល័យ និងចែករំលែក និងរួមបញ្ចូលធនធានអប់រំ និងហេដ្ឋារចនាសម្ព័ន្ធបរិវេណសិក្សា។ គោលបំណងស្នូលមិនត្រឹមតែបង្កើនចំនួននិស្សិតបរទេសប៉ុណ្ណោះទេ ប៉ុន្តែក៏ដើម្បីលើកកម្ពស់គុណភាពអប់រំ និងបណ្តុះបណ្តាលធនធានមនុស្សសកលដែលតាំងទីលំនៅក្នុងតំបន់ផងដែរ។",
+        '### ២. ប្រព័ន្ធអប់រំសំខាន់ៗ (សសរស្តម្ភស្នូល ៣)',
+        '- កម្មវិធីសិក្សារួម (មុខវិជ្ជាក្នុងកម្មវិធីសិក្សា)៖ មុខវិជ្ជារួមរបស់សាកលវិទ្យាល័យទាំង ៣ (សិក្សាដោយផ្ទាល់ និងតាមអនឡាញ និងការសិក្សាផ្លាស់ទីលើមូលដ្ឋានបរិវេណសិក្សាសម្ព័ន្ធសកល)',
+        '- កម្មវិធីក្រៅកម្មវិធីសិក្សា៖ បទពិសោធន៍វប្បធម៌ K-Culture ទស្សនកិច្ចសិក្សានៅក្រុមហ៊ុនក្នុងតំបន់ បាឋកថាពិសេសអំពីការងារ និងទិដ្ឋាការ និងការផ្លាស់ប្តូររវាងនិស្សិតនៃសាកលវិទ្យាល័យទាំង ៣',
+        '- ការអប់រំភាសាកូរ៉េ និងតំបន់សិក្សា (Gyeongbuk សិក្សា)៖ ពង្រឹងវាក្យសព្ទ និងសមត្ថភាពភាសាកូរ៉េជាក់ស្តែង និងស្វែងយល់ពីវប្បធម៌ និងឧស្សាហកម្មនៃតំបន់ Gyeongbuk ដើម្បីកសាងមូលដ្ឋានសម្រាប់ការតាំងទីលំនៅ',
+        '### ៣. គោលដៅចុងក្រោយនៃគម្រោង',
+        'កសាងវដ្តវិជ្ជមាន ការអប់រំ (Teaching) → ការផ្លាស់ប្តូរ (Networking) → ការគាំទ្រ (Support) → ការតាំងទីលំនៅ (Settlement) ដើម្បីជួយឱ្យនិស្សិតទទួលបានជោគជ័យក្នុងការសិក្សា និងគាំទ្រយ៉ាងទូលំទូលាយឱ្យទទួលបានការងារនៅក្រុមហ៊ុនល្អៗក្នុងតំបន់ Gyeongbuk និងតាំងទីលំនៅប្រកបដោយស្ថិរភាពក្រោយបញ្ចប់ការសិក្សា។',
+        '## ការណែនាំអំពីការស្ទង់មតិ',
+        '- អ្នកចូលរួម៖ និស្សិតបរទេសដែលចូលរួមក្នុង MEGAversity នៃសាកលវិទ្យាល័យ Kyungwoon វិទ្យាស្ថានបច្ចេកវិទ្យាជាតិ Kumoh និងសាកលវិទ្យាល័យ Gumi',
+        '- រយៈពេល៖ ប្រហែល ១០ នាទី',
+        '※ RISE៖ ជាអក្សរកាត់នៃ Regional Innovation System & Education (ប្រព័ន្ធគាំទ្រសាកលវិទ្យាល័យផ្តោតលើការច្នៃប្រឌិតក្នុងតំបន់) ជាគម្រោងអភិវឌ្ឍន៍តំបន់ប្រកបដោយតុល្យភាពរបស់ក្រសួងអប់រំកូរ៉េ ដែលសាកលវិទ្យាល័យក្លាយជាតួអង្គស្នូលនៃការច្នៃប្រឌិតក្នុងតំបន់ សហការជាមួយអាជ្ញាធរមូលដ្ឋាន និងវិស័យឧស្សាហកម្ម ដើម្បីបណ្តុះបណ្តាលធនធានមនុស្សដែលភ្ជាប់នឹងឧស្សាហកម្មពិសេសរបស់តំបន់ និងដឹកនាំការអភិវឌ្ឍតំបន់។'
+      ].join('\n'),
+      date: 'ខែធ្នូ ឆ្នាំ២០២៦ · សាកលវិទ្យាល័យ Kyungwoon',
+      thanks: 'សូមអរគុណយ៉ាងជ្រាលជ្រៅចំពោះមតិដ៏មានតម្លៃរបស់អ្នក។'
+    }
+  };
+
+   
+  const NOTE = {
+    '1개 선택': { vi: 'Chọn 1', zh: '单选', km: 'ជ្រើសរើស ១' },
+    '최대 2개 선택': { vi: 'Chọn tối đa 2', zh: '最多选 2 项', km: 'ជ្រើសរើសបានច្រើនបំផុត ២' },
+    '복수 응답 가능': { vi: 'Có thể chọn nhiều', zh: '可多选', km: 'អាចជ្រើសរើសបានច្រើន' }
+  };
+  const SAT = {
+    vi: ['Rất hài lòng', 'Hài lòng', 'Bình thường', 'Không hài lòng', 'Rất không hài lòng'],
+    zh: ['非常满意', '满意', '一般', '不满意', '非常不满意'],
+    km: ['ពេញចិត្តខ្លាំង', 'ពេញចិត្ត', 'មធ្យម', 'មិនពេញចិត្ត', 'មិនពេញចិត្តខ្លាំង']
+  };
+  const SEC = {
+    S1: { vi: 'I. Mức độ nhận biết và mức độ hài lòng chi tiết về chương trình', zh: 'I. 项目认知度及项目细节满意度', km: 'I. កម្រិតនៃការស្គាល់ និងកម្រិតពេញចិត្តលម្អិតលើកម្មវិធី' },
+    S2: { vi: 'II. Mức độ hài lòng về vận hành chương trình và hướng cải thiện', zh: 'II. 项目运营满意度及改进方向', km: 'II. កម្រិតពេញចិត្តលើការដំណើរការកម្មវិធី និងទិសដៅកែលម្អ' },
+    S3: { vi: 'III. Định cư tại địa phương và kế hoạch tương lai', zh: 'III. 地区定居及未来规划', km: 'III. ការតាំងទីលំនៅក្នុងតំបន់ និងផែនការអនាគត' },
+    S4: { vi: 'IV. Thông tin người trả lời', zh: 'IV. 答卷人信息', km: 'IV. ព័ត៌មានអំពីអ្នកឆ្លើយ' }
+  };
+
+   
+  const Q = {
+    Q1: {
+      vi: ['', "Trước đây, bạn biết về dự án 'Đại học Liên kết MEGAversity' ở mức độ nào?", '', ['Biết rất rõ', 'Biết khá rõ', 'Đã nghe tên (bình thường)', 'Không biết rõ', 'Hoàn toàn không biết (lần đầu biết đến)']],
+      zh: ['', '您事先对“MEGAversity 联合大学”项目了解多少？', '', ['非常了解', '比较了解', '听说过名字（一般）', '不太了解', '完全不了解（这次才第一次知道）']],
+      km: ['', "មុននេះ តើអ្នកដឹងអំពីគម្រោង 'សាកលវិទ្យាល័យសម្ព័ន្ធ MEGAversity' កម្រិតណា?", '', ['ដឹងច្បាស់ណាស់', 'ដឹងបានខ្លះ', 'ធ្លាប់ឮឈ្មោះ (មធ្យម)', 'មិនសូវដឹង', 'មិនដឹងសោះ (ទើបដឹងលើកនេះ)']]
+    },
+    'Q1-1': {
+      vi: ['Kênh tiếp nhận thông tin', 'Bạn biết đến thông tin về dự án này lần đầu tiên chủ yếu qua kênh nào?', '', ['Trang web khoa/trường và thông báo chính thức', 'Mạng xã hội chính thức của trường (Instagram, YouTube…)', 'Hướng dẫn từ Trung tâm hỗ trợ du học sinh/Phòng Hợp tác quốc tế (email, nhóm chat…)', 'Giới thiệu từ giáo sư hướng dẫn, bạn bè hoặc anh chị khóa trên', 'Áp phích, băng rôn, tờ rơi trong khuôn viên trường', 'Khác']],
+      zh: ['信息获取渠道', '您最初主要是通过什么渠道了解到本项目信息的？', '', ['所属院系/大学官网及官方公告', '大学官方社交媒体（Instagram、YouTube 等）', '留学生支援中心/国际交流处通知（邮件、群聊等）', '指导教授或朋友·学长学姐推荐', '校园内海报、横幅、宣传单', '其他']],
+      km: ['ប្រភពព័ត៌មាន', 'តើអ្នកបានទទួលព័ត៌មានអំពីគម្រោងនេះជាលើកដំបូងតាមរយៈប្រភពណាជាចម្បង?', '', ['គេហទំព័រមហាវិទ្យាល័យ/សាកលវិទ្យាល័យ និងសេចក្តីជូនដំណឹងផ្លូវការ', 'បណ្តាញសង្គមផ្លូវការរបស់សាកលវិទ្យាល័យ (Instagram, YouTube ។ល។)', 'ការណែនាំពីមជ្ឈមណ្ឌលគាំទ្រនិស្សិតបរទេស/ការិយាល័យទំនាក់ទំនងអន្តរជាតិ (អ៊ីមែល ក្រុមជជែក ។ល។)', 'ការណែនាំពីសាស្ត្រាចារ្យណែនាំ ឬមិត្តភក្តិ បងប្អូនរួមសាលា', 'ផ្ទាំងរូបភាព បដា ខិត្តប័ណ្ណក្នុងបរិវេណសាលា', 'ផ្សេងៗ']]
+    },
+    'Q1-2': {
+      vi: ['Động lực tham gia', 'Lý do quyết định nhất khiến bạn tham gia chương trình này là gì?', '', ['Giao lưu và xây dựng mạng lưới với sinh viên các trường khác', 'Trải nghiệm học tập mới (chính khóa/ngoại khóa) và tích lũy tín chỉ', 'Nâng cao năng lực tiếng Hàn và hiểu biết văn hóa địa phương (Gyeongbuk học)', 'Học bổng và các quyền lợi khi tham gia chương trình', 'Được giáo sư hướng dẫn/Trung tâm hỗ trợ du học sinh tích cực khuyến khích']],
+      zh: ['参加动机', '您参加本项目最决定性的原因是什么？', '', ['与其他大学学生交流并建立人际网络', '新的学分/非学分学习体验及修读学分', '提高韩国语能力及了解地区文化（庆北学）', '奖学金及参与项目的优惠支持', '指导教授/留学生支援中心的积极推荐']],
+      km: ['មូលហេតុចូលរួម', 'តើអ្វីជាមូលហេតុសំខាន់បំផុតដែលធ្វើឱ្យអ្នកសម្រេចចិត្តចូលរួមកម្មវិធីនេះ?', '', ['ការផ្លាស់ប្តូរ និងបង្កើតបណ្តាញទំនាក់ទំនងជាមួយនិស្សិតសាកលវិទ្យាល័យផ្សេង', 'បទពិសោធន៍សិក្សាថ្មី (ក្នុង/ក្រៅកម្មវិធីសិក្សា) និងការទទួលបានក្រេឌីត', 'ការលើកកម្ពស់សមត្ថភាពភាសាកូរ៉េ និងការស្វែងយល់វប្បធម៌តំបន់ (Gyeongbuk សិក្សា)', 'អាហារូបករណ៍ និងអត្ថប្រយោជន៍នៃការចូលរួមកម្មវិធី', 'ការលើកទឹកចិត្តយ៉ាងសកម្មពីសាស្ត្រាចារ្យណែនាំ/មជ្ឈមណ្ឌលគាំទ្រនិស្សិតបរទេស']]
+    },
+    Q2: {
+      vi: ['', "Nhìn chung, bạn hài lòng với 'Chương trình đào tạo chung (môn học)' của MEGAversity ở mức độ nào?", '', SAT.vi],
+      zh: ['', '您对 MEGAversity“联合课程（授课）”整体的满意程度如何？', '', SAT.zh],
+      km: ['', "ជាទូទៅ តើអ្នកពេញចិត្តនឹង 'កម្មវិធីសិក្សារួម (ការបង្រៀន)' របស់ MEGAversity កម្រិតណា?", '', SAT.km]
+    },
+    'Q2-1': {
+      vi: ['Sự quan tâm và hỗ trợ trong giờ học', 'Trong giờ học, sự quan tâm dành cho du học sinh nước ngoài (giải thích bằng tiếng Hàn dễ hiểu, giải đáp thắc mắc…) có được cung cấp đầy đủ không?', '', ['Rất đầy đủ', 'Đầy đủ', 'Bình thường', 'Thiếu', 'Rất thiếu']],
+      zh: ['课堂关照与支持', '授课时是否为外国留学生提供了充分的关照（简单易懂的韩语讲解、答疑等）？', '', ['非常充分', '充分', '一般', '不足', '非常不足']],
+      km: ['ការយកចិត្តទុកដាក់ និងការគាំទ្រក្នុងថ្នាក់', 'ក្នុងពេលបង្រៀន តើមានការយកចិត្តទុកដាក់គ្រប់គ្រាន់ចំពោះនិស្សិតបរទេសដែរឬទេ (ការពន្យល់ជាភាសាកូរ៉េងាយៗ ការឆ្លើយសំណួរ ។ល។)?', '', ['គ្រប់គ្រាន់ខ្លាំង', 'គ្រប់គ្រាន់', 'មធ្យម', 'មិនគ្រប់គ្រាន់', 'មិនគ្រប់គ្រាន់ខ្លាំង']]
+    },
+    'Q2-2': {
+      vi: ['Yếu tố cần cải thiện ưu tiên', 'Trong các môn học của chương trình đào tạo chung, điều gì cần được cải thiện ưu tiên nhất trong thời gian tới?', '', ['Điều chỉnh nội dung và độ khó bài giảng (phù hợp trình độ tiếng Hàn của du học sinh)', 'Chất lượng giáo trình và tài liệu hỗ trợ (cung cấp bản dịch đa ngôn ngữ và bản tóm tắt)', 'Khả năng truyền đạt của giảng viên và giao tiếp với sinh viên nước ngoài', 'Tính công bằng của phương thức đánh giá và hướng dẫn tiêu chí rõ ràng', 'Sắp xếp thời khóa biểu (tránh trùng với lịch học chính của trường mình)', 'Khác']],
+      zh: ['优先改进因素', '联合课程授课中，今后最需要优先改进的部分是什么？', '', ['讲课内容及难度调整（考虑留学生的韩语水平）', '教材及课堂辅助资料的质量（提供多语种翻译及摘要）', '教师的授课表达能力及与外国学生的沟通', '成绩评价方式的公平性及明确标准的说明', '课程时间表安排（避免与所属大学正规课程冲突）', '其他']],
+      km: ['កត្តាដែលត្រូវកែលម្អជាអាទិភាព', 'ក្នុងការបង្រៀននៃកម្មវិធីសិក្សារួម តើផ្នែកណាដែលត្រូវកែលម្អជាអាទិភាពបំផុតនាពេលខាងមុខ?', '', ['ការកែសម្រួលខ្លឹមសារ និងកម្រិតលំបាកនៃមេរៀន (គិតគូរពីកម្រិតភាសាកូរ៉េរបស់និស្សិតបរទេស)', 'គុណភាពសៀវភៅសិក្សា និងឯកសារជំនួយ (ផ្តល់ការបកប្រែពហុភាសា និងសេចក្តីសង្ខេប)', 'សមត្ថភាពបង្រៀនរបស់សាស្ត្រាចារ្យ និងការប្រាស្រ័យទាក់ទងជាមួយនិស្សិតបរទេស', 'ភាពយុត្តិធម៌នៃវិធីវាយតម្លៃពិន្ទុ និងការណែនាំលក្ខណៈវិនិច្ឆ័យឱ្យច្បាស់លាស់', 'ការរៀបចំកាលវិភាគ (ជៀសវាងការជាន់ម៉ោងជាមួយថ្នាក់ធម្មតានៃសាកលវិទ្យាល័យខ្លួន)', 'ផ្សេងៗ']]
+    },
+    Q3: {
+      vi: ['', "Mức độ hài lòng chung của bạn đối với chương trình 'môn học chính khóa' mà sinh viên 3 trường cùng tham gia là như thế nào?", '', SAT.vi],
+      zh: ['', '您对 3 所大学学生共同参与的“学分课程（授课）”项目的整体满意度如何？', '', SAT.zh],
+      km: ['', "តើកម្រិតពេញចិត្តទូទៅរបស់អ្នកចំពោះកម្មវិធី 'មុខវិជ្ជាក្នុងកម្មវិធីសិក្សា (ការបង្រៀន)' ដែលនិស្សិតនៃសាកលវិទ្យាល័យទាំង ៣ ចូលរួមជាមួយគ្នា ស្ថិតក្នុងកម្រិតណា?", '', SAT.km]
+    },
+    'Q3-1': {
+      vi: ['Hiệu quả của phương thức vận hành liên kết', 'Phương thức học cùng sinh viên các trường khác (học luân chuyển, kết hợp trực tiếp và trực tuyến…) có hiệu quả đối với việc học của bạn ở mức độ nào?', '', ['Rất hiệu quả', 'Hiệu quả', 'Bình thường', 'Không mấy hiệu quả', 'Hoàn toàn không hiệu quả']],
+      zh: ['联合运营方式的有效性', '与其他大学学生一起上课的运营方式（移动授课、线上线下并行等）对学习的效果如何？', '', ['非常有效', '有效', '一般', '不太有效', '非常无效']],
+      km: ['ប្រសិទ្ធភាពនៃវិធីដំណើរការសម្ព័ន្ធ', 'តើវិធីសិក្សារួមជាមួយនិស្សិតសាកលវិទ្យាល័យផ្សេង (ការសិក្សាផ្លាស់ទី ការសិក្សាដោយផ្ទាល់ និងអនឡាញ ។ល។) មានប្រសិទ្ធភាពចំពោះការសិក្សារបស់អ្នកកម្រិតណា?', '', ['មានប្រសិទ្ធភាពខ្លាំង', 'មានប្រសិទ្ធភាព', 'មធ្យម', 'មិនសូវមានប្រសិទ្ធភាព', 'គ្មានប្រសិទ្ធភាពសោះ']]
+    },
+    'Q3-2': {
+      vi: ['Khó khăn khi tham gia lớp học', 'Khó khăn lớn nhất bạn gặp phải khi tham gia các môn học liên kết là gì?', '', ['Khoảng cách di chuyển giữa các trường và giờ xe đưa đón không thuận tiện', 'Trùng lịch với giờ học chính/lịch trình của trường mình', 'Áp lực làm dự án nhóm/giao tiếp với sinh viên Hàn Quốc và sinh viên trường khác', 'Độ khó môn học cao hơn dự kiến và khó hiểu thuật ngữ chuyên ngành', 'Không có khó khăn đặc biệt', 'Khác']],
+      zh: ['上课困难', '参加联合课程时感到的最大困难是什么？', '', ['大学间移动距离远及班车发车时间不便', '与所属大学正规课程/日程时间冲突', '与韩国学生及其他大学学生进行小组项目/沟通的压力', '课程难度高于预期，专业术语理解困难', '没有特别的困难', '其他']],
+      km: ['ការលំបាកក្នុងការចូលរៀន', 'តើការលំបាកធំបំផុតដែលអ្នកបានជួបក្នុងការចូលរៀនមុខវិជ្ជាសម្ព័ន្ធគឺអ្វី?', '', ['ចម្ងាយធ្វើដំណើររវាងសាកលវិទ្យាល័យ និងម៉ោងឡានដឹកជញ្ជូនមិនងាយស្រួល', 'ជាន់ម៉ោងជាមួយថ្នាក់ធម្មតា/កាលវិភាគនៃសាកលវិទ្យាល័យខ្លួន', 'សម្ពាធក្នុងការធ្វើគម្រោងជាក្រុម/ការប្រាស្រ័យទាក់ទងជាមួយនិស្សិតកូរ៉េ និងនិស្សិតសាកលវិទ្យាល័យផ្សេង', 'មុខវិជ្ជាលំបាកជាងការរំពឹងទុក និងពិបាកយល់ពាក្យបច្ចេកទេស', 'គ្មានការលំបាកពិសេស', 'ផ្សេងៗ']]
+    },
+    Q4: {
+      vi: ['', "Mức độ hài lòng chung của bạn đối với chương trình 'ngoại khóa (chuyên đề, trải nghiệm…)' mà sinh viên 3 trường cùng tham gia là như thế nào?", '', SAT.vi],
+      zh: ['', '您对 3 所大学学生共同参与的“非学分（专题讲座、体验等）”项目的整体满意度如何？', '', SAT.zh],
+      km: ['', "តើកម្រិតពេញចិត្តទូទៅរបស់អ្នកចំពោះកម្មវិធី 'ក្រៅកម្មវិធីសិក្សា (បាឋកថាពិសេស បទពិសោធន៍ ។ល។)' ដែលនិស្សិតនៃសាកលវិទ្យាល័យទាំង ៣ ចូលរួមជាមួយគ្នា ស្ថិតក្នុងកម្រិតណា?", '', SAT.km]
+    },
+    'Q4-1': {
+      vi: ['Loại chương trình hữu ích', 'Trong các hoạt động ngoại khóa đã tham gia, loại chương trình nào hữu ích nhất?', '', ['Khám phá và trải nghiệm K-Culture, văn hóa địa phương', 'Tham quan thực tế doanh nghiệp và khu công nghiệp địa phương', 'Chuyên đề việc làm, visa và nâng cao năng lực chuyên ngành', 'Sự kiện giao lưu, kết nối sinh viên 3 trường', 'Lớp luyện thi chứng chỉ tiếng Hàn (TOPIK) chuyên sâu']],
+      zh: ['有益的项目类型', '在参加过的非学分活动中，最有益的项目类型是什么？', '', ['K-Culture 及地区文化探访·体验', '地区企业现场参观及产业考察', '就业·签证专题讲座及专业能力提升讲座', '3 所大学学生联合交流及联谊活动', '韩国语（TOPIK）集中备考班']],
+      km: ['ប្រភេទកម្មវិធីដែលមានប្រយោជន៍', 'ក្នុងចំណោមសកម្មភាពក្រៅកម្មវិធីសិក្សាដែលបានចូលរួម តើប្រភេទកម្មវិធីណាដែលមានប្រយោជន៍បំផុត?', '', ['ការស្វែងយល់ និងបទពិសោធន៍ K-Culture និងវប្បធម៌តំបន់', 'ទស្សនកិច្ចសិក្សានៅក្រុមហ៊ុន និងឧស្សាហកម្មក្នុងតំបន់', 'បាឋកថាពិសេសអំពីការងារ ទិដ្ឋាការ និងការពង្រឹងសមត្ថភាពជំនាញ', 'កម្មវិធីផ្លាស់ប្តូរ និងជួបជុំនិស្សិតនៃសាកលវិទ្យាល័យទាំង ៣', 'ថ្នាក់ត្រៀមប្រឡងវិញ្ញាបនបត្រភាសាកូរ៉េ (TOPIK) យ៉ាងស៊ីជម្រៅ']]
+    },
+    'Q4-2': {
+      vi: ['Điểm cần cải thiện trong vận hành', 'Để nâng cao mức độ hài lòng với chương trình ngoại khóa, điều gì cần được cải thiện nhất?', '', ['Cải thiện khả năng tiếp cận địa điểm tổ chức', 'Đa dạng hóa khung giờ có thể tham gia (cuối tuần, kỳ nghỉ…)', 'Thông báo tuyển chọn và đăng ký sớm, đủ thời gian', 'Mở rộng số lượng tham gia và đảm bảo cơ hội được chọn công bằng', 'Hệ thống hóa và nâng cao chất lượng nội dung chương trình', 'Khác']],
+      zh: ['运营改进点', '为了提高非学分项目的满意度，最需要改进的是什么？', '', ['提高聚会/活动举办场所的交通便利性', '增加可参与的时间段（周末/假期等）', '提前留出充足的招募及报名通知时间', '扩大招募人数并提供均等的选拔机会', '使项目内容系统化并提升质量', '其他']],
+      km: ['ចំណុចដែលត្រូវកែលម្អក្នុងការដំណើរការ', 'ដើម្បីបង្កើនកម្រិតពេញចិត្តលើកម្មវិធីក្រៅកម្មវិធីសិក្សា តើចំណុចណាដែលត្រូវកែលម្អបំផុត?', '', ['ធ្វើឱ្យទីកន្លែងរៀបចំកម្មវិធីងាយស្រួលធ្វើដំណើរទៅដល់', 'បង្កើនភាពចម្រុះនៃពេលវេលាដែលអាចចូលរួមបាន (ចុងសប្តាហ៍ វិស្សមកាល ។ល។)', 'ផ្សព្វផ្សាយការជ្រើសរើស និងការចុះឈ្មោះឱ្យបានមុន និងមានពេលគ្រប់គ្រាន់', 'បង្កើនចំនួនអ្នកចូលរួម និងផ្តល់ឱកាសជ្រើសរើសស្មើភាព', 'រៀបចំខ្លឹមសារកម្មវិធីឱ្យមានប្រព័ន្ធ និងលើកកម្ពស់គុណភាព', 'ផ្សេងៗ']]
+    },
+    Q5: {
+      vi: ['', 'Độ khó và nội dung của chương trình đào tạo chung (môn học) có phù hợp với trình độ tiếng Hàn hoặc trình độ chuyên ngành của bạn không?', '', ['Rất phù hợp', 'Phù hợp', 'Bình thường', 'Không phù hợp', 'Rất không phù hợp']],
+      zh: ['', '联合课程（授课）的难度和内容是否适合您的韩语水平或专业水平？', '', ['非常适合', '适合', '一般', '不适合', '非常不适合']],
+      km: ['', 'តើកម្រិតលំបាក និងខ្លឹមសារនៃកម្មវិធីសិក្សារួម (ការបង្រៀន) សមស្របនឹងកម្រិតភាសាកូរ៉េ ឬកម្រិតជំនាញរបស់អ្នកដែរឬទេ?', '', ['សមស្របខ្លាំង', 'សមស្រប', 'មធ្យម', 'មិនសមស្រប', 'មិនសមស្របខ្លាំង']]
+    },
+    'Q5-1': {
+      vi: ['Mức độ khó khăn khi hiểu tiếng Hàn', 'Trong giờ học, bạn gặp khó khăn ở mức độ nào khi hiểu từ vựng tiếng Hàn hoặc thuật ngữ chuyên ngành?', '', ['Hoàn toàn không khó', 'Không mấy khó', 'Bình thường', 'Hơi khó', 'Rất khó']],
+      zh: ['韩语理解负担', '上课时，您在理解韩语词汇或专业术语方面遇到了多大的困难？', '', ['完全不难', '不太难', '一般', '有点难', '非常难']],
+      km: ['កម្រិតលំបាកក្នុងការយល់ភាសាកូរ៉េ', 'ក្នុងពេលរៀន តើអ្នកជួបការលំបាកកម្រិតណាក្នុងការយល់វាក្យសព្ទភាសាកូរ៉េ ឬពាក្យបច្ចេកទេស?', '', ['មិនពិបាកសោះ', 'មិនសូវពិបាក', 'មធ្យម', 'ពិបាកបន្តិច', 'ពិបាកខ្លាំង']]
+    },
+    'Q5-2': {
+      vi: ['Nhu cầu hỗ trợ học tập', 'Để giúp bạn hiểu bài tốt hơn, bạn mong nhà trường ưu tiên cung cấp hình thức hỗ trợ nào?', '', ['Bản tóm tắt nội dung chính và phụ đề/tài liệu dịch đa ngôn ngữ', 'Hỗ trợ kết nối mentoring/tutoring 1:1 với sinh viên Hàn Quốc', 'Dịch vụ xem lại video bài giảng (VOD) để ôn tập', 'Sổ tay thuật ngữ chuyên ngành/từ điển tiếng Hàn thương mại', 'Tăng cường giờ hỏi đáp 1:1 với giáo sư (office hour)', 'Khác']],
+      zh: ['学习支援需求', '为了提高对课程的理解，您希望学校优先提供哪种支援？', '', ['课程核心摘要及多语种字幕/翻译资料', '与韩国学生 1:1 结对辅导（mentoring/tutoring）支援', '用于复习的课程录像（VOD）回看服务', '主要专业术语集/商务韩语词典', '与教授 1:1 答疑（office hour）常态化', '其他']],
+      km: ['តម្រូវការជំនួយការសិក្សា', 'ដើម្បីជួយឱ្យយល់មេរៀនកាន់តែច្បាស់ តើអ្នកចង់ឱ្យសាកលវិទ្យាល័យផ្តល់ជំនួយប្រភេទណាជាអាទិភាព?', '', ['សេចក្តីសង្ខេបខ្លឹមសារសំខាន់ៗ និងចំណងជើងរង/ឯកសារបកប្រែពហុភាសា', 'ការភ្ជាប់អ្នកណែនាំ/គ្រូជំនួយ ១:១ ជាមួយនិស្សិតកូរ៉េ', 'សេវាមើលវីដេអូមេរៀនឡើងវិញ (VOD) សម្រាប់រំលឹកមេរៀន', 'សៀវភៅពាក្យបច្ចេកទេសជំនាញ/វចនានុក្រមភាសាកូរ៉េពាណិជ្ជកម្ម', 'ពង្រឹងម៉ោងសួរ-ឆ្លើយ ១:១ ជាមួយសាស្ត្រាចារ្យ (office hour)', 'ផ្សេងៗ']]
+    },
+    Q6: {
+      vi: ['', 'Bạn nghĩ chương trình giáo dục tiếng Hàn và Địa phương học (Gyeongbuk học) giúp ích ở mức độ nào cho việc làm và định cư tại địa phương (Gyeongbuk) sau này?', '', ['Rất có ích', 'Khá có ích', 'Bình thường', 'Không mấy có ích', 'Hoàn toàn không có ích']],
+      zh: ['', '您认为韩国语教育及地区学（庆北学）项目对今后在地区（庆北）就业及定居有多大帮助？', '', ['非常有帮助', '比较有帮助', '一般', '不太有帮助', '完全没有帮助']],
+      km: ['', 'តើអ្នកគិតថាកម្មវិធីអប់រំភាសាកូរ៉េ និងតំបន់សិក្សា (Gyeongbuk សិក្សា) មានប្រយោជន៍កម្រិតណាសម្រាប់ការងារ និងការតាំងទីលំនៅក្នុងតំបន់ (Gyeongbuk) នាពេលអនាគត?', '', ['មានប្រយោជន៍ខ្លាំង', 'មានប្រយោជន៍', 'មធ្យម', 'មិនសូវមានប្រយោជន៍', 'គ្មានប្រយោជន៍សោះ']]
+    },
+    'Q6-1': {
+      vi: ['Tính hữu ích thực tế của nội dung', 'Trong nội dung chương trình giáo dục tiếng Hàn và Địa phương học (Gyeongbuk học), phần nào hữu ích thiết thực nhất cho việc hiểu xã hội địa phương và chuẩn bị cho cuộc sống, việc làm của bạn?', '', ['Học tiếng Hàn thương mại thực tế và từ vựng chuyên môn liên quan đến công việc', 'Hiểu biết về lịch sử, văn hóa, môi trường sống và thông tin cư trú tại Gyeongbuk', 'Giới thiệu các ngành công nghiệp chính (IT, kỹ thuật, y tế…) và thông tin tuyển dụng tại Gyeongbuk', 'Hỗ trợ luyện thi TOPIK và lấy chứng chỉ ngôn ngữ', 'Thích nghi với văn hóa xã hội Hàn Quốc và nâng cao năng lực giao tiếp với sinh viên trường khác', 'Khác']],
+      zh: ['教育内容的实际益处', '在韩国语教育及地区学（庆北学）项目内容中，对您了解地区社会以及准备生活·就业最实际有益的部分是什么？', '', ['实用商务韩语及与职务相关的专业词汇学习', '了解庆北地区历史·文化·生活环境及居住信息', '庆北地区主要产业（IT、工程、保健等）及企业招聘信息介绍', 'TOPIK（韩国语能力考试）备考及语言资格证取得支援', '适应韩国社会文化及增强与其他大学学生的沟通能力', '其他']],
+      km: ['ប្រយោជន៍ជាក់ស្តែងនៃខ្លឹមសារអប់រំ', 'ក្នុងខ្លឹមសារនៃកម្មវិធីអប់រំភាសាកូរ៉េ និងតំបន់សិក្សា (Gyeongbuk សិក្សា) តើផ្នែកណាដែលមានប្រយោជន៍ជាក់ស្តែងបំផុតសម្រាប់ការយល់ដឹងពីសង្គមក្នុងតំបន់ និងការត្រៀមខ្លួនសម្រាប់ការរស់នៅ និងការងាររបស់អ្នក?', '', ['ការរៀនភាសាកូរ៉េពាណិជ្ជកម្មជាក់ស្តែង និងវាក្យសព្ទជំនាញពាក់ព័ន្ធនឹងការងារ', 'ការយល់ដឹងពីប្រវត្តិសាស្ត្រ វប្បធម៌ បរិយាកាសរស់នៅ និងព័ត៌មានស្នាក់នៅក្នុងតំបន់ Gyeongbuk', 'ការណែនាំអំពីឧស្សាហកម្មសំខាន់ៗ (IT វិស្វកម្ម សុខាភិបាល ។ល។) និងព័ត៌មានជ្រើសរើសបុគ្គលិកក្នុងតំបន់ Gyeongbuk', 'ការគាំទ្រការត្រៀមប្រឡង TOPIK និងការទទួលបានវិញ្ញាបនបត្រភាសា', 'ការសម្របខ្លួនទៅនឹងវប្បធម៌សង្គមកូរ៉េ និងការពង្រឹងសមត្ថភាពប្រាស្រ័យទាក់ទងជាមួយនិស្សិតសាកលវិទ្យាល័យផ្សេង', 'ផ្សេងៗ']]
+    },
+    'Q6-2': {
+      vi: ['Rào cản định cư tại địa phương', 'Khi quyết định định cư tại địa phương sau khi tốt nghiệp, điều bạn lo ngại nhất hoặc cần được bổ sung là gì?', '', ['Thiếu doanh nghiệp tuyển dụng du học sinh và thông tin tuyển dụng tại địa phương', 'Vấn đề cấp visa (visa lao động E-7, visa đặc thù vùng F-2-R…) và tư cách lưu trú', 'Thiếu tiếng Hàn thương mại thực tế và năng lực chuyên môn', 'Điều kiện sống tại địa phương (nhà ở, giao thông công cộng, tiện ích…)', 'Ưu tiên thành phố lớn (vùng thủ đô) và chênh lệch lương/phúc lợi', 'Khác']],
+      zh: ['地区定居障碍因素', '毕业后决定在本地区定居时，您最担心或最需要补充的是什么？', '', ['地区内招聘留学生的企业及招聘信息不足', '签证（E-7 就业签证、F-2-R 地区特色签证等）办理及滞留资格问题', '实用商务韩语及职务能力不足', '地区居住条件（居住环境、公共交通、便利设施等）', '偏好大城市（首都圈）及工资/福利差距', '其他']],
+      km: ['ឧបសគ្គក្នុងការតាំងទីលំនៅក្នុងតំបន់', 'នៅពេលសម្រេចចិត្តតាំងទីលំនៅក្នុងតំបន់ក្រោយបញ្ចប់ការសិក្សា តើអ្វីដែលអ្នកព្រួយបារម្ភបំផុត ឬត្រូវការការគាំទ្របន្ថែម?', '', ['ខ្វះក្រុមហ៊ុនដែលជ្រើសរើសនិស្សិតបរទេស និងព័ត៌មានការងារក្នុងតំបន់', 'បញ្ហាការចេញទិដ្ឋាការ (ទិដ្ឋាការការងារ E-7 ទិដ្ឋាការពិសេសតំបន់ F-2-R ។ល។) និងសិទ្ធិស្នាក់នៅ', 'ខ្វះភាសាកូរ៉េពាណិជ្ជកម្មជាក់ស្តែង និងសមត្ថភាពការងារ', 'លក្ខខណ្ឌរស់នៅក្នុងតំបន់ (លំនៅដ្ឋាន ការដឹកជញ្ជូនសាធារណៈ សេវាកម្មងាយស្រួល ។ល។)', 'ចូលចិត្តទីក្រុងធំ (តំបន់រាជធានី) និងគម្លាតប្រាក់ខែ/អត្ថប្រយោជន៍', 'ផ្សេងៗ']]
+    },
+    Q7: {
+      vi: ['', 'Bạn có nghĩ rằng cơ hội giao lưu với sinh viên các trường khác đã được cung cấp đầy đủ không?', '', ['Rất đầy đủ', 'Đầy đủ', 'Bình thường', 'Thiếu', 'Rất thiếu']],
+      zh: ['', '您认为与其他大学学生交流的机会是否充分？', '', ['非常充分', '充分', '一般', '不足', '非常不足']],
+      km: ['', 'តើអ្នកគិតថាឱកាសផ្លាស់ប្តូរជាមួយនិស្សិតសាកលវិទ្យាល័យផ្សេងត្រូវបានផ្តល់ឱ្យគ្រប់គ្រាន់ដែរឬទេ?', '', ['គ្រប់គ្រាន់ខ្លាំង', 'គ្រប់គ្រាន់', 'មធ្យម', 'មិនគ្រប់គ្រាន់', 'មិនគ្រប់គ្រាន់ខ្លាំង']]
+    },
+    'Q7-1': {
+      vi: ['Đối tượng giao lưu chính', 'Trong quá trình giao lưu, bạn xây dựng mối quan hệ tích cực nhất với nhóm sinh viên nào?', '', ['Du học sinh nước ngoài của trường khác', 'Sinh viên Hàn Quốc của trường khác', 'Du học sinh và bạn bè người Hàn cùng trường', 'Giao lưu đều với tất cả sinh viên', 'Ít cơ hội giao lưu nên chưa thân thiết với ai']],
+      zh: ['主要交流对象', '在交流过程中，您主要与哪些学生建立了最活跃的关系？', '', ['其他大学的外国留学生', '其他大学的韩国学生', '本校的留学生及韩国同学', '与所有学生均衡交流', '交流机会少，未能建立亲密关系']],
+      km: ['អ្នកផ្លាស់ប្តូរសំខាន់', 'ក្នុងដំណើរការផ្លាស់ប្តូរ តើអ្នកបានបង្កើតទំនាក់ទំនងសកម្មបំផុតជាមួយនិស្សិតក្រុមណា?', '', ['និស្សិតបរទេសនៃសាកលវិទ្យាល័យផ្សេង', 'និស្សិតកូរ៉េនៃសាកលវិទ្យាល័យផ្សេង', 'និស្សិតបរទេស និងមិត្តរួមថ្នាក់កូរ៉េនៃសាកលវិទ្យាល័យខ្លួន', 'ផ្លាស់ប្តូរស្មើៗគ្នាជាមួយនិស្សិតទាំងអស់', 'ឱកាសផ្លាស់ប្តូរតិច មិនទាន់បានស្និទ្ធស្នាល']]
+    },
+    'Q7-2': {
+      vi: ['Lý do gặp khó khăn khi giao lưu', 'Khó khăn lớn nhất bạn cảm thấy khi tham gia hoạt động giao lưu với sinh viên các trường khác là gì?', '', ['Rào cản ngôn ngữ và giao tiếp', 'Thiếu không gian và thời gian gặp gỡ để giao lưu thường xuyên', 'Áp lực về khoảng cách di chuyển và sắp xếp thời gian giữa các trường', 'Khác biệt văn hóa và sự ngượng ngùng ban đầu', 'Không có khó khăn đặc biệt', 'Khác']],
+      zh: ['交流困难原因', '在与其他大学学生开展交流活动时，您感到的最大困难是什么？', '', ['语言及沟通障碍', '缺乏可持续交流的聚会空间和时间', '大学间移动距离及时间协调的负担', '文化差异及初期的生疏感', '没有特别的困难', '其他']],
+      km: ['មូលហេតុនៃការលំបាកក្នុងការផ្លាស់ប្តូរ', 'តើការលំបាកធំបំផុតដែលអ្នកមានអារម្មណ៍នៅពេលធ្វើសកម្មភាពផ្លាស់ប្តូរជាមួយនិស្សិតសាកលវិទ្យាល័យផ្សេងគឺអ្វី?', '', ['របាំងភាសា និងការប្រាស្រ័យទាក់ទង', 'ខ្វះទីកន្លែង និងពេលវេលាជួបជុំដើម្បីទំនាក់ទំនងជាប្រចាំ', 'បន្ទុកនៃចម្ងាយធ្វើដំណើរ និងការសម្របសម្រួលពេលវេលារវាងសាកលវិទ្យាល័យ', 'ភាពខុសគ្នាផ្នែកវប្បធម៌ និងភាពមិនទាន់ស្និទ្ធស្នាលនៅដំណាក់កាលដំបូង', 'គ្មានការលំបាកពិសេស', 'ផ្សេងៗ']]
+    },
+    Q8: {
+      vi: ['', 'Trong quá trình tham gia chương trình, các hỗ trợ hành chính (hướng dẫn, sử dụng cơ sở vật chất…) được thực hiện thuận lợi ở mức độ nào?', '', ['Rất thuận lợi', 'Thuận lợi', 'Bình thường', 'Không thuận lợi', 'Rất không thuận lợi']],
+      zh: ['', '参与项目期间，行政支援（指导、设施使用等）的顺畅程度如何？', '', ['非常顺畅', '顺畅', '一般', '不顺畅', '非常不顺畅']],
+      km: ['', 'ក្នុងអំឡុងពេលចូលរួមកម្មវិធី តើការគាំទ្រផ្នែករដ្ឋបាល (ការណែនាំ ការប្រើប្រាស់សម្ភារៈបរិក្ខារ ។ល។) ដំណើរការរលូនកម្រិតណា?', '', ['រលូនខ្លាំង', 'រលូន', 'មធ្យម', 'មិនរលូន', 'មិនរលូនខ្លាំង']]
+    },
+    'Q8-1': {
+      vi: ['Tính kịp thời và chính xác của thông tin', 'Các thông báo về lịch trình chương trình, phương tiện di chuyển (xe đưa đón…) và những điều cần chuẩn bị có được truyền đạt kịp thời và rõ ràng không?', '', ['Rất rõ ràng', 'Rõ ràng', 'Bình thường', 'Chưa tốt', 'Rất chưa tốt']],
+      zh: ['信息传达的及时性与准确性', '有关项目日程、交通工具（班车等）、准备事项的通知是否及时、明确地传达？', '', ['非常明确', '明确', '一般', '欠佳', '非常欠佳']],
+      km: ['ភាពទាន់ពេល និងភាពត្រឹមត្រូវនៃការផ្តល់ព័ត៌មាន', 'តើការជូនដំណឹងអំពីកាលវិភាគកម្មវិធី មធ្យោបាយធ្វើដំណើរ (ឡានដឹកជញ្ជូន ។ល។) និងរបស់ដែលត្រូវត្រៀម ត្រូវបានផ្តល់ទាន់ពេល និងច្បាស់លាស់ដែរឬទេ?', '', ['ច្បាស់លាស់ខ្លាំង', 'ច្បាស់លាស់', 'មធ្យម', 'មិនសូវល្អ', 'មិនល្អខ្លាំង']]
+    },
+    Q9: {
+      vi: ['', 'Hãy chọn 1~2 điều bạn hài lòng nhất khi tham gia dự án Đại học Liên kết MEGAversity.', '', ['Được giao lưu với sinh viên nhiều trường khác nhau', 'Được sử dụng cơ sở vật chất của khuôn viên mới (Khuôn viên Liên kết Toàn cầu)', 'Có trải nghiệm học tập mới qua chương trình đào tạo chung', 'Chương trình giáo dục tiếng Hàn và Địa phương học (Gyeongbuk học) hữu ích', 'Các chương trình ngoại khóa cùng tham gia (trải nghiệm văn hóa, chuyên đề…) bổ ích', 'Khác']],
+      zh: ['', '请选择您在参与 MEGAversity 联合大学项目期间最满意的 1~2 项。', '', ['能够与多所大学的学生交流', '能够使用新校区（全球联合校区）的设施', '通过联合课程获得了新的学习体验', '韩国语教育及地区学（庆北学）项目有帮助', '共同参与的非学分项目（文化体验、专题讲座等）很有益', '其他']],
+      km: ['', 'សូមជ្រើសរើស ១~២ ចំណុចដែលអ្នកពេញចិត្តបំផុតក្នុងអំឡុងពេលចូលរួមគម្រោងសាកលវិទ្យាល័យសម្ព័ន្ធ MEGAversity។', '', ['បានផ្លាស់ប្តូរជាមួយនិស្សិតពីសាកលវិទ្យាល័យជាច្រើន', 'បានប្រើប្រាស់សម្ភារៈបរិក្ខារនៃបរិវេណសិក្សាថ្មី (បរិវេណសិក្សាសម្ព័ន្ធសកល)', 'ទទួលបានបទពិសោធន៍សិក្សាថ្មីតាមរយៈកម្មវិធីសិក្សារួម', 'កម្មវិធីអប់រំភាសាកូរ៉េ និងតំបន់សិក្សា (Gyeongbuk សិក្សា) មានប្រយោជន៍', 'កម្មវិធីក្រៅកម្មវិធីសិក្សាដែលចូលរួមជាមួយគ្នា (បទពិសោធន៍វប្បធម៌ បាឋកថាពិសេស ។ល។) មានប្រយោជន៍', 'ផ្សេងៗ']]
+    },
+    'Q9-1': {
+      vi: ['Ý định giới thiệu', 'Bạn có giới thiệu chương trình Đại học Liên kết MEGAversity cho bạn bè du học sinh hoặc các bạn khóa sau không?', '', ['Chắc chắn sẽ giới thiệu', 'Có thể sẽ giới thiệu', 'Bình thường', 'Có lẽ không giới thiệu', 'Chắc chắn không giới thiệu']],
+      zh: ['推荐意向', '您是否会向其他留学生或学弟学妹推荐参加 MEGAversity 联合大学项目？', '', ['积极推荐', '倾向于推荐', '一般', '不太会推荐', '完全不推荐']],
+      km: ['បំណងណែនាំ', 'តើអ្នកនឹងណែនាំមិត្តនិស្សិតបរទេស ឬប្អូនៗជំនាន់ក្រោយឱ្យចូលរួមកម្មវិធីសាកលវិទ្យាល័យសម្ព័ន្ធ MEGAversity ដែរឬទេ?', '', ['ណែនាំយ៉ាងសកម្ម', 'ប្រហែលជាណែនាំ', 'មធ្យម', 'មិនសូវណែនាំ', 'មិនណែនាំសោះ']]
+    },
+    Q10: {
+      vi: ['', 'Trong việc sử dụng cơ sở vật chất như Khuôn viên Liên kết Toàn cầu hoặc khi di chuyển, điều gì cần được cải thiện ưu tiên nhất?', '', ['Tăng số chuyến xe buýt đưa đón giữa các trường và tối ưu hóa giờ chạy', 'Khả năng tiếp cận tiện ích (căng tin, quán cà phê, khu nghỉ) trong khuôn viên trường khác', 'Cải thiện Wi-Fi và trang thiết bị IT/học tập trong phòng học', 'Hướng dẫn trước bằng nhiều ngôn ngữ về vị trí và quy định sử dụng cơ sở vật chất', 'Không có điều gì đặc biệt bất tiện', 'Khác']],
+      zh: ['', '在使用全球联合校区等相关设施或移动过程中，最需要优先改进的是什么？', '', ['增加大学间班车运行班次并优化发车时间', '其他大学校园内便利设施（食堂、咖啡厅、休息空间）的使用便利性', '改善教室 Wi-Fi 及 IT/学习设备环境', '提前以多种语言说明设施位置及使用规则', '没有特别不便之处', '其他']],
+      km: ['', 'ក្នុងការប្រើប្រាស់សម្ភារៈបរិក្ខារដូចជាបរិវេណសិក្សាសម្ព័ន្ធសកល ឬក្នុងការធ្វើដំណើរ តើចំណុចណាដែលត្រូវកែលម្អជាអាទិភាពបំផុត?', '', ['បង្កើនចំនួនជើងឡានដឹកជញ្ជូនរវាងសាកលវិទ្យាល័យ និងកែសម្រួលម៉ោងចេញដំណើរ', 'លទ្ធភាពប្រើប្រាស់សេវាកម្ម (អាហារដ្ឋាន ហាងកាហ្វេ កន្លែងសម្រាក) នៅបរិវេណសាកលវិទ្យាល័យផ្សេង', 'កែលម្អ Wi-Fi និងឧបករណ៍ IT/សិក្សាក្នុងថ្នាក់រៀន', 'ការណែនាំជាមុនជាពហុភាសាអំពីទីតាំង និងបទបញ្ជាប្រើប្រាស់សម្ភារៈបរិក្ខារ', 'គ្មានចំណុចមិនងាយស្រួលពិសេស', 'ផ្សេងៗ']]
+    },
+    Q11: {
+      vi: ['', 'Bạn mong muốn MEGAversity ưu tiên mở mới chương trình nào nhất trong thời gian tới?', '', ['Chương trình thực tập và thực tế tại doanh nghiệp vùng Gyeongbuk', 'Lớp luyện thi TOPIK chuyên sâu theo từng cấp độ', 'Trải nghiệm K-Culture chuyên sâu và khám phá văn hóa địa phương', 'Mentoring 1:1/câu lạc bộ giữa du học sinh và sinh viên Hàn Quốc của 3 trường', 'Hội chợ việc làm và tư vấn visa dành riêng cho du học sinh nước ngoài', 'Khác']],
+      zh: ['', '您最希望 MEGAversity 联合大学今后优先开设什么项目？', '', ['庆北地区企业实习及现场实践项目', 'TOPIK（韩国语能力考试）分级集中备考班', 'K-Culture 深度体验及地区文化探访', '3 所大学留学生与韩国学生 1:1 结对辅导/社团', '外国留学生专场招聘会及签证咨询会', '其他']],
+      km: ['', 'តើអ្នកចង់ឱ្យ MEGAversity បង្កើតកម្មវិធីថ្មីណាមួយជាអាទិភាពបំផុតនាពេលខាងមុខ?', '', ['កម្មវិធីកម្មសិក្សា និងការអនុវត្តជាក់ស្តែងនៅក្រុមហ៊ុនក្នុងតំបន់ Gyeongbuk', 'ថ្នាក់ត្រៀមប្រឡង TOPIK យ៉ាងស៊ីជម្រៅតាមកម្រិត', 'បទពិសោធន៍ K-Culture ស៊ីជម្រៅ និងការស្វែងយល់វប្បធម៌តំបន់', 'ការណែនាំ ១:១/ក្លឹបរវាងនិស្សិតបរទេស និងនិស្សិតកូរ៉េនៃសាកលវិទ្យាល័យទាំង ៣', 'ពិព័រណ៍ការងារ និងការប្រឹក្សាទិដ្ឋាការសម្រាប់និស្សិតបរទេស', 'ផ្សេងៗ']]
+    },
+    Q12: {
+      vi: ['', 'Sau khi tốt nghiệp, bạn có ý định làm việc và định cư (sinh sống) tại Hàn Quốc (đặc biệt là vùng Gyeongbuk) ở mức độ nào?', '', ['Rất mong muốn (ý định rất cao)', 'Đang cân nhắc tích cực', 'Chưa rõ (đang suy nghĩ)', 'Không mong muốn (dự định về nước hoặc chuyển đến vùng khác)', 'Hoàn toàn không mong muốn (không có ý định)']],
+      zh: ['', '毕业后，您有多大意愿在韩国（尤其是庆北地区）就业并定居（居住）？', '', ['积极希望（意愿非常强烈）', '正在积极考虑', '不太清楚（还在考虑中）', '不希望（计划回国或去其他地区）', '完全不希望（没有意愿）']],
+      km: ['', 'ក្រោយបញ្ចប់ការសិក្សា តើអ្នកមានបំណងធ្វើការ និងតាំងទីលំនៅ (រស់នៅ) នៅប្រទេសកូរ៉េ (ជាពិសេសតំបន់ Gyeongbuk) កម្រិតណា?', '', ['ចង់បានយ៉ាងខ្លាំង (បំណងខ្ពស់ណាស់)', 'កំពុងពិចារណាជាវិជ្ជមាន', 'មិនទាន់ដឹង (កំពុងគិត)', 'មិនចង់ (គ្រោងត្រឡប់ទៅប្រទេសកំណើត ឬទៅតំបន់ផ្សេង)', 'មិនចង់សោះ (គ្មានបំណង)']]
+    },
+    'Q12-1': {
+      vi: ['Lý do và ngành nghề mong muốn', 'Nếu bạn mong muốn, hãy viết lý do hoặc ngành nghề bạn muốn làm.', '', null],
+      zh: ['希望的理由·职业', '如果您希望定居，请写下理由或希望从事的职业。', '', null],
+      km: ['មូលហេតុ និងមុខរបរដែលចង់បាន', 'ប្រសិនបើអ្នកចង់ សូមសរសេរមូលហេតុ ឬមុខរបរដែលអ្នកចង់ធ្វើ។', '', null]
+    },
+    Q13: {
+      vi: ['', 'Lý do lớn nhất khiến bạn còn do dự khi sinh sống tại vùng Gyeongbuk là gì?', '', ['Thiếu thông tin việc làm', 'Khó giải quyết vấn đề visa', 'Khó khăn trong giao tiếp bằng tiếng Hàn', 'Khó khăn do khác biệt văn hóa', 'Thích thành phố lớn (Seoul…)', 'Khác']],
+      zh: ['', '您对在庆北地区居住犹豫不决的最大原因是什么？', '', ['工作信息不足', '难以解决签证问题', '韩语沟通困难', '文化差异带来的困难', '更喜欢大城市（首尔等）', '其他']],
+      km: ['', 'តើអ្វីជាមូលហេតុធំបំផុតដែលធ្វើឱ្យអ្នកស្ទាក់ស្ទើរក្នុងការរស់នៅតំបន់ Gyeongbuk?', '', ['ខ្វះព័ត៌មានការងារ', 'ពិបាកដោះស្រាយបញ្ហាទិដ្ឋាការ', 'ពិបាកប្រាស្រ័យទាក់ទងជាភាសាកូរ៉េ', 'ការលំបាកដោយសារភាពខុសគ្នាផ្នែកវប្បធម៌', 'ចូលចិត្តទីក្រុងធំ (សេអ៊ូល ។ល។)', 'ផ្សេងៗ']]
+    },
+    Q14: {
+      vi: ['', 'Mục tiêu cuối cùng mà bạn muốn đạt được tại Hàn Quốc là gì?', 'Ví dụ: trở thành chuyên gia trong một lĩnh vực, có việc làm rồi nhận thẻ thường trú, khởi nghiệp, trải nghiệm văn hóa Hàn Quốc… Hãy viết mục tiêu cụ thể.', null],
+      zh: ['', '您在韩国最终想实现的目标是什么？', '例如：成为某一领域的专家、就业后取得永久居留权、创业、体验韩国文化等，请具体写出您的目标。', null],
+      km: ['', 'តើគោលដៅចុងក្រោយដែលអ្នកចង់សម្រេចបាននៅប្រទេសកូរ៉េគឺអ្វី?', 'ឧទាហរណ៍៖ ក្លាយជាអ្នកជំនាញក្នុងវិស័យណាមួយ ទទួលបានការងារ ហើយទទួលបានសិទ្ធិស្នាក់នៅអចិន្ត្រៃយ៍ បង្កើតអាជីវកម្ម បទពិសោធន៍វប្បធម៌កូរ៉េ ។ល។ សូមសរសេរគោលដៅឱ្យបានជាក់លាក់។', null]
+    },
+    D1: {
+      vi: ['Trường', 'Vui lòng chọn trường của bạn.', 'School', ['Đại học Kyungwoon', 'Học viện Công nghệ Quốc gia Kumoh', 'Đại học Gumi']],
+      zh: ['所属大学', '请选择您所属的大学。', 'School', ['庆云大学', '国立金乌工科大学', '龟尾大学']],
+      km: ['សាកលវិទ្យាល័យ', 'សូមជ្រើសរើសសាកលវិទ្យាល័យរបស់អ្នក។', 'School', ['សាកលវិទ្យាល័យ Kyungwoon', 'វិទ្យាស្ថានបច្ចេកវិទ្យាជាតិ Kumoh', 'សាកលវិទ្យាល័យ Gumi']]
+    },
+    D0: {
+      vi: ['Quốc tịch', 'Vui lòng chọn quốc tịch của bạn.', 'Nationality', ['Việt Nam', 'Campuchia', 'Trung Quốc', 'Khác']],
+      zh: ['国籍', '请选择您的国籍。', 'Nationality', ['越南', '柬埔寨', '中国', '其他']],
+      km: ['សញ្ជាតិ', 'សូមជ្រើសរើសសញ្ជាតិរបស់អ្នក។', 'Nationality', ['វៀតណាម', 'កម្ពុជា', 'ចិន', 'ផ្សេងៗ']]
+    },
+    D2: {
+      vi: ['Năm học', 'Vui lòng chọn năm học của bạn.', 'Grade', ['Năm 1', 'Năm 2', 'Năm 3', 'Năm 4']],
+      zh: ['年级', '请选择您的年级。', 'Grade', ['大一', '大二', '大三', '大四']],
+      km: ['ឆ្នាំសិក្សា', 'សូមជ្រើសរើសឆ្នាំសិក្សារបស់អ្នក។', 'Grade', ['ឆ្នាំទី ១', 'ឆ្នាំទី ២', 'ឆ្នាំទី ៣', 'ឆ្នាំទី ៤']]
+    },
+    D3: {
+      vi: ['Chuyên ngành', 'Vui lòng nhập chuyên ngành của bạn.', 'Major', null],
+      zh: ['专业', '请输入您的专业。', 'Major', null],
+      km: ['ជំនាញ', 'សូមបញ្ចូលជំនាញសិក្សារបស់អ្នក។', 'Major', null]
+    },
+    D4: {
+      vi: ['Năng lực tiếng Hàn', 'Trình độ tiếng Hàn của bạn ở mức nào?', '', ['Sử dụng rất thành thạo / Trình độ cao nhất', 'Sử dụng thành thạo / Trình độ cao cấp', 'Sử dụng ở mức bình thường / Trình độ trung cấp', 'Sử dụng chưa thành thạo / Trình độ sơ cấp', 'Hoàn toàn không sử dụng được / Trình độ cơ bản']],
+      zh: ['韩语能力', '您的韩语水平如何？', '', ['非常熟练 / 最高水平', '熟练 / 高级水平', '一般 / 中级水平', '不太熟练 / 初级水平', '完全不会 / 基础水平']],
+      km: ['សមត្ថភាពភាសាកូរ៉េ', 'តើសមត្ថភាពនិយាយភាសាកូរ៉េរបស់អ្នកស្ថិតក្នុងកម្រិតណា?', '', ['ស្ទាត់ជំនាញខ្លាំង / កម្រិតខ្ពស់បំផុត', 'ស្ទាត់ជំនាញ / កម្រិតខ្ពស់', 'និយាយបានធម្មតា / កម្រិតមធ្យម', 'មិនសូវស្ទាត់ / កម្រិតដំបូង', 'មិនចេះសោះ / កម្រិតមូលដ្ឋាន']]
+    },
+    CONTACT: {
+      vi: ['Số điện thoại tại Hàn Quốc (để bốc thăm quà tặng gifticon)', 'Chúng tôi sẽ gửi phiếu quà tặng (gifticon) cho người trúng thưởng qua hình thức bốc thăm. Nếu không muốn, bạn có thể để trống.', 'Thông tin thu thập: số điện thoại di động · Mục đích: bốc thăm và gửi quà tặng · Thời gian lưu giữ: hủy ngay sau khi gửi quà xong · Bạn có quyền từ chối đồng ý; nếu từ chối, bạn chỉ không được tham gia bốc thăm.', null],
+      zh: ['韩国联系电话（礼品券抽奖用）', '我们将通过抽奖向中奖者发送礼品券（gifticon）。如不需要，可留空。', '收集项目：手机号码 · 收集目的：礼品券抽奖及发放 · 保存期限：礼品发放完毕后立即销毁 · 您可以拒绝同意，拒绝时仅不参加抽奖。', null],
+      km: ['លេខទូរស័ព្ទនៅកូរ៉េ (សម្រាប់ការចាប់ឆ្នោតកាតអំណោយ)', 'យើងនឹងផ្ញើកាតអំណោយ (gifticon) ដល់អ្នកឈ្នះតាមរយៈការចាប់ឆ្នោត។ ប្រសិនបើមិនចង់ អ្នកអាចទុកចន្លោះទទេបាន។', 'ព័ត៌មានដែលប្រមូល៖ លេខទូរស័ព្ទដៃ · គោលបំណង៖ ការចាប់ឆ្នោត និងការផ្ញើកាតអំណោយ · រយៈពេលរក្សាទុក៖ លុបចោលភ្លាមៗក្រោយផ្ញើអំណោយរួច · អ្នកមានសិទ្ធិបដិសេធមិនយល់ព្រម ហើយប្រសិនបើបដិសេធ អ្នកគ្រាន់តែមិនត្រូវបានរាប់បញ្ចូលក្នុងការចាប់ឆ្នោតប៉ុណ្ណោះ។', null]
+    }
+  };
+
+   
+  const S = DEFAULT_SURVEY;
+  for (const l of ['vi', 'zh', 'km']) {
+    for (const k in META[l]) { S.meta[k] = S.meta[k] || {}; S.meta[k][l] = META[l][k]; }
+  }
+  for (const it of S.items) {
+    if (it.type === 'section') { for (const l of ['vi', 'zh', 'km']) { if (SEC[it.id]) it.title[l] = SEC[it.id][l]; it.text[l] = it.text.ko; } continue; }
+    const q = Q[it.id]; if (!q) continue;
+    for (const l of ['vi', 'zh', 'km']) {
+      const [title, text, note, opts] = q[l];
+      it.title = it.title || {}; it.text = it.text || {}; it.note = it.note || {};
+      if (title) it.title[l] = title;
+      if (text) it.text[l] = text;
+      const n = note || (NOTE[(it.note || {}).ko] || {})[l];
+      if (n) it.note[l] = n;
+      if (opts && it.options) opts.forEach((t, i) => { if (it.options[i]) it.options[i].t[l] = t; });
+    }
+  }
+  S.version = '2026-11-26-i18n';
+})();
+
+</script>
+<script>
+{
+const $ = (s) => document.querySelector(s);
+const PREVIEW = location.hash === '#preview' || /[?&]preview=1/.test(location.search) || !!(window.APP_PARAMS && APP_PARAMS.preview === '1');
+const S = { survey: null, settings: { open: true, activeLangs: ['ko', 'vi', 'zh', 'km'] }, lang: 'ko', step: -1, answers: {}, started: null, contact: { consent: '', phone: '' } };
+let pages = [];
+
+function toast(msg) { const t = $('#toast'); t.textContent = msg; t.hidden = false; clearTimeout(toast.h); toast.h = setTimeout(() => (t.hidden = true), 2600); }
+const T = (o) => tr(o, S.lang);
+const U = (k, v) => ui(S.lang, k, v);
+
+function buildPages() {
+  pages = [];
+  for (const it of S.survey.items) {
+    if (it.type === 'section') pages.push({ sec: it, items: [] });
+    else { if (!pages.length) pages.push({ sec: null, items: [] }); pages[pages.length - 1].items.push(it); }
+  }
+}
+function saveDraft() { if (!PREVIEW) Store.set('mv_draft', { answers: S.answers, lang: S.lang, step: S.step, started: S.started, v: S.survey.version }); }
+
+function renderLangs() {
+  const act = PREVIEW ? LANGS.map((l) => l.code) : (S.settings.activeLangs || ['ko']);
+  $('#langs').innerHTML = '<span class="ll">언어 · Ngôn ngữ · 语言 · ភាសា</span>' + LANGS.map((l) => {
+    const on = act.includes(l.code);
+    return `<button type="button" data-lang="${l.code}" aria-pressed="${S.lang === l.code}" ${on ? '' : 'disabled title="' + esc(ui('ko', 'soon')) + '"'}>${esc(l.name)}${on ? '' : '<small>· 준비 중</small>'}</button>`;
+  }).join('');
+}
+function renderHeader() {
+  const m = S.survey.meta;
+  document.documentElement.lang = S.lang;
+  $('#kicker').textContent = T(m.kicker); $('#title').textContent = T(m.title); $('#org').textContent = T(m.org);
+  document.title = T(m.title);
+  renderLangs();
+}
+function introHtml(txt) {
+  let out = '', list = false;
+  for (const line of String(txt).split('\n')) {
+    const l = line.trim(); if (!l) continue;
+    const isLi = l.startsWith('- ');
+    if (list && !isLi) { out += '</ul>'; list = false; }
+    if (l.startsWith('### ')) out += `<h4>${esc(l.slice(4))}</h4>`;
+    else if (l.startsWith('## ')) out += `<h3>${esc(l.slice(3))}</h3>`;
+    else if (isLi) { if (!list) { out += '<ul>'; list = true; } out += `<li>${esc(l.slice(2))}</li>`; }
+    else if (l.startsWith('※')) out += `<p class="rem">${esc(l)}</p>`;
+    else out += `<p>${esc(l)}</p>`;
+  }
+  return out + (list ? '</ul>' : '');
+}
+
+function render() {
+  renderHeader();
+  const app = $('#app');
+  if (!S.settings.open && !PREVIEW) { $('#prog').hidden = true; app.innerHTML = `<div class="done"><h2>${esc(U('closed'))}</h2></div>`; return; }
+  if (S.step === -1) {
+    $('#prog').hidden = true;
+    const m = S.survey.meta;
+    app.innerHTML = `<p class="notice">${esc(T(m.notice))}</p><div class="intro">${introHtml(T(m.intro))}</div>
+      <p class="date">${esc(T(m.date))}</p><div class="nav"><button class="btn pri" id="go">${esc(U('start'))}</button></div>`;
+    $('#go').onclick = () => { if (!S.started) S.started = Date.now(); go(0); };
+    return;
+  }
+  if (S.step === 'done') {
+    $('#prog').hidden = true;
+    app.innerHTML = `<div class="done"><svg viewBox="0 0 84 84" aria-hidden="true"><circle cx="42" cy="42" r="40" fill="#e0115f"/><path d="M25 43l12 12 23-25" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <h2>${esc(U('doneTitle'))}</h2><p>${esc(T(S.survey.meta.thanks) || U('doneBody'))}</p><div class="nav" style="justify-content:center"><button class="btn" id="again">${esc(U('again'))}</button></div></div>`;
+    $('#again').onclick = () => { S.step = -1; render(); window.scrollTo(0, 0); };
+    return;
+  }
+  const pg = pages[S.step], last = S.step === pages.length - 1;
+  $('#prog').hidden = false;
+  $('#barI').style.width = ((S.step + 1) / pages.length * 100) + '%';
+  $('#stepTxt').textContent = U('step', { a: S.step + 1, b: pages.length });
+  app.innerHTML = (pg.sec ? `<div class="sec-head"><h2>${esc(T(pg.sec.title))}</h2><p>${esc(T(pg.sec.text))}</p></div>` : '') +
+    pg.items.map(qHtml).join('') +
+    `<p class="err" id="pageErr" hidden></p><div class="nav"><button class="btn" id="prev">${esc(U('prev'))}</button>
+     <button class="btn pri" id="next">${esc(last ? U('submit') : U('next'))}</button></div>`;
+  bind(pg);
+  refresh();
+}
+
+function qHtml(it) {
+  const a = S.answers[it.id];
+  const title = T(it.title), note = T(it.note);
+  const head = it.type === 'contact' ? `<div class="qh"><div class="qt">${esc(title)}</div></div>` :
+    `<div class="qh"><span class="no">${esc(it.id)}</span><div class="qt">${title ? `<b>[${esc(title)}]</b>` : ''}${esc(T(it.text))}${it.required ? ' <span class="req" aria-label="필수">*</span>' : ''}${note ? `<span class="note">${esc(note)}</span>` : ''}</div></div>`;
+  let body = '';
+  const name = 'q_' + it.id;
+  if (it.type === 'scale') {
+    body = `<div class="scale" role="radiogroup">${it.options.map((o, i) => { const v = optValue(it, i); return `<button type="button" role="radio" data-v="${v}" aria-checked="${a === v}"><em>${v}</em><span>${esc(T(o.t))}</span></button>`; }).join('')}</div>`;
+  } else if (it.type === 'single' || it.type === 'multi') {
+    const multi = it.type === 'multi', sel = multi ? (a || []) : [a];
+    body = `<div class="opts">${it.options.map((o, i) => { const v = optValue(it, i); return `<label class="opt"><input type="${multi ? 'checkbox' : 'radio'}" name="${esc(name)}" value="${v}" ${sel.includes(v) ? 'checked' : ''}><span>${esc(T(o.t))}</span></label>`; }).join('')}</div>`;
+    const oi = it.options.findIndex((o) => o.other);
+    if (oi > -1) body += `<div class="other" data-other="${optValue(it, oi)}" hidden><input type="text" data-etc="${esc(it.id)}" placeholder="${esc(U('otherPh'))}" value="${esc(S.answers[it.id + '_기타'] || '')}"></div>`;
+    if (multi && it.max) body += `<p class="counter" data-counter></p>`;
+  } else if (it.type === 'text') {
+    body = `<input type="text" data-text value="${esc(a || '')}" placeholder="${esc(U('textPh'))}">`;
+  } else if (it.type === 'longtext') {
+    body = `<textarea data-text placeholder="${esc(U('textPh'))}">${esc(a || '')}</textarea>`;
+  } else if (it.type === 'contact') {
+    const c = S.contact;
+    body = `<p style="margin:0 0 10px">${esc(T(it.text))}</p><p class="consent">${esc(note)}</p>
+      <div class="opts row2"><label class="opt"><input type="radio" name="consent" value="Y" ${c.consent === 'Y' ? 'checked' : ''}><span>${esc(U('agree'))}</span></label>
+      <label class="opt"><input type="radio" name="consent" value="N" ${c.consent === 'N' ? 'checked' : ''}><span>${esc(U('disagree'))}</span></label></div>
+      <input type="tel" id="phone" inputmode="tel" autocomplete="tel" placeholder="${esc(U('phonePh'))}" value="${esc(c.phone)}" ${c.consent === 'Y' ? '' : 'disabled'}>`;
+  }
+  return `<section class="q${it.sub ? ' sub' : ''}" data-id="${esc(it.id)}">${head}${body}<p class="err" hidden></p></section>`;
+}
+
+function bind(pg) {
+  for (const it of pg.items) {
+    const el = document.querySelector(`.q[data-id="${CSS.escape(it.id)}"]`);
+    if (!el) continue;
+    if (it.type === 'scale') el.querySelectorAll('.scale button').forEach((b) => b.onclick = () => {
+      S.answers[it.id] = Number(b.dataset.v);
+      el.querySelectorAll('.scale button').forEach((x) => x.setAttribute('aria-checked', x === b));
+      changed(el);
+    });
+    if (it.type === 'single' || it.type === 'multi') {
+      el.querySelectorAll('.opts input').forEach((inp) => inp.onchange = () => {
+        const v = Number(inp.value);
+        if (it.type === 'single') S.answers[it.id] = v;
+        else {
+          let arr = [...el.querySelectorAll('.opts input:checked')].map((x) => Number(x.value));
+          const noneVals = it.options.map((o, i) => o.none ? optValue(it, i) : null).filter((x) => x != null);
+          if (inp.checked && noneVals.includes(v)) arr = [v];
+          else if (inp.checked) arr = arr.filter((x) => !noneVals.includes(x));
+          el.querySelectorAll('.opts input').forEach((x) => x.checked = arr.includes(Number(x.value)));
+          if (arr.length) S.answers[it.id] = arr; else delete S.answers[it.id];
+        }
+        changed(el);
+      });
+      const etc = el.querySelector('[data-etc]');
+      if (etc) etc.oninput = () => { S.answers[it.id + '_기타'] = etc.value; saveDraft(); };
+    }
+    const tx = el.querySelector('[data-text]');
+    if (tx) tx.oninput = () => { const v = tx.value; if (v.trim()) S.answers[it.id] = v; else delete S.answers[it.id]; saveDraft(); };
+    if (it.type === 'contact') {
+      el.querySelectorAll('input[name=consent]').forEach((r) => r.onchange = () => {
+        S.contact.consent = r.value; const ph = $('#phone'); ph.disabled = r.value !== 'Y'; if (r.value !== 'Y') { ph.value = ''; S.contact.phone = ''; } else ph.focus();
+      });
+      $('#phone').oninput = (e) => { S.contact.phone = e.target.value.trim(); };
+    }
+  }
+  $('#prev').onclick = () => go(S.step - 1);
+  $('#next').onclick = next;
+}
+function changed(el) { el.classList.remove('bad'); el.querySelector('.err').hidden = true; refresh(); saveDraft(); }
+
+/* 조건 분기·기타 입력란·최대 선택 수 반영 */
+function refresh() {
+  for (const it of S.survey.items) {
+    const el = document.querySelector(`.q[data-id="${CSS.escape(it.id)}"]`);
+    if (!el) continue;
+    el.hidden = !isVisible(it, S.answers);
+    const sel = it.type === 'multi' ? (S.answers[it.id] || []) : [S.answers[it.id]];
+    const oth = el.querySelector('[data-other]');
+    if (oth) oth.hidden = !sel.includes(Number(oth.dataset.other));
+    if (it.type === 'multi' && it.max) {
+      const full = sel.length >= it.max;
+      el.querySelectorAll('.opts input').forEach((x) => x.disabled = full && !x.checked);
+      el.querySelector('[data-counter]').textContent = U('picked', { n: sel.length }) + ' · ' + U('maxPick', { n: it.max });
+    }
+  }
+}
+function validate(pg) {
+  let first = null;
+  for (const it of pg.items) {
+    const el = document.querySelector(`.q[data-id="${CSS.escape(it.id)}"]`);
+    if (!el || el.hidden) continue;
+    let msg = '';
+    const a = S.answers[it.id];
+    if (it.type === 'contact') {
+      if (S.contact.consent === 'Y' && !/^01[016789]-?\d{3,4}-?\d{4}$/.test(S.contact.phone)) msg = U('phoneBad');
+    } else if (it.required && (a == null || a === '' || (Array.isArray(a) && !a.length))) msg = U('required');
+    else {
+      const oi = (it.options || []).findIndex((o) => o.other);
+      const sel = Array.isArray(a) ? a : [a];
+      if (oi > -1 && sel.includes(optValue(it, oi)) && !(S.answers[it.id + '_기타'] || '').trim()) msg = U('otherPh');
+    }
+    const e = el.querySelector('.err');
+    el.classList.toggle('bad', !!msg); e.hidden = !msg; e.textContent = msg;
+    if (msg && !first) first = el;
+  }
+  if (first) { first.scrollIntoView({ behavior: 'smooth', block: 'center' }); const pe = $('#pageErr'); pe.hidden = false; pe.textContent = U('unanswered'); }
+  return !first;
+}
+function go(i) { S.step = i; saveDraft(); render(); window.scrollTo(0, 0); }
+async function next() {
+  if (!validate(pages[S.step])) return;
+  if (S.step < pages.length - 1) return go(S.step + 1);
+  const btn = $('#next'); btn.disabled = true; btn.textContent = U('sending');
+  try {
+    if (!PREVIEW) {
+      await Api.request('submit', {
+        row: flattenAnswers(S.survey, S.answers), lang: S.lang,
+        durationSec: S.started ? Math.round((Date.now() - S.started) / 1000) : '',
+        contact: S.contact.consent === 'Y' ? { phone: S.contact.phone } : null
+      });
+      Store.del('mv_draft');
+    }
+    S.answers = {}; S.started = null; S.contact = { consent: '', phone: '' };
+    go('done');
+  } catch (e) { btn.disabled = false; btn.textContent = U('submit'); toast(U('fail')); }
+}
+
+$('#langs').addEventListener('click', (e) => {
+  const b = e.target.closest('button[data-lang]'); if (!b || b.disabled) return;
+  S.lang = b.dataset.lang; saveDraft(); render();
+});
+
+if (window.APP_URL) { const a = $('#adminLink'); a.href = APP_URL + '?page=admin'; a.target = '_top'; }
+(async function init() {
+  if (PREVIEW) { const p = $('#pv'); p.hidden = false; p.textContent = ui('ko', 'preview'); }
+  try {
+    const r = await Api.request('getSurvey');
+    S.survey = r.survey && r.survey.items && r.survey.items.length ? r.survey : clone(DEFAULT_SURVEY);
+    S.settings = Object.assign(S.settings, r.settings || {});
+  } catch (e) { S.survey = clone(DEFAULT_SURVEY); }
+  buildPages();
+  const d = !PREVIEW && Store.get('mv_draft', null);
+  if (d && d.answers && Object.keys(d.answers).length && d.v === S.survey.version) {
+    Object.assign(S, { answers: d.answers, lang: d.lang || 'ko', step: typeof d.step === 'number' ? Math.min(d.step, pages.length - 1) : -1, started: d.started });
+    toast(ui(S.lang, 'restore'));
+  }
+  const act = S.settings.activeLangs || ['ko'];
+  if (!(d && d.lang)) { const nl = (navigator.language || '').slice(0, 2).toLowerCase(); if (act.includes(nl)) S.lang = nl; }
+  if (!PREVIEW && !act.includes(S.lang)) S.lang = act[0] || 'ko';
+  render();
+})();
+}
+</script>
+</body>
+</html>
