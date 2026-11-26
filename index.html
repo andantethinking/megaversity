@@ -53,6 +53,7 @@ html,body{overflow-x:hidden}
 .langbox{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:18px;margin-top:-18px;position:relative;z-index:2}
 .langbox h2{font-size:15px;margin:0 0 12px;color:var(--mute);font-weight:600}
 .lgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.lgrid .lg:last-child:nth-child(odd){grid-column:1/-1}
 .lg{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;border:2px solid var(--line);background:var(--card);border-radius:14px;padding:12px 14px;min-height:64px;transition:border-color .15s,background .15s}
 .lg b{font-size:17px;font-weight:700}
 .lg small{font-size:12.5px;color:var(--mute)}
@@ -247,14 +248,15 @@ textarea.field{min-height:150px;resize:vertical;line-height:1.55}
 const CONFIG = {
   API_URL: 'https://script.google.com/macros/s/AKfycbznViu76RBQkllGVUk-A_4ajY1rnLgGShpj_VE-hxbH2F1upghjizTDMC4lQtwjh41Bkg/exec',              // 예: 'https://script.google.com/macros/s/AKfy.../exec'
   DEMO_PASSWORD: 'demo',    // 데모 모드 관리자 비밀번호 (실서비스는 Apps Script 쪽 ADMIN_PW 사용)
-  VERSION: '0.2.0'
+  VERSION: '0.7.0'
 };
 
 const LANGS = [
   { code: 'ko', name: '한국어',     short: 'KO', ko: '한국어' },
   { code: 'vi', name: 'Tiếng Việt', short: 'VI', ko: '베트남어' },
   { code: 'zh', name: '中文',        short: 'ZH', ko: '중국어' },
-  { code: 'km', name: 'ភាសាខ្មែរ',  short: 'KM', ko: '크메르어(캄보디아)' }
+  { code: 'km', name: 'ភាសាខ្មែរ',  short: 'KM', ko: '크메르어(캄보디아)' },
+  { code: 'en', name: 'English',    short: 'EN', ko: '영어' }
 ];
 
 /* 화면 공통 문구 (문항 외). 번역 단계에서 vi/km/zh 채움 — 비어 있으면 en → ko 순으로 대체 */
@@ -510,7 +512,7 @@ const Api = {
 
 const Demo = {
   survey() { return Store.get('mv_survey', null) || clone(DEFAULT_SURVEY); },
-  settings() { return Object.assign({ open: true, reviewMode: false, activeLangs: ['ko', 'vi', 'zh', 'km'] }, Store.get('mv_settings', {})); },
+  settings() { return Object.assign({ open: true, reviewMode: false, activeLangs: ['ko', 'vi', 'zh', 'km', 'en'] }, Store.get('mv_settings', {})); },
   getSurvey() { return { ok: true, survey: this.survey(), settings: this.settings() }; },
   submit({ row, contact, lang, durationSec }) {
     const list = Store.get('mv_responses', []);
@@ -566,7 +568,7 @@ const Demo = {
 </script>
 <script>
 /* =========================================================================
-   MEGAversity 유학생 만족도 조사 — 다국어 번역 (베트남어 vi · 중국어 zh · 크메르어 km)
+   MEGAversity 유학생 만족도 조사 — 다국어 번역 (베트남어 vi · 중국어 zh · 크메르어 km · 영어 en)
    - 초벌 번역(2026-11-26). 배포 전 원어민 검수 권장 — 특히 크메르어
    - 형식: 문항ID: { 언어: [대괄호 소제목, 질문, 안내, [보기…]] }
    - 실제 운영 중 문구는 구글 시트 Questions 탭(언어별 열)에서 수정
@@ -905,6 +907,105 @@ Object.assign(UI, {
   S.version = '2026-11-26-i18n';
 })();
 
+/* =========================================================================
+   MEGAversity 유학생 만족도 조사 — 영어(en) 번역
+   - 초벌 번역(2026-11-26). 형식은 i18n.js와 같음: [소제목, 질문, 안내, [보기…]]
+   ========================================================================= */
+(() => {
+  const L = 'en';
+
+  const META = {
+    kicker: 'Ministry of Education RISE Project',
+    title: 'MEGAversity Joint University International Student Satisfaction Survey',
+    org: 'Survey by Kyungwoon University · Conducted by the Korea Institute of Educational Technology',
+    notice: 'Statistics Act, Article 33 (Protection of Confidentiality) — Any confidential information about individuals, corporations or organizations learned while compiling statistics must be protected.',
+    intro: [
+      'Hello!',
+      "This survey is part of the Ministry of Education's RISE (Regional Innovation System & Education) project. It aims to assess how satisfied international students are with the 'MEGAversity Joint University' program, so that we can improve courses tailored to international students and build policies that support settling in the region.",
+      '## About the MEGAversity Joint University Project',
+      '### 1. What is MEGAversity Joint University?',
+      "'MEGAversity Joint University' is a joint education system based in the Gyeongbuk region, run by three universities: Kyungwoon University (lead university), Kumoh National Institute of Technology and Gumi University. The three universities break down the walls between campuses and share their educational resources and facilities. Beyond attracting more international students, its core goals are to raise the quality of education and to develop global talent who will settle in the region.",
+      '### 2. Main Education Areas (3 Pillars)',
+      '- Joint Curriculum (credit courses): courses run jointly by the three universities (online and offline classes and on-the-move classes based on the Global Joint Campus)',
+      '- Extracurricular Programs: K-Culture experiences, field trips to local companies, special lectures on jobs and visas, exchanges among students of the three universities',
+      '- Korean Language and Regional Studies (Gyeongbuk Studies): building Korean vocabulary and practical skills, and understanding the culture and industries of Gyeongbuk as a foundation for settling in the region',
+      '### 3. Final Goal',
+      'We are building a positive cycle of Teaching → Networking → Support → Settlement. It helps you succeed in your studies and supports you in getting a job at a good company in Gyeongbuk and settling in the region after graduation.',
+      '## Survey Guidelines',
+      '- Participants: international students taking part in MEGAversity at Kyungwoon University, Kumoh National Institute of Technology and Gumi University',
+      '- Time required: about 10 minutes',
+      '※ RISE stands for Regional Innovation System & Education. It is a balanced regional development project of the Ministry of Education. Universities become key players in regional innovation, work with local governments and industries, train talent for the region\'s specialized industries and lead regional development.'
+    ].join('\n'),
+    date: 'December 2026 · Kyungwoon University',
+    thanks: 'Thank you for your valuable opinion.'
+  };
+
+  const NOTE = { '1개 선택': 'Choose one', '최대 2개 선택': 'Choose up to 2', '복수 응답 가능': 'Choose all that apply' };
+  const SAT = ['Very satisfied', 'Satisfied', 'Neutral', 'Dissatisfied', 'Very dissatisfied'];
+  const SEC = {
+    S1: 'I. Program Awareness and Satisfaction with Program Details',
+    S2: 'II. Program Operation Satisfaction and Improvements',
+    S3: 'III. Regional Settlement and Future Plans',
+    S4: 'IV. About You'
+  };
+  const OTHER = 'Other';
+
+  const Q = {
+    Q1: ['', "How much did you know about the 'MEGAversity Joint University' project before taking part?", '', ['I knew it very well', 'I knew it fairly well', 'I had heard the name (neutral)', 'I did not know much', 'I did not know it at all (first time hearing about it)']],
+    'Q1-1': ['How you heard about it', 'Through which channel did you first hear about this project?', '', ['Department/university website and official notices', 'Official university social media (Instagram, YouTube, etc.)', 'International Student Support Center / Office of International Affairs (email, group chat, etc.)', 'Recommendation from an advisor, friends or senior/junior students', 'Posters, banners or leaflets on campus', OTHER]],
+    'Q1-2': ['Reason for joining', 'What was the main reason you decided to join this program?', '', ['Meeting and networking with students from other universities', 'New learning experiences (credit/extracurricular) and earning credits', 'Improving my Korean and understanding regional culture (Gyeongbuk Studies)', 'Scholarships and other benefits for participants', 'Strong encouragement from my advisor or the International Student Support Center']],
+    Q2: ['', "Overall, how satisfied are you with MEGAversity's 'Joint Curriculum (classes)'?", '', SAT],
+    'Q2-1': ['Support in class', 'In class, was enough support given to international students (easy Korean explanations, answering questions, etc.)?', '', ['More than enough', 'Enough', 'Neutral', 'Not enough', 'Far from enough']],
+    'Q2-2': ['What to improve first', 'In the joint curriculum classes, what should be improved first?', '', ['Adjusting lecture content and difficulty (considering students\' Korean level)', 'Quality of textbooks and class materials (multilingual translations and summaries)', "Instructors' delivery and communication with international students", 'Fair grading and clear explanation of grading criteria', 'Class timetable (avoiding clashes with regular classes at my university)', OTHER]],
+    Q3: ['', "How satisfied are you overall with the 'credit course (class)' program that students from the three universities take together?", '', SAT],
+    'Q3-1': ['Effectiveness of joint classes', 'How effective for your learning was taking classes with students from other universities (on-the-move classes, online and offline classes, etc.)?', '', ['Very effective', 'Effective', 'Neutral', 'Not very effective', 'Not effective at all']],
+    'Q3-2': ['Difficulties in joint classes', 'What was your biggest difficulty when taking the joint courses?', '', ['Travel distance between universities and inconvenient shuttle bus times', 'Timetable clashes with regular classes or schedules at my university', 'Pressure of team projects / communicating with Korean students and students from other universities', 'Classes were harder than expected and technical terms were hard to understand', 'No particular difficulty', OTHER]],
+    Q4: ['', "How satisfied are you overall with the 'extracurricular (special lectures, experiences, etc.)' programs that students from the three universities join together?", '', SAT],
+    'Q4-1': ['Most useful program type', 'Among the extracurricular activities you joined, which type of program was the most useful?', '', ['K-Culture and local culture tours and experiences', 'Field trips to local companies and industrial sites', 'Special lectures on jobs, visas and major-related skills', 'Networking and social events for students of the three universities', 'Intensive Korean (TOPIK) preparation class']],
+    'Q4-2': ['What to improve', 'What most needs to improve to make the extracurricular programs more satisfying?', '', ['Easier access to meeting and event venues', 'More time options to take part (weekends, vacations, etc.)', 'Announcing recruitment and applications well in advance', 'More places and equal chances of being selected', 'Better organized, higher-quality program content', OTHER]],
+    Q5: ['', 'Were the difficulty and content of the joint curriculum (classes) right for your Korean level or major level?', '', ['Very appropriate', 'Appropriate', 'Neutral', 'Not appropriate', 'Not appropriate at all']],
+    'Q5-1': ['Difficulty understanding Korean', 'In class, how difficult was it to understand Korean words or technical terms?', '', ['Not difficult at all', 'Not very difficult', 'Neutral', 'A little difficult', 'Very difficult']],
+    'Q5-2': ['Learning support needed', 'What support would you most like the university to provide to help you understand classes better?', '', ['Lecture summaries and multilingual subtitles/translations', '1:1 mentoring/tutoring with Korean students', 'Recorded lectures (VOD) to watch again for review', 'Glossary of key major terms / business Korean dictionary', 'More 1:1 Q&A time with professors (office hours)', OTHER]],
+    Q6: ['', 'How helpful do you think the Korean language and Regional Studies (Gyeongbuk Studies) programs will be for finding a job and settling in the region (Gyeongbuk)?', '', ['Very helpful', 'Somewhat helpful', 'Neutral', 'Not very helpful', 'Not helpful at all']],
+    'Q6-1': ['Most practical content', 'In the Korean language and Regional Studies (Gyeongbuk Studies) programs, which part was the most practically useful for understanding the local community and preparing for life and work?', '', ['Practical business Korean and job-related vocabulary', 'History, culture, living environment and housing information of Gyeongbuk', 'Information on major industries (IT, engineering, health, etc.) and job openings in Gyeongbuk', 'TOPIK (Test of Proficiency in Korean) preparation and language certificates', 'Adapting to Korean society and culture, and communicating with students from other universities', OTHER]],
+    'Q6-2': ['Barriers to settling in the region', 'When deciding whether to settle in the region after graduation, what worries you most or needs more support?', '', ['Few companies hiring international students and little job information in the region', 'Visa issuance (E-7 work visa, F-2-R regional visa, etc.) and residence status', 'Lack of practical business Korean and job skills', 'Living conditions in the region (housing, public transport, amenities, etc.)', 'Preference for big cities (Seoul area) and gaps in pay/benefits', OTHER]],
+    Q7: ['', 'Do you think you had enough chances to interact with students from other universities?', '', ['More than enough', 'Enough', 'Neutral', 'Not enough', 'Far from enough']],
+    'Q7-1': ['Who you mainly interacted with', 'During the exchanges, with which students did you build the closest relationships?', '', ['International students from other universities', 'Korean students from other universities', 'International and Korean students from my own university', 'I interacted evenly with all students', 'There were too few chances to get close to anyone']],
+    'Q7-2': ['Difficulties in exchanges', 'What was your biggest difficulty in exchange activities with students from other universities?', '', ['Language and communication barriers', 'Not enough space or time to keep meeting', 'Travel distance between universities and coordinating schedules', 'Cultural differences and awkwardness at first', 'No particular difficulty', OTHER]],
+    Q8: ['', 'How smooth was the administrative support (guidance, use of facilities, etc.) during the program?', '', ['Very smooth', 'Smooth', 'Neutral', 'Not smooth', 'Not smooth at all']],
+    'Q8-1': ['Timely and clear information', 'Was information about the schedule, transport (shuttle bus, etc.) and things to prepare given on time and clearly?', '', ['Very clear', 'Clear', 'Neutral', 'Unclear', 'Very unclear']],
+    Q9: ['', 'Choose 1–2 things you were most satisfied with while taking part in MEGAversity Joint University.', '', ['Meeting students from different universities', 'Using the facilities of a new campus (Global Joint Campus)', 'New learning experiences through the joint curriculum', 'The Korean language and Regional Studies (Gyeongbuk Studies) programs were helpful', 'The joint extracurricular programs (cultural experiences, special lectures, etc.) were useful', OTHER]],
+    'Q9-1': ['Would you recommend it?', 'Would you recommend the MEGAversity Joint University program to other international students or juniors?', '', ['Definitely recommend', 'Probably recommend', 'Neutral', 'Probably not recommend', 'Definitely not recommend']],
+    Q10: ['', 'When using the Global Joint Campus and related facilities or travelling between campuses, what should be improved first?', '', ['More shuttle buses between universities and better timetables', 'Access to amenities (cafeterias, cafés, lounges) on other campuses', 'Better Wi-Fi and IT/learning equipment in classrooms', 'Multilingual information in advance about facility locations and rules', 'Nothing particularly inconvenient', OTHER]],
+    Q11: ['', 'Which new program would you most like MEGAversity Joint University to offer?', '', ['Internships and field training at companies in Gyeongbuk', 'Intensive TOPIK (Test of Proficiency in Korean) classes by level', 'In-depth K-Culture experiences and local culture tours', '1:1 mentoring/clubs between international and Korean students of the three universities', 'Job fairs and visa counseling only for international students', OTHER]],
+    Q12: ['', 'After graduation, how willing are you to work and settle (live) in Korea, especially in the Gyeongbuk region?', '', ['I strongly want to (very willing)', 'I am considering it positively', 'I am not sure (still thinking)', 'I do not want to (plan to return home or move elsewhere)', 'I do not want to at all (not willing)']],
+    'Q12-1': ['Reason and desired job', 'If you want to, please write your reason or the kind of job you hope for.', '', null],
+    Q13: ['', 'What is the biggest reason you hesitate to live in the Gyeongbuk region?', '', ['Not enough job information', 'Difficulty solving visa issues', 'Difficulty communicating in Korean', 'Difficulties from cultural differences', 'Preference for big cities (Seoul, etc.)', OTHER]],
+    Q14: ['', 'What is the ultimate goal you want to achieve in Korea?', 'For example: becoming an expert in a field, getting permanent residency after finding a job, starting a business, experiencing Korean culture. Please describe your goal in detail.', null],
+    D1: ['University', 'Please choose your university.', 'School', ['Kyungwoon University', 'Kumoh National Institute of Technology', 'Gumi University']],
+    D0: ['Nationality', 'Please choose your nationality.', 'Nationality', ['Vietnam', 'Cambodia', 'China', OTHER]],
+    D2: ['Year', 'Please choose your year of study.', 'Grade', ['1st year', '2nd year', '3rd year', '4th year']],
+    D3: ['Major', 'Please enter your major.', 'Major', null],
+    D4: ['Korean proficiency', 'How well do you speak Korean?', '', ['Very fluent / highest level', 'Fluent / advanced', 'Fair / intermediate', 'Not fluent / beginner', 'Cannot speak at all / basic']],
+    CONTACT: ['Phone number in Korea (for the gift card draw)', 'Winners of a random draw will receive a mobile gift card (gifticon). You may leave this blank if you do not want to take part.', 'Information collected: mobile phone number · Purpose: gift card draw and delivery · Retention: deleted right after the gifts are sent · You may refuse to agree; if you do, you will only be excluded from the draw.', null]
+  };
+
+  const S = DEFAULT_SURVEY;
+  for (const k in META) { S.meta[k] = S.meta[k] || {}; S.meta[k][L] = META[k]; }
+  for (const it of S.items) {
+    if (it.type === 'section') { if (SEC[it.id]) it.title[L] = SEC[it.id]; it.text[L] = it.text.ko; continue; }
+    const q = Q[it.id]; if (!q) continue;
+    const [title, text, note, opts] = q;
+    it.title = it.title || {}; it.text = it.text || {}; it.note = it.note || {};
+    if (title) it.title[L] = title;
+    if (text) it.text[L] = text;
+    const n = note || NOTE[(it.note || {}).ko];
+    if (n) it.note[L] = n;
+    if (opts && it.options) opts.forEach((t, i) => { if (it.options[i]) it.options[i].t[L] = t; });
+  }
+  S.version = '2026-11-26-i18n-en';
+})();
+
 </script>
 <script>
 {
@@ -917,7 +1018,8 @@ const X = {
   ko: { upCard:'왼쪽으로 넘기면 다음 장', org1:'조사기관', org2:'조사 수행기관', up:'왼쪽으로 넘기면 다음 문항', intro:'조사 안내', swipe:'옆으로 넘겨 보세요', ready:'이제 설문을 시작해 볼까요?', readySub:'안내를 모두 읽어 주셔서 감사합니다. 솔직한 경험을 들려주세요.', hello:'안녕하세요!', sub:'MEGAversity에 참여한 여러분의 경험을 들려주세요. 여러분의 의견이 더 좋은 수업과 생활 지원으로 이어집니다.', c1:'약 10분', c2:'{n}개 문항', c3:'기프티콘 추첨', pick:'편한 언어를 선택하세요', more:'조사 안내 자세히 보기', anon:'응답 내용은 통계 목적으로만 사용됩니다.', part:'파트 {n}', left:'약 {n}분 남음', skip:'건너뛰기', go:'시작하기', giftOn:'기프티콘 추첨에 참여했어요', lang:'언어 선택', last:'마지막 문항이에요' },
   vi: { upCard:'Vuốt sang trái để xem tiếp', org1:'Cơ quan khảo sát', org2:'Đơn vị thực hiện', up:'Vuốt sang trái để sang câu tiếp', intro:'Giới thiệu khảo sát', swipe:'Vuốt sang để xem tiếp', ready:'Bắt đầu khảo sát nhé?', readySub:'Cảm ơn bạn đã đọc hết phần giới thiệu. Hãy chia sẻ trải nghiệm thật của bạn.', hello:'Xin chào!', sub:'Hãy chia sẻ trải nghiệm của bạn khi tham gia MEGAversity. Ý kiến của bạn sẽ giúp lớp học và các hỗ trợ cuộc sống trở nên tốt hơn.', c1:'Khoảng 10 phút', c2:'{n} câu hỏi', c3:'Bốc thăm quà tặng', pick:'Chọn ngôn ngữ bạn thấy thoải mái', more:'Xem chi tiết hướng dẫn khảo sát', anon:'Câu trả lời chỉ được sử dụng cho mục đích thống kê.', part:'Phần {n}', left:'Còn khoảng {n} phút', skip:'Bỏ qua', go:'Bắt đầu', giftOn:'Bạn đã tham gia bốc thăm quà tặng', lang:'Chọn ngôn ngữ', last:'Đây là câu hỏi cuối cùng' },
   zh: { upCard:'向左滑动查看下一页', org1:'调查机构', org2:'执行机构', up:'向左滑动进入下一题', intro:'调查说明', swipe:'左右滑动查看', ready:'现在开始答题吧？', readySub:'感谢你读完说明，请真实地分享你的经历。', hello:'你好！', sub:'请分享你参加 MEGAversity 的经历。你的意见将帮助我们把课程和生活支援做得更好。', c1:'约 10 分钟', c2:'{n} 道题', c3:'礼品券抽奖', pick:'请选择你习惯的语言', more:'查看调查说明详情', anon:'回答内容仅用于统计目的。', part:'第 {n} 部分', left:'还剩约 {n} 分钟', skip:'跳过', go:'开始', giftOn:'你已参加礼品券抽奖', lang:'选择语言', last:'这是最后一题' },
-  km: { upCard:'អូសទៅឆ្វេង ដើម្បីមើលបន្ត', org1:'ស្ថាប័នស្ទង់មតិ', org2:'ស្ថាប័នអនុវត្ត', up:'អូសទៅឆ្វេង ដើម្បីទៅសំណួរបន្ទាប់', intro:'ការណែនាំអំពីការស្ទង់មតិ', swipe:'អូសទៅចំហៀងដើម្បីមើលបន្ត', ready:'តោះចាប់ផ្តើមការស្ទង់មតិ?', readySub:'សូមអរគុណដែលបានអានការណែនាំទាំងអស់។ សូមចែករំលែកបទពិសោធន៍ពិតរបស់អ្នក។', hello:'សួស្តី!', sub:'សូមចែករំលែកបទពិសោធន៍របស់អ្នកក្នុងការចូលរួម MEGAversity។ មតិរបស់អ្នកនឹងជួយកែលម្អការសិក្សា និងការគាំទ្រការរស់នៅឱ្យកាន់តែប្រសើរ។', c1:'ប្រហែល ១០ នាទី', c2:'{n} សំណួរ', c3:'ចាប់ឆ្នោតកាតអំណោយ', pick:'សូមជ្រើសរើសភាសាដែលអ្នកងាយស្រួល', more:'មើលការណែនាំលម្អិតអំពីការស្ទង់មតិ', anon:'ចម្លើយត្រូវបានប្រើសម្រាប់គោលបំណងស្ថិតិតែប៉ុណ្ណោះ។', part:'ផ្នែកទី {n}', left:'នៅសល់ប្រហែល {n} នាទី', skip:'រំលង', go:'ចាប់ផ្តើម', giftOn:'អ្នកបានចូលរួមការចាប់ឆ្នោតកាតអំណោយ', lang:'ជ្រើសរើសភាសា', last:'នេះជាសំណួរចុងក្រោយ' }
+  km: { upCard:'អូសទៅឆ្វេង ដើម្បីមើលបន្ត', org1:'ស្ថាប័នស្ទង់មតិ', org2:'ស្ថាប័នអនុវត្ត', up:'អូសទៅឆ្វេង ដើម្បីទៅសំណួរបន្ទាប់', intro:'ការណែនាំអំពីការស្ទង់មតិ', swipe:'អូសទៅចំហៀងដើម្បីមើលបន្ត', ready:'តោះចាប់ផ្តើមការស្ទង់មតិ?', readySub:'សូមអរគុណដែលបានអានការណែនាំទាំងអស់។ សូមចែករំលែកបទពិសោធន៍ពិតរបស់អ្នក។', hello:'សួស្តី!', sub:'សូមចែករំលែកបទពិសោធន៍របស់អ្នកក្នុងការចូលរួម MEGAversity។ មតិរបស់អ្នកនឹងជួយកែលម្អការសិក្សា និងការគាំទ្រការរស់នៅឱ្យកាន់តែប្រសើរ។', c1:'ប្រហែល ១០ នាទី', c2:'{n} សំណួរ', c3:'ចាប់ឆ្នោតកាតអំណោយ', pick:'សូមជ្រើសរើសភាសាដែលអ្នកងាយស្រួល', more:'មើលការណែនាំលម្អិតអំពីការស្ទង់មតិ', anon:'ចម្លើយត្រូវបានប្រើសម្រាប់គោលបំណងស្ថិតិតែប៉ុណ្ណោះ។', part:'ផ្នែកទី {n}', left:'នៅសល់ប្រហែល {n} នាទី', skip:'រំលង', go:'ចាប់ផ្តើម', giftOn:'អ្នកបានចូលរួមការចាប់ឆ្នោតកាតអំណោយ', lang:'ជ្រើសរើសភាសា', last:'នេះជាសំណួរចុងក្រោយ' },
+  en: { upCard:'Swipe left for the next page', org1:'Survey by', org2:'Conducted by', up:'Swipe left for the next question', intro:'About the survey', swipe:'Swipe sideways to see more', ready:'Ready to start the survey?', readySub:'Thank you for reading everything. Please share your honest experience.', hello:'Hello!', sub:'Tell us about your experience with MEGAversity. Your opinions will help us improve classes and support for student life.', c1:'About 10 min', c2:'{n} questions', c3:'Gift card draw', pick:'Choose the language you prefer', more:'See survey details', anon:'Your answers are used for statistical purposes only.', part:'Part {n}', left:'About {n} min left', skip:'Skip', go:'Start', giftOn:'You have entered the gift card draw', lang:'Language', last:'This is the last question' }
 };
 
 /* 표시용 텍스트: 이스케이프 + 괄호 묶음은 앞 어절과 함께 줄바꿈되지 않게 */
@@ -936,7 +1038,7 @@ function fmt(str) {
   h = h.replace(/(^|\s)약 (?=\d)/g, '$1약&nbsp;').replace(/ ~ /g, '&nbsp;~&nbsp;');
   return h;
 }
-const S = { survey: null, settings: { open: true, reviewMode: false, activeLangs: ['ko', 'vi', 'zh', 'km'] }, lang: 'ko', view: 'welcome', cur: null, answers: {}, started: null, contact: { consent: '', phone: '' }, dir: 1 };
+const S = { survey: null, settings: { open: true, reviewMode: false, activeLangs: ['ko', 'vi', 'zh', 'km', 'en'] }, lang: 'ko', view: 'welcome', cur: null, answers: {}, started: null, contact: { consent: '', phone: '' }, dir: 1 };
 const T = (o) => tr(o, S.lang);
 const U = (k, v) => { let s = (X[S.lang] && X[S.lang][k]) || (X.ko[k]) || ui(S.lang, k); if (v) for (const n in v) s = s.replace('{' + n + '}', v[n]); return s; };
 const L = (k, v) => ui(S.lang, k, v);
