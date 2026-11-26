@@ -21,7 +21,8 @@
 *{box-sizing:border-box;min-width:0;-webkit-tap-highlight-color:transparent}
 html,body{margin:0}
 body{background:var(--bg);color:var(--ink);font:17px/1.6 Pretendard,"Pretendard Variable","Noto Sans KR","Noto Sans Khmer","Noto Sans SC",system-ui,sans-serif;word-break:keep-all;overflow-wrap:break-word;overflow-x:clip;min-height:100dvh}
-:lang(zh) body,:lang(zh) *{word-break:normal}
+:lang(zh) body,:lang(zh) *{word-break:normal;line-break:strict}
+:lang(zh).bx body,:lang(zh).bx *{word-break:keep-all;overflow-wrap:anywhere}
 :lang(km) body,:lang(km) *{word-break:normal}
 :lang(km) body{line-height:1.85}
 button,input,textarea{font:inherit;color:inherit}
@@ -56,15 +57,41 @@ button{cursor:pointer}
 .cta:active{transform:scale(.98)}
 .cta:disabled{background:#b7c1e8;box-shadow:none;cursor:not-allowed}
 .cta svg{width:20px;height:20px}
-details.more{margin:16px 0 0;background:var(--card);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden}
-details.more summary{list-style:none;padding:16px 18px;font-weight:700;font-size:15.5px;display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer}
-details.more summary::-webkit-details-marker{display:none}
-details.more summary::after{content:"";width:10px;height:10px;border-right:2.5px solid var(--mute);border-bottom:2.5px solid var(--mute);transform:rotate(45deg);transition:transform .2s;flex:none;margin-top:-4px}
-details.more[open] summary::after{transform:rotate(-135deg);margin-top:4px}
-.intro{padding:0 18px 18px;font-size:15.5px;color:#2b3150}
-.intro p{margin:0 0 10px}.intro h3{font-size:17px;margin:20px 0 8px;color:var(--blue)}.intro h4{font-size:15.5px;margin:14px 0 4px}
-.intro ul{margin:0 0 10px;padding-left:18px}.intro li{margin:3px 0}.intro .rem{font-size:13px;color:var(--mute)}
-.notice{font-size:12.5px;color:var(--mute);background:var(--bg);border-radius:12px;padding:10px 12px;margin:0 0 14px}
+.nw{white-space:nowrap}
+p,li,.tx,.qt,.hint{text-wrap:pretty}
+/* 카드뉴스 */
+.deckwrap{padding:12px 16px 120px}
+.deck{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin:0 -16px;padding:4px 16px 8px;scroll-padding:0 16px}
+.deck::-webkit-scrollbar{display:none}
+.cn{flex:0 0 100%;scroll-snap-align:center;scroll-snap-stop:always;border-radius:24px;background:var(--card);box-shadow:var(--sh);padding:26px 22px;min-height:calc(100dvh - 230px);display:flex;flex-direction:column;position:relative;overflow:hidden}
+.cn .kk{font-size:13px;font-weight:800;color:var(--blue);margin:0 0 8px;display:flex;align-items:center;gap:8px}
+.cn .kk i{font-style:normal;background:var(--sky);border-radius:99px;padding:3px 10px;white-space:nowrap;flex:none}
+.cn h2{font-size:clamp(23px,6.4vw,30px);line-height:1.3;font-weight:800;margin:0 0 16px;text-wrap:balance;letter-spacing:-.01em}
+:lang(km) .cn h2{font-size:clamp(20px,5.6vw,25px);line-height:1.6}
+.cn p{margin:0 0 12px;font-size:16.5px;line-height:1.7;color:#2b3150}
+.cn .num{position:absolute;right:18px;top:10px;font-size:84px;font-weight:800;line-height:1;color:var(--sky);z-index:0}
+.cn>*{position:relative;z-index:1}
+.cn.blue{background:var(--blue);color:#fff}.cn.blue p{color:#eef1ff}.cn.blue .kk{color:var(--sun)}.cn.blue .kk i{background:rgba(255,255,255,.16)}
+.cn.sun{background:#fff7d6}
+.cn .art{margin:auto 0 0;padding-top:10px}
+.tiles{display:grid;gap:10px;margin:4px 0 12px}
+.tile{display:flex;gap:12px;align-items:flex-start;background:var(--bg);border-radius:16px;padding:14px}
+.tile b.n{flex:none;width:30px;height:30px;border-radius:10px;background:var(--blue);color:#fff;display:grid;place-items:center;font-size:14px}
+.tile div{font-size:15.5px;line-height:1.6}
+.tile strong{display:block;font-size:16px;margin-bottom:2px}
+.flow{display:grid;gap:6px;margin:6px 0 16px}
+.fc{display:flex;align-items:center;gap:10px;background:var(--sky);border-radius:14px;padding:12px 14px;font-weight:700;font-size:16px}
+.fc b{flex:none;width:26px;height:26px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font-size:13px}
+.fa{font-style:normal;color:var(--blue);text-align:center;font-weight:800;line-height:1}
+.rem2{font-size:13px;color:var(--mute);line-height:1.6;margin-top:auto!important;padding-top:10px}
+.notice2{font-size:13.5px;color:#5a4a00;background:#ffefb0;border-radius:14px;padding:12px 14px;margin:0 0 14px}
+.sig{margin-top:auto;font-size:14px;color:var(--mute);line-height:1.7}
+.sig b{color:var(--ink)}
+.dots{display:flex;justify-content:center;gap:6px;margin-top:10px}
+.dots i{width:7px;height:7px;border-radius:99px;background:#cfd5ea;transition:width .2s,background .2s}
+.dots i.on{width:22px;background:var(--blue)}
+.swipe{font-size:12.5px;color:var(--mute);text-align:center;margin:6px 0 0}
+.ttl{flex:1;font-weight:800;font-size:15px;text-align:center}
 .anon{font-size:13px;color:var(--mute);text-align:center;margin:14px 0 6px}
 .foot{text-align:center;color:var(--mute);font-size:12.5px;padding:18px 0 calc(28px + env(safe-area-inset-bottom))}
 .foot a{color:inherit}
@@ -84,8 +111,20 @@ details.more[open] summary::after{transform:rotate(-135deg);margin-top:4px}
 /* ---------- 문항 ---------- */
 .view{animation:in .32s ease both}
 .view.back{animation-name:inb}
-@keyframes in{from{opacity:0;transform:translateX(26px)}to{opacity:1;transform:none}}
-@keyframes inb{from{opacity:0;transform:translateX(-26px)}to{opacity:1;transform:none}}
+@keyframes in{from{opacity:0;transform:translateY(48px)}to{opacity:1;transform:none}}
+@keyframes inb{from{opacity:0;transform:translateY(-48px)}to{opacity:1;transform:none}}
+.deckwrap.view{animation-name:fade}
+.view.drag{transition:none;animation:none}
+.view.fly{transition:transform .22s ease-in,opacity .22s ease-in;transform:translateY(-60vh)!important;opacity:0!important}
+.view.flyb{transition:transform .22s ease-in,opacity .22s ease-in;transform:translateY(50vh)!important;opacity:0!important}
+.swhint{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(92px + env(safe-area-inset-bottom));z-index:8;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:12.5px;font-weight:700;color:var(--mute);pointer-events:none;transition:opacity .3s}
+.swhint svg{width:22px;height:22px;color:var(--blue);animation:bob 1.4s ease-in-out infinite}
+.nodock .swhint{bottom:calc(22px + env(safe-area-inset-bottom))}
+@keyframes bob{0%,100%{transform:translateY(4px)}50%{transform:translateY(-4px)}}
+.pull{position:fixed;left:0;right:0;bottom:0;height:0;z-index:7;pointer-events:none;display:flex;justify-content:center;align-items:flex-start}
+.pull i{margin-top:-46px;width:40px;height:40px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;opacity:0;transform:scale(.6);transition:opacity .15s,transform .15s;box-shadow:0 8px 18px -8px rgba(47,84,235,.9)}
+.pull i.on{opacity:1;transform:scale(1)}
+.pull i svg{width:20px;height:20px}
 .qwrap{padding:14px 0 120px}
 .qh{margin:6px 2px 18px}
 .tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
@@ -845,12 +884,28 @@ const ADMIN_URL = window.APP_URL ? APP_URL + '?page=admin' : 'admin.html';
 
 /* 이 페이지에서 새로 쓰는 문구 */
 const X = {
-  ko: { hello:'안녕하세요!', sub:'MEGAversity에 참여한 여러분의 경험을 들려주세요. 여러분의 의견이 더 좋은 수업과 생활 지원으로 이어집니다.', c1:'약 10분', c2:'{n}개 문항', c3:'기프티콘 추첨', pick:'편한 언어를 선택하세요', more:'조사 안내 자세히 보기', anon:'응답 내용은 통계 목적으로만 사용됩니다.', part:'파트 {n}', left:'약 {n}분 남음', skip:'건너뛰기', go:'시작하기', giftOn:'기프티콘 추첨에 참여했어요', lang:'언어 선택', last:'마지막 문항이에요' },
-  vi: { hello:'Xin chào!', sub:'Hãy chia sẻ trải nghiệm của bạn khi tham gia MEGAversity. Ý kiến của bạn sẽ giúp lớp học và các hỗ trợ cuộc sống trở nên tốt hơn.', c1:'Khoảng 10 phút', c2:'{n} câu hỏi', c3:'Bốc thăm quà tặng', pick:'Chọn ngôn ngữ bạn thấy thoải mái', more:'Xem chi tiết hướng dẫn khảo sát', anon:'Câu trả lời chỉ được sử dụng cho mục đích thống kê.', part:'Phần {n}', left:'Còn khoảng {n} phút', skip:'Bỏ qua', go:'Bắt đầu', giftOn:'Bạn đã tham gia bốc thăm quà tặng', lang:'Chọn ngôn ngữ', last:'Đây là câu hỏi cuối cùng' },
-  zh: { hello:'你好！', sub:'请分享你参加 MEGAversity 的经历。你的意见将帮助我们把课程和生活支援做得更好。', c1:'约 10 分钟', c2:'{n} 道题', c3:'礼品券抽奖', pick:'请选择你习惯的语言', more:'查看调查说明详情', anon:'回答内容仅用于统计目的。', part:'第 {n} 部分', left:'还剩约 {n} 分钟', skip:'跳过', go:'开始', giftOn:'你已参加礼品券抽奖', lang:'选择语言', last:'这是最后一题' },
-  km: { hello:'សួស្តី!', sub:'សូមចែករំលែកបទពិសោធន៍របស់អ្នកក្នុងការចូលរួម MEGAversity។ មតិរបស់អ្នកនឹងជួយកែលម្អការសិក្សា និងការគាំទ្រការរស់នៅឱ្យកាន់តែប្រសើរ។', c1:'ប្រហែល ១០ នាទី', c2:'{n} សំណួរ', c3:'ចាប់ឆ្នោតកាតអំណោយ', pick:'សូមជ្រើសរើសភាសាដែលអ្នកងាយស្រួល', more:'មើលការណែនាំលម្អិតអំពីការស្ទង់មតិ', anon:'ចម្លើយត្រូវបានប្រើសម្រាប់គោលបំណងស្ថិតិតែប៉ុណ្ណោះ។', part:'ផ្នែកទី {n}', left:'នៅសល់ប្រហែល {n} នាទី', skip:'រំលង', go:'ចាប់ផ្តើម', giftOn:'អ្នកបានចូលរួមការចាប់ឆ្នោតកាតអំណោយ', lang:'ជ្រើសរើសភាសា', last:'នេះជាសំណួរចុងក្រោយ' }
+  ko: { up:'위로 밀어 다음 문항', intro:'조사 안내', swipe:'옆으로 넘겨 보세요', ready:'이제 설문을 시작해 볼까요?', readySub:'안내를 모두 읽어 주셔서 감사합니다. 솔직한 경험을 들려주세요.', hello:'안녕하세요!', sub:'MEGAversity에 참여한 여러분의 경험을 들려주세요. 여러분의 의견이 더 좋은 수업과 생활 지원으로 이어집니다.', c1:'약 10분', c2:'{n}개 문항', c3:'기프티콘 추첨', pick:'편한 언어를 선택하세요', more:'조사 안내 자세히 보기', anon:'응답 내용은 통계 목적으로만 사용됩니다.', part:'파트 {n}', left:'약 {n}분 남음', skip:'건너뛰기', go:'시작하기', giftOn:'기프티콘 추첨에 참여했어요', lang:'언어 선택', last:'마지막 문항이에요' },
+  vi: { up:'Vuốt lên để sang câu tiếp', intro:'Giới thiệu khảo sát', swipe:'Vuốt sang để xem tiếp', ready:'Bắt đầu khảo sát nhé?', readySub:'Cảm ơn bạn đã đọc hết phần giới thiệu. Hãy chia sẻ trải nghiệm thật của bạn.', hello:'Xin chào!', sub:'Hãy chia sẻ trải nghiệm của bạn khi tham gia MEGAversity. Ý kiến của bạn sẽ giúp lớp học và các hỗ trợ cuộc sống trở nên tốt hơn.', c1:'Khoảng 10 phút', c2:'{n} câu hỏi', c3:'Bốc thăm quà tặng', pick:'Chọn ngôn ngữ bạn thấy thoải mái', more:'Xem chi tiết hướng dẫn khảo sát', anon:'Câu trả lời chỉ được sử dụng cho mục đích thống kê.', part:'Phần {n}', left:'Còn khoảng {n} phút', skip:'Bỏ qua', go:'Bắt đầu', giftOn:'Bạn đã tham gia bốc thăm quà tặng', lang:'Chọn ngôn ngữ', last:'Đây là câu hỏi cuối cùng' },
+  zh: { up:'上滑进入下一题', intro:'调查说明', swipe:'左右滑动查看', ready:'现在开始答题吧？', readySub:'感谢你读完说明，请真实地分享你的经历。', hello:'你好！', sub:'请分享你参加 MEGAversity 的经历。你的意见将帮助我们把课程和生活支援做得更好。', c1:'约 10 分钟', c2:'{n} 道题', c3:'礼品券抽奖', pick:'请选择你习惯的语言', more:'查看调查说明详情', anon:'回答内容仅用于统计目的。', part:'第 {n} 部分', left:'还剩约 {n} 分钟', skip:'跳过', go:'开始', giftOn:'你已参加礼品券抽奖', lang:'选择语言', last:'这是最后一题' },
+  km: { up:'អូសឡើងលើ ដើម្បីទៅសំណួរបន្ទាប់', intro:'ការណែនាំអំពីការស្ទង់មតិ', swipe:'អូសទៅចំហៀងដើម្បីមើលបន្ត', ready:'តោះចាប់ផ្តើមការស្ទង់មតិ?', readySub:'សូមអរគុណដែលបានអានការណែនាំទាំងអស់។ សូមចែករំលែកបទពិសោធន៍ពិតរបស់អ្នក។', hello:'សួស្តី!', sub:'សូមចែករំលែកបទពិសោធន៍របស់អ្នកក្នុងការចូលរួម MEGAversity។ មតិរបស់អ្នកនឹងជួយកែលម្អការសិក្សា និងការគាំទ្រការរស់នៅឱ្យកាន់តែប្រសើរ។', c1:'ប្រហែល ១០ នាទី', c2:'{n} សំណួរ', c3:'ចាប់ឆ្នោតកាតអំណោយ', pick:'សូមជ្រើសរើសភាសាដែលអ្នកងាយស្រួល', more:'មើលការណែនាំលម្អិតអំពីការស្ទង់មតិ', anon:'ចម្លើយត្រូវបានប្រើសម្រាប់គោលបំណងស្ថិតិតែប៉ុណ្ណោះ។', part:'ផ្នែកទី {n}', left:'នៅសល់ប្រហែល {n} នាទី', skip:'រំលង', go:'ចាប់ផ្តើម', giftOn:'អ្នកបានចូលរួមការចាប់ឆ្នោតកាតអំណោយ', lang:'ជ្រើសរើសភាសា', last:'នេះជាសំណួរចុងក្រោយ' }
 };
 
+/* 표시용 텍스트: 이스케이프 + 괄호 묶음은 앞 어절과 함께 줄바꿈되지 않게 */
+function fmt(str) {
+  let h = esc(str);
+  const vi = typeof S !== 'undefined' && S.lang === 'vi';
+  /* 1) 붙어 있는 괄호 묶음: 경운대학교(주관대학), 교육(Teaching) → 한 덩어리 */
+  h = h.replace(/([^\s(（]{1,12}[(（][^()（）]{1,16}[)）][^\s(（]{0,4})/g, (m) => m.length <= 22 ? '<span class="nw">' + m + '</span>' : m);
+  /* 2) 띄어 쓴 괄호 묶음: 들어봤다 (보통) → 앞 어절(베트남어는 두 음절)과 함께 */
+  const re = vi ? /(^|\s)((?:[^\s(（<>]+\s){1,2})?([(（][^()（）<>]{1,16}[)）][^\s<]*)/g : /(^|\s)([^\s(（<>]+\s)?([(（][^()（）<>]{1,16}[)）][^\s<]*)/g;
+  h = h.replace(re, (all, sp, w, par) => {
+    if (w && (w.length + par.length) <= 24) return sp + '<span class="nw">' + w + par + '</span>';
+    return sp + (w || '') + '<span class="nw">' + par + '</span>';
+  });
+  /* 3) 숫자+단위, 물결표 */
+  h = h.replace(/(^|\s)약 (?=\d)/g, '$1약&nbsp;').replace(/ ~ /g, '&nbsp;~&nbsp;');
+  return h;
+}
 const S = { survey: null, settings: { open: true, reviewMode: false, activeLangs: ['ko', 'vi', 'zh', 'km'] }, lang: 'ko', view: 'welcome', cur: null, answers: {}, started: null, contact: { consent: '', phone: '' }, dir: 1 };
 const T = (o) => tr(o, S.lang);
 const U = (k, v) => { let s = (X[S.lang] && X[S.lang][k]) || (X.ko[k]) || ui(S.lang, k); if (v) for (const n in v) s = s.replace('{' + n + '}', v[n]); return s; };
@@ -859,7 +914,7 @@ const RV = () => !!S.settings.reviewMode;
 const langs = () => PREVIEW ? LANGS.map((l) => l.code) : (S.settings.activeLangs || ['ko']);
 
 function toast(m) { const t = $('#toast'); t.textContent = m; t.hidden = false; clearTimeout(toast.h); toast.h = setTimeout(() => (t.hidden = true), 2600); }
-function saveDraft() { if (!PREVIEW) Store.set('mv_draft', { answers: S.answers, lang: S.lang, cur: S.cur, view: S.view, started: S.started, v: S.survey.version }); }
+function saveDraft() { if (!PREVIEW) Store.set('mv_draft', { answers: S.answers, lang: S.lang, cur: S.cur, view: S.view, card: S.card, started: S.started, v: S.survey.version }); }
 
 /* ---------- 흐름: 파트 시작 화면 + 보이는 문항만 ---------- */
 function steps() {
@@ -879,7 +934,8 @@ const ICON = {
   back: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>',
   arrow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
   globe: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></svg>',
-  check: '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>'
+  check: '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
+  up: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 14l6-6 6 6"/></svg>'
 };
 function face(v) {
   const c = ['', 'var(--f1)', 'var(--f2)', 'var(--f3)', 'var(--f4)', 'var(--f5)'][v];
@@ -936,10 +992,13 @@ function introHtml(txt) {
 function render() {
   document.documentElement.lang = S.lang;
   document.body.classList.toggle('rvon', RV());
+  document.documentElement.classList.toggle('bx', S.lang === 'zh' && !!BX);
+  if (S.lang === 'zh' && !BX) loadBudoux().then(() => { if (BX) { document.documentElement.classList.add('bx'); phraseify($('#app')); } });
   document.title = T(S.survey.meta.title);
   if (!S.settings.open && !PREVIEW) return closedView();
   if (S.view === 'done') return doneView();
   if (S.view === 'step') return stepView();
+  if (S.view === 'intro') return introView();
   welcomeView();
 }
 function closedView() {
@@ -950,10 +1009,10 @@ function welcomeView() {
   const act = langs();
   $('#app').innerHTML = rvBar() + `
   <header class="hero"><div class="hin">
-    <div class="brand"><i>M</i>MEGAversity <span>· ${esc(T(m.kicker))}</span></div>
+    <div class="brand"><i>M</i>MEGAversity <span>· ${fmt(T(m.kicker))}</span></div>
     ${heroArt()}
-    <h1>${esc(T(m.title))}</h1>
-    <p class="sub">${esc(U('sub'))}</p>
+    <h1>${fmt(T(m.title))}</h1>
+    <p class="sub">${fmt(U('sub'))}</p>
     <div class="chips"><span>${esc(U('c1'))}</span><span>${esc(U('c2', { n: qn }))}</span><span class="y">${esc(U('c3'))}</span></div>
   </div></header>
   <main class="wrap">
@@ -962,14 +1021,101 @@ function welcomeView() {
       <button class="cta" id="go">${esc(L('start'))} ${ICON.arrow}</button>
       <p class="anon">${esc(U('anon'))}</p>
     </section>
-    <details class="more"><summary>${esc(U('more'))}</summary><div class="intro"><p class="notice">${esc(T(m.notice))}</p>${introHtml(T(m.intro))}<p class="rem" style="text-align:right">${esc(T(m.org))}<br>${esc(T(m.date))}</p></div></details>
     <p class="foot">MEGAversity · RISE · <a href="${esc(ADMIN_URL)}"${window.APP_URL ? ' target="_top"' : ''}>admin</a></p>
   </main>`;
   document.querySelectorAll('.lg').forEach((b) => b.onclick = () => { S.lang = b.dataset.lang; saveDraft(); welcomeView(); document.documentElement.lang = S.lang; });
-  $('#go').onclick = () => { if (!S.started) S.started = Date.now(); const st = steps(); go(S.cur && st.some((s) => s.key === S.cur) ? S.cur : st[0].key, 1); };
+  $('#go').onclick = () => {
+    if (!S.started) S.started = Date.now();
+    const st = steps();
+    if (S.cur && st.some((s) => s.key === S.cur)) return go(S.cur, 1);
+    S.view = 'intro'; S.card = 0; S.dir = 1; saveDraft(); render(); window.scrollTo(0, 0);
+  };
 }
 function rvBar() {
   return RV() ? '<div class="rv"><b>검토 모드</b> 응답하지 않아도 넘어갈 수 있고 조건부 문항도 모두 보입니다 · Review mode</div>' : '';
+}
+/* ---------- 조사 안내 카드뉴스 ---------- */
+function introCards() {
+  const m = S.survey.meta, cards = [];
+  const lines = T(m.intro).split('\n').map((l) => l.trim()).filter(Boolean);
+  let section = '', cur = { kind: 'hello', kicker: T(m.kicker), title: '', blocks: [] };
+  const push = () => { if (cur.title || cur.blocks.length) cards.push(cur); };
+  for (const l of lines) {
+    if (l.startsWith('## ')) { push(); section = l.slice(3); cur = { kicker: section, title: '', blocks: [] }; continue; }
+    if (l.startsWith('### ')) {
+      push(); const h = l.slice(4), mm = h.match(/^([\d០-៩]+)[.)]\s*/);
+      cur = { kicker: section, title: mm ? h.slice(mm[0].length) : h, num: mm ? mm[1] : '', blocks: [] }; continue;
+    }
+    if (cur.kind === 'hello' && !cur.title && !cur.blocks.length) { cur.title = l; continue; }
+    if (l.startsWith('- ')) { const last = cur.blocks[cur.blocks.length - 1]; if (last && last.t === 'ul') last.items.push(l.slice(2)); else cur.blocks.push({ t: 'ul', items: [l.slice(2)] }); }
+    else if (l.startsWith('※')) cur.blocks.push({ t: 'rem', s: l });
+    else if (l.includes('→')) cur.blocks.push({ t: 'flow', s: l });
+    else cur.blocks.push({ t: 'p', s: l });
+  }
+  push();
+  cards.forEach((c) => { if (!c.title) { c.title = c.kicker; c.kicker = ''; } });
+  cards.push({ kind: 'final' });
+  return cards;
+}
+function tileHtml(items) {
+  return `<div class="tiles">${items.map((t, i) => {
+    const mm = t.match(/^(.{1,40}?)\s*[:：៖]\s*(.+)$/);
+    return `<div class="tile"><b class="n">${i + 1}</b><div>${mm ? `<strong>${fmt(mm[1])}</strong>${fmt(mm[2])}` : fmt(t)}</div></div>`;
+  }).join('')}</div>`;
+}
+function flowHtml(str) {
+  const parts = str.split('→').map((x) => x.trim());
+  const seg = (p) => { const k = p.search(/[(（]/), c = p.search(/[)）]/); return k < 0 || c < k ? null : { pre: p.slice(0, k), par: p.slice(k, c + 1), sp: p[k - 1] === ' ' ? ' ' : '' }; };
+  const segs = parts.map(seg);
+  if (segs.some((x) => !x)) return `<p>${fmt(str)}</p>`;
+  const wc = segs[1].pre.trim().split(/\s+/).length;
+  const chips = segs.map((x, i) => (i === 0 ? x.pre.trim().split(/\s+/).slice(-wc).join(' ') : x.pre.trim()) + x.sp + x.par);
+  return `<div class="flow">${chips.map((c, i) => `<span class="fc"><b>${i + 1}</b><span>${fmt(c)}</span></span>`).join('<i class="fa">↓</i>')}</div><p>${fmt(str)}</p>`;
+}
+function cardHtml(c, i, n) {
+  if (c.kind === 'final') {
+    const m = S.survey.meta;
+    return `<article class="cn sun" aria-label="${i + 1} / ${n}"><p class="kk"><i>${i + 1} / ${n}</i></p><h2>${fmt(U('ready'))}</h2><p>${fmt(U('readySub'))}</p>
+      <p class="notice2">${fmt(T(m.notice))}</p><p>${fmt(U('anon'))}</p>
+      <p class="sig"><b>${fmt(T(m.org))}</b><br>${fmt(T(m.date))}</p></article>`;
+  }
+  const cls = c.kind === 'hello' ? 'cn blue' : 'cn';
+  const body = c.blocks.map((b) => b.t === 'ul' ? tileHtml(b.items) : b.t === 'flow' ? flowHtml(b.s) : b.t === 'rem' ? `<p class="rem2">${fmt(b.s)}</p>` : `<p>${fmt(b.s)}</p>`).join('');
+  return `<article class="${cls}" aria-label="${i + 1} / ${n}">${c.num ? `<span class="num">${esc(c.num)}</span>` : ''}
+    <p class="kk"><i>${i + 1} / ${n}</i>${c.kicker ? `<span>${fmt(c.kicker)}</span>` : ''}</p><h2>${fmt(c.title)}</h2>${body}
+    ${c.kind === 'hello' ? heroArt() : ''}</article>`;
+}
+function introView() {
+  const cards = introCards(), n = cards.length;
+  S.card = Math.min(Math.max(S.card || 0, 0), n - 1);
+  $('#app').innerHTML = rvBar() + `<div class="top"><div class="tin">
+    <button class="ib" id="back" aria-label="${esc(L('prev'))}">${ICON.back}</button>
+    <div class="ttl">${fmt(U('intro'))}</div>
+    <button class="lbtn" id="lang" aria-label="${esc(U('lang'))}">${ICON.globe}${esc((LANGS.find((l) => l.code === S.lang) || {}).short || 'KO')}</button></div></div>
+  <main class="wrap deckwrap view"><div class="deck" id="deck">${cards.map((c, i) => cardHtml(c, i, n)).join('')}</div>
+    <div class="dots" id="dots">${cards.map((_, i) => `<i class="${i === S.card ? 'on' : ''}"></i>`).join('')}</div>
+    <p class="swipe">${fmt(U('swipe'))}</p></main>
+  <div class="dock"><div class="wrap"><button class="ghost" id="cprev">${esc(L('prev'))}</button><button class="cta" id="cnext"></button></div></div>`;
+  const deck = $('#deck');
+  const setBtn = () => {
+    const last = S.card === n - 1, b = $('#cnext'); if (!b || S.view !== 'intro') return;
+    b.innerHTML = (last ? esc(L('start')) : esc(L('next'))) + ' ' + ICON.arrow;
+    $('#cprev').style.visibility = S.card === 0 ? 'hidden' : 'visible';
+    document.querySelectorAll('#dots i').forEach((d, k) => d.classList.toggle('on', k === S.card));
+  };
+  const toCard = (k, smooth = true) => { S.card = k; deck.scrollTo({ left: deck.children[k].offsetLeft - deck.children[0].offsetLeft, behavior: smooth ? 'smooth' : 'auto' }); setBtn(); saveDraft(); };
+  deck.addEventListener('scroll', () => {
+    clearTimeout(deck.t); deck.t = setTimeout(() => {
+      if (S.view !== 'intro' || !deck.isConnected) return;
+      const k = Math.round(deck.scrollLeft / (deck.children[0].offsetWidth + 12));
+      if (k !== S.card) { S.card = Math.min(n - 1, Math.max(0, k)); setBtn(); saveDraft(); }
+    }, 80);
+  });
+  $('#cnext').onclick = () => { if (S.card < n - 1) toCard(S.card + 1); else { const st = steps(); go(st[0].key, 1); } };
+  $('#cprev').onclick = () => { if (S.card > 0) toCard(S.card - 1); };
+  $('#back').onclick = () => { S.view = 'welcome'; saveDraft(); render(); window.scrollTo(0, 0); };
+  $('#lang').onclick = langSheet;
+  requestAnimationFrame(() => toCard(S.card, false));
 }
 function topBar(st, i) {
   const qs = st.filter((s) => s.kind === 'q'), done = st.slice(0, i + 1).filter((s) => s.kind === 'q').length;
@@ -990,7 +1136,7 @@ function stepView() {
   if (step.kind === 'section') {
     const n = step.part, pc = partCount();
     body = `<section class="part view ${S.dir < 0 ? 'back' : ''}"><span class="pnum">${esc(U('part', { n }))} / ${pc}</span>
-      <h2>${esc(T(step.it.title).replace(/^[IVX]+\.\s*/, ''))}</h2><p>${esc(T(step.it.text))}</p>${partArt(n)}
+      <h2>${fmt(T(step.it.title).replace(/^[IVX]+\.\s*/, ''))}</h2><p>${fmt(T(step.it.text))}</p>${partArt(n)}
       <div class="plist">${Array.from({ length: pc }, (_, k) => `<i class="${k < n ? 'on' : ''}"></i>`).join('')}</div></section>`;
     dock = `<button class="cta" id="next">${esc(U('go'))} ${ICON.arrow}</button>`;
   } else {
@@ -1001,7 +1147,10 @@ function stepView() {
     if (isLast) dock = `<button class="cta" id="next">${esc(L('submit'))} ${ICON.arrow}</button>`;
     else if (needBtn || answered(it)) dock = `${optional && !answered(it) ? `<button class="ghost" id="skip">${esc(U('skip'))}</button>` : ''}<button class="cta" id="next" ${!RV() && !optional && !answered(it) && it.type !== 'contact' ? 'disabled' : ''}>${esc(L('next'))} ${ICON.arrow}</button>`;
   }
-  $('#app').innerHTML = rvBar() + topBar(st, i) + `<main class="wrap">${body}</main>` + (dock ? `<div class="dock"><div class="wrap">${dock}</div></div>` : '');
+  const hint = !S.swiped || st.slice(0, i + 1).filter((x) => x.kind === 'q').length <= 2;
+  $('#app').innerHTML = rvBar() + topBar(st, i) + `<main class="wrap">${body}</main>` + (dock ? `<div class="dock"><div class="wrap">${dock}</div></div>` : '')
+    + (hint && !isLast ? `<div class="swhint">${ICON.up}<span>${fmt(U('up'))}</span></div>` : '') + `<div class="pull"><i id="pullI">${ICON.up}</i></div>`;
+  document.body.classList.toggle('nodock', !dock);
   $('#back').onclick = prev;
   $('#lang').onclick = langSheet;
   if ($('#next')) $('#next').onclick = next;
@@ -1023,16 +1172,16 @@ function qHtml(it) {
   const title = T(it.title), note = T(it.note), a = S.answers[it.id];
   if (it.type === 'contact') {
     const c = S.contact;
-    return `<div class="qh"><h2 class="qt">${esc(title)}</h2></div>
-      <div class="gift">${giftArt()}<p>${esc(T(it.text))}</p></div>
-      <p class="consent">${esc(note)}</p>
+    return `<div class="qh"><h2 class="qt">${fmt(title)}</h2></div>
+      <div class="gift">${giftArt()}<p>${fmt(T(it.text))}</p></div>
+      <p class="consent">${fmt(note)}</p>
       <div class="row2">
         <button class="opt" data-consent="Y" role="radio" aria-checked="${c.consent === 'Y'}"><span class="k">✓</span><span class="tx">${esc(L('agree'))}</span></button>
         <button class="opt" data-consent="N" role="radio" aria-checked="${c.consent === 'N'}"><span class="k">–</span><span class="tx">${esc(L('disagree'))}</span></button></div>
       <input class="field" type="tel" id="phone" inputmode="tel" autocomplete="tel" placeholder="${esc(L('phonePh'))}" value="${esc(c.phone)}" ${c.consent === 'Y' ? '' : 'hidden'}>`;
   }
   const cond = RV() && it.cond ? `<span class="tag c">조건부 · ${esc(it.cond.q)} = ${esc(it.cond.in.join(', '))}</span>` : '';
-  const tags = `<div class="tags"><span class="tag">${esc(it.id)}</span>${cond}${title ? `<span class="tag t">${esc(title)}</span>` : ''}${note && !/^(School|Nationality|Grade|Major)$/.test(note) ? `<span class="tag n">${esc(note)}</span>` : ''}</div>`;
+  const tags = `<div class="tags"><span class="tag">${esc(it.id)}</span>${cond}${title ? `<span class="tag t">${fmt(title)}</span>` : ''}${note && !/^(School|Nationality|Grade|Major)$/.test(note) ? `<span class="tag n">${fmt(note)}</span>` : ''}</div>`;
   let body = '';
   if (it.type === 'scale' || it.type === 'single' || it.type === 'multi') {
     const multi = it.type === 'multi', sel = multi ? (a || []) : [a];
@@ -1040,13 +1189,13 @@ function qHtml(it) {
     body = `<div class="opts" role="${multi ? 'group' : 'radiogroup'}">${it.options.map((o, i) => {
       const v = optValue(it, i), on = sel.includes(v);
       const lead = it.type === 'scale' ? (/^D/.test(it.id) ? level(v) : face(v)) : `<span class="k">${multi ? ICON.check : letters[i]}</span>`;
-      return `<button class="opt${multi ? ' m' : ''}" data-v="${v}" role="${multi ? 'checkbox' : 'radio'}" aria-checked="${on}">${lead}<span class="tx">${esc(T(o.t))}</span>${it.type === 'scale' ? `<span class="sc">${v}</span>` : ''}</button>`;
+      return `<button class="opt${multi ? ' m' : ''}" data-v="${v}" role="${multi ? 'checkbox' : 'radio'}" aria-checked="${on}">${lead}<span class="tx">${fmt(T(o.t))}</span>${it.type === 'scale' ? `<span class="sc">${v}</span>` : ''}</button>`;
     }).join('')}</div>`;
     if (it.options.some((o) => o.other)) body += `<div class="other" ${otherSelected(it) ? '' : 'hidden'}><input class="field" type="text" id="etc" placeholder="${esc(L('otherPh'))}" value="${esc(S.answers[it.id + '_기타'] || '')}"></div>`;
     if (multi) body += `<p class="count" id="cnt"></p>`;
   } else if (it.type === 'text') body = `<input class="field" type="text" id="tx" value="${esc(a || '')}" placeholder="${esc(L('textPh'))}">`;
   else if (it.type === 'longtext') body = `<textarea class="field" id="tx" placeholder="${esc(L('textPh'))}">${esc(a || '')}</textarea>`;
-  return `<div class="qh">${tags}<h2 class="qt">${esc(T(it.text))}${it.required ? ' <span class="req">*</span>' : ''}</h2></div>${body}`;
+  return `<div class="qh">${tags}<h2 class="qt">${fmt(T(it.text))}${it.required ? ' <span class="req">*</span>' : ''}</h2></div>${body}`;
 }
 function setNextEnabled(it) {
   const b = $('#next'); if (!b) { stepView(); return; }
@@ -1116,7 +1265,7 @@ function validate(it) {
 function go(key, dir) { S.cur = key; S.view = 'step'; S.dir = dir; saveDraft(); stepView(); }
 function prev() {
   const st = steps(), i = st.findIndex((s) => s.key === S.cur);
-  if (i <= 0) { S.view = 'welcome'; saveDraft(); render(); window.scrollTo(0, 0); return; }
+  if (i <= 0) { S.view = 'intro'; S.card = 99; S.dir = -1; saveDraft(); render(); window.scrollTo(0, 0); return; }
   go(st[i - 1].key, -1);
 }
 async function next() {
@@ -1139,7 +1288,7 @@ async function next() {
 function doneView() {
   $('#app').innerHTML = `<main class="wrap done view">
     <svg class="ok" viewBox="0 0 96 96" aria-hidden="true"><circle cx="48" cy="48" r="46" fill="#2f54eb"/><circle cx="48" cy="48" r="36" fill="#5f86ff"/><path d="M30 49l12 12 25-27" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    <h2>${esc(L('doneTitle'))}</h2><p>${esc(T(S.survey.meta.thanks) || L('doneBody'))}</p>
+    <h2>${esc(L('doneTitle'))}</h2><p>${fmt(T(S.survey.meta.thanks) || L('doneBody'))}</p>
     ${S.gift ? `<span class="badge">${esc(U('giftOn'))}</span>` : ''}
     <div style="margin-top:28px"><button class="ghost" id="again">${esc(L('again'))}</button></div></main><div class="conf" id="conf"></div>`;
   $('#again').onclick = () => { S.view = 'welcome'; render(); window.scrollTo(0, 0); };
@@ -1156,7 +1305,61 @@ function langSheet() {
   el.onclick = (e) => { const b = e.target.closest('.lg'); if (b && !b.disabled) { S.lang = b.dataset.lang; saveDraft(); el.remove(); S.dir = 0; render(); } else if (e.target === el) el.remove(); };
   document.body.appendChild(el);
 }
+/* ---------- 쇼츠처럼 세로로 밀어 넘기기 ---------- */
+(() => {
+  let y0 = null, x0 = 0, t0 = 0, atBottom = false, atTop = false, v = null, busy = false;
+  const edgeB = () => innerHeight + scrollY >= document.documentElement.scrollHeight - 3;
+  const edgeT = () => scrollY <= 2;
+  const reset = () => { if (v) { v.classList.remove('drag'); v.style.transform = ''; v.style.opacity = ''; } const p = $('#pullI'); if (p) p.classList.remove('on'); };
+  const fly = (up, fn) => {
+    if (busy) return; busy = true; S.swiped = true;
+    const el = $('.view');
+    if (el && !matchMedia('(prefers-reduced-motion: reduce)').matches) { el.classList.remove('drag'); el.style.transform = ''; el.classList.add(up ? 'fly' : 'flyb'); setTimeout(() => { busy = false; fn(); }, 200); }
+    else { busy = false; fn(); }
+  };
+  const canSwipe = (e) => S.view === 'step' && !document.querySelector('.sheet') && !(e.target.closest && e.target.closest('textarea,input'));
+  document.addEventListener('touchstart', (e) => {
+    if (!canSwipe(e) || e.touches.length !== 1) { y0 = null; return; }
+    y0 = e.touches[0].clientY; x0 = e.touches[0].clientX; t0 = Date.now(); atBottom = edgeB(); atTop = edgeT(); v = $('.view');
+  }, { passive: true });
+  document.addEventListener('touchmove', (e) => {
+    if (y0 == null || !v) return;
+    const dy = e.touches[0].clientY - y0, dx = e.touches[0].clientX - x0;
+    if (Math.abs(dx) > Math.abs(dy)) return;
+    if ((dy < 0 && atBottom) || (dy > 0 && atTop)) {
+      v.classList.add('drag'); v.style.transform = `translateY(${dy * 0.35}px)`; v.style.opacity = String(1 - Math.min(Math.abs(dy) / 700, .35));
+      const p = $('#pullI'); if (p) p.classList.toggle('on', dy < -70);
+    }
+  }, { passive: true });
+  document.addEventListener('touchend', (e) => {
+    if (y0 == null) return;
+    const t = e.changedTouches[0], dy = t.clientY - y0, dx = t.clientX - x0, th = Date.now() - t0 < 350 ? 45 : 80;
+    y0 = null;
+    if (Math.abs(dx) > Math.abs(dy)) { reset(); return; }
+    if (dy < -th && atBottom) { const ok = trySwipeNext(); if (ok) fly(true, next); else reset(); }
+    else if (dy > th && atTop) fly(false, prev);
+    else reset();
+  });
+  /* PC: 휠을 끝까지 내린 뒤 한 번 더 굴리면 다음 */
+  let acc = 0, cool = 0;
+  addEventListener('wheel', (e) => {
+    if (S.view !== 'step' || document.querySelector('.sheet') || Date.now() < cool) return;
+    if (e.deltaY > 0 && edgeB()) acc += e.deltaY; else if (e.deltaY < 0 && edgeT()) acc += e.deltaY; else { acc = 0; return; }
+    if (acc > 140) { acc = 0; cool = Date.now() + 900; if (trySwipeNext()) fly(true, next); }
+    else if (acc < -140) { acc = 0; cool = Date.now() + 900; fly(false, prev); }
+  }, { passive: true });
+  function trySwipeNext() {
+    const st = steps(), i = st.findIndex((x) => x.key === S.cur), step = st[i];
+    if (!step || i === st.length - 1) { if (step && step.kind === 'q' && validate(step.it)) { const b = $('#next'); if (b) b.focus(); } return false; }
+    return step.kind === 'section' || validate(step.it);
+  }
+})();
 document.addEventListener('keydown', (e) => {
+  if (S.view === 'intro' && !document.querySelector('.sheet')) {
+    if (e.key === 'ArrowRight' || e.key === 'Enter') { e.preventDefault(); $('#cnext').click(); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); $('#cprev').click(); }
+    return;
+  }
   if (S.view !== 'step' || document.querySelector('.sheet')) return;
   const tag = (e.target.tagName || '').toLowerCase(); if (tag === 'input' || tag === 'textarea') return;
   const st = steps(), step = st.find((s) => s.key === S.cur); if (!step) return;
@@ -1164,6 +1367,21 @@ document.addEventListener('keydown', (e) => {
   if (step.kind === 'q' && /^[1-9]$/.test(e.key)) { const b = document.querySelectorAll('.opt[data-v]')[Number(e.key) - 1]; if (b && !b.disabled) b.click(); }
 });
 
+/* 중국어는 띄어쓰기가 없어 BudouX로 구(句) 단위 경계를 찾아 그 자리에서만 줄바꿈 */
+let BX = null, bxLoading = null;
+function loadBudoux() {
+  if (BX || bxLoading) return bxLoading;
+  bxLoading = import('https://cdn.jsdelivr.net/npm/budoux@0.6.4/+esm').then((m) => { BX = m.loadDefaultSimplifiedChineseParser(); }).catch(() => { BX = null; });
+  return bxLoading;
+}
+function phraseify(root) {
+  if (S.lang !== 'zh' || !BX) return;
+  const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, { acceptNode: (n) => /[\u4e00-\u9fff]/.test(n.data) && !n.parentElement.closest('script,style,textarea,.lg,.lbtn') ? 1 : 2 });
+  const list = []; while (w.nextNode()) list.push(w.currentNode);
+  for (const n of list) { if (n.data.includes('\u200b')) continue; n.data = BX.parse(n.data).join('\u200b'); }
+}
+new MutationObserver(() => { if (S.lang === 'zh') { if (BX) phraseify($('#app')); else loadBudoux().then(() => phraseify($('#app'))); } })
+  .observe(document.getElementById('app'), { childList: true, subtree: true });
 (async function init() {
   if (PREVIEW) { const p = $('#pv'); p.hidden = false; p.textContent = ui('ko', 'preview'); }
   try {
@@ -1174,7 +1392,7 @@ document.addEventListener('keydown', (e) => {
   const act = S.settings.activeLangs || ['ko'];
   const d = !PREVIEW && Store.get('mv_draft', null);
   if (d && d.answers && Object.keys(d.answers).length && d.v === S.survey.version) {
-    Object.assign(S, { answers: d.answers, lang: d.lang || 'ko', cur: d.cur || null, view: d.view === 'step' ? 'step' : 'welcome', started: d.started });
+    Object.assign(S, { answers: d.answers, lang: d.lang || 'ko', cur: d.cur || null, view: d.view === 'step' ? 'step' : (d.view === 'intro' ? 'intro' : 'welcome'), card: d.card || 0, started: d.started });
     setTimeout(() => toast(ui(S.lang, 'restore')), 300);
   } else {
     const nl = (navigator.language || '').slice(0, 2).toLowerCase(); if (act.includes(nl)) S.lang = nl;
