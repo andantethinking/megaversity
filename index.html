@@ -1080,7 +1080,7 @@ function level(v) {
   return `<svg class="lv" viewBox="0 0 34 28" aria-hidden="true">${[1, 2, 3, 4, 5].map((i) => `<rect x="${(i - 1) * 7}" y="${26 - i * 5}" width="5" height="${i * 5}" rx="1.5" fill="${i <= v ? 'var(--blue)' : '#dfe3f2'}"/>`).join('')}</svg>`;
 }
 function heroArt() {
-  /* 세 캠퍼스를 잇는 궤도와 4개 언어 인사 말풍선 */
+  /* 세 캠퍼스를 잇는 궤도와 5개 언어 인사 말풍선 */
   const bub = (x, y, w, t, fill, ink, tail) => `<g transform="translate(${x} ${y})"><rect width="${w}" height="34" rx="17" fill="${fill}"/><path d="M${tail} 33 l6 9 l4 -9z" fill="${fill}"/><text x="${w / 2}" y="22.5" text-anchor="middle" font-size="15" font-weight="700" fill="${ink}" font-family="Pretendard,'Noto Sans KR','Noto Sans Khmer','Noto Sans SC',sans-serif">${t}</text></g>`;
   const bld = (x, y, s, roof) => `<g transform="translate(${x} ${y}) scale(${s})"><ellipse cx="30" cy="62" rx="34" ry="7" fill="#1d3bc4" opacity=".45"/><rect x="2" y="22" width="56" height="40" rx="5" fill="#fff"/><rect x="2" y="22" width="56" height="8" fill="#dbe3ff"/><path d="M-2 24 L30 2 L62 24z" fill="${roof}"/><rect x="24" y="42" width="12" height="20" rx="2" fill="#2f54eb"/><rect x="9" y="36" width="9" height="9" rx="2" fill="#c7d3ff"/><rect x="42" y="36" width="9" height="9" rx="2" fill="#c7d3ff"/></g>`;
   return `<svg class="art" viewBox="0 0 600 230" role="img" aria-label="세 대학 캠퍼스와 여러 나라 인사">
@@ -1090,8 +1090,8 @@ function heroArt() {
     <path d="M110 170 Q300 230 490 170" fill="none" stroke="#9fb4ff" stroke-width="2.5" stroke-dasharray="2 9" stroke-linecap="round"/>
     ${bld(76, 112, 1.05, '#ffcc33')}${bld(266, 76, 1.2, '#1fbf9f')}${bld(458, 112, 1.05, '#ff8a65')}
     <circle cx="300" cy="62" r="5" fill="#ffcc33"/>
-    ${bub(20, 30, 112, '안녕하세요', '#fff', '#141a33', 30)}${bub(150, 6, 96, 'Xin chào', '#ffcc33', '#141a33', 24)}
-    ${bub(372, 6, 72, '你好', '#1fbf9f', '#fff', 22)}${bub(462, 34, 116, 'សួស្តី', '#fff', '#141a33', 76)}
+    ${bub(8, 34, 112, '안녕하세요', '#fff', '#141a33', 30)}${bub(132, 4, 84, 'Hello', '#ff8a65', '#fff', 24)}
+    ${bub(264, 0, 72, '你好', '#1fbf9f', '#fff', 22)}${bub(382, 4, 96, 'Xin chào', '#ffcc33', '#141a33', 54)}${bub(490, 34, 104, 'សួស្តី', '#fff', '#141a33', 66)}
   </svg>`;
 }
 function partArt(n) {
@@ -1153,11 +1153,12 @@ function welcomeView() {
   <main class="wrap wmain">
     <section class="langbox"><h2>${esc(U('pick'))} · Language</h2>
       <div class="lgrid">${LANGS.map((l) => `<button class="lg" data-lang="${l.code}" aria-pressed="${S.lang === l.code}" aria-label="${esc(l.name)} (${esc(l.ko)})" ${act.includes(l.code) ? '' : 'disabled'}><span class="flag">${FLAG[l.code] || ''}</span><b>${esc(l.name)}</b></button>`).join('')}</div>
+      <button class="cta" id="go">${esc(L('start'))} ${ICON.arrow}</button>
       <p class="anon">${esc(U('anon'))}</p>
     </section>
     ${orgsHtml()}
     <p class="foot">MEGAversity · RISE · <a href="${esc(ADMIN_URL)}"${window.APP_URL ? ' target="_top"' : ''}>admin</a></p>
-  </main>` + `<nav class="fnav"><div class="wrap"><span></span><button class="fab pill" id="go">${esc(L('start'))} ${ICON.arrow}</button></div></nav>`;
+  </main>`;
   document.querySelectorAll('.lg').forEach((b) => b.onclick = () => { S.lang = b.dataset.lang; saveDraft(); welcomeView(); document.documentElement.lang = S.lang; });
   $('#go').onclick = () => {
     if (!S.started) S.started = Date.now();
